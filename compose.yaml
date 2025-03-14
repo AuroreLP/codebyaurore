@@ -17,7 +17,7 @@ services:
     volumes:
       - ./var/db_data:/var/lib/mysql
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - codebyaurore
 
@@ -27,11 +27,11 @@ services:
     depends_on:
       - mysql
     ports:
-      - 8080:80
+      - 8081:80
     networks:
       - codebyaurore
     environment:
-      - PMA_HOST: mysql
+      PMA_HOST: mysql
 
 networks:
   codebyaurore:
