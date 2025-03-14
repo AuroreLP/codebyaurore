@@ -31,9 +31,6 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    /**
-     * @var Collection<int, Comment>
-     */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article')]
     private Collection $comments;
 
