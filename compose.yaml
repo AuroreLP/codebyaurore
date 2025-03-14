@@ -11,7 +11,7 @@ services:
     networks:
       - codebyaurore
 ###> doctrine/doctrine-bundle ###
-  db:
+  mysql:
     image: mysql
     container_name: codebyaurore_mysql
     volumes:
@@ -24,13 +24,14 @@ services:
   phpmyadmin:
     image: phpmyadmin
     container_name: codebyaurore_phpmyadmin
+    depends_on:
+      - mysql
     ports:
-      - 8780:80
+      - 8080:80
     networks:
       - codebyaurore
-
-volumes:
-  db_data:
+    environment:
+      - PMA_HOST: mysql
 
 networks:
   codebyaurore:
