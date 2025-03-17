@@ -8,18 +8,19 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/php/vhosts:/etc/apache2/site-enabled
-    networks:
-      - codebyaurore
 ###> doctrine/doctrine-bundle ###
   mysql:
     image: mysql
     container_name: codebyaurore_mysql
-    volumes:
-      - ./var/db_data:/var/lib/mysql
+    restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    networks:
-      - codebyaurore
+      MYSQL_DATABASE: codebyaurore
+    ports:
+      - "3307:3306" 
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -28,10 +29,8 @@ services:
       - mysql
     ports:
       - 8081:80
-    networks:
-      - codebyaurore
     environment:
       PMA_HOST: mysql
 
-networks:
-  codebyaurore:
+volumes:
+  mysql_data:
