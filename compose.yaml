@@ -20,7 +20,7 @@ services:
     ports:
       - "3307:3306" 
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./var/db_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -28,6 +28,7 @@ services:
     depends_on:
       - mysql
     ports:
+    
       - 8081:80
     environment:
       PMA_HOST: mysql
