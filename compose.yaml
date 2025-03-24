@@ -6,8 +6,10 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./:/var/www
+      - ./:/var/www/html
       - ./docker/php/vhosts:/etc/apache2/site-enabled
+    networks:
+      - codebyaurore
 ###> doctrine/doctrine-bundle ###
   mysql:
     image: mysql
@@ -21,6 +23,8 @@ services:
       - "3307:3306" 
     volumes:
       - ./var/db_data:/var/lib/mysql
+    networks:
+      - codebyaurore
 
   phpmyadmin:
     image: phpmyadmin
@@ -28,10 +32,11 @@ services:
     depends_on:
       - mysql
     ports:
-    
       - 8081:80
     environment:
       PMA_HOST: mysql
+    networks:
+      - codebyaurore
 
-volumes:
-  mysql_data:
+networks:
+  codebyaurore:

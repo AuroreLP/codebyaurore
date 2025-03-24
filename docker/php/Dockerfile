@@ -30,13 +30,11 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions amqp
 
 # Définition du répertoire de travail
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copie des fichiers du projet dans le conteneur
-COPY . /var/www/html
+# COPY . /var/www
 
 # Attribution des permissions correctes
-RUN chown -R www-data:www-data /var/www/html
+# RUN chown -R root:root /var/www
 
-# Exposition du port Apache
-EXPOSE 80
