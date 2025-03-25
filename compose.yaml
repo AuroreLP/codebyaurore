@@ -7,7 +7,7 @@ services:
       - 8080:80
     volumes:
       - ./:/var/www/html
-      - ./docker/php/vhosts:/etc/apache2/site-enabled
+      - ./docker/php/vhosts:/etc/apache2/sites-enabled
     networks:
       - codebyaurore
 ###> doctrine/doctrine-bundle ###
