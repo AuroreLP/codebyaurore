@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   créer un article
+   <h2>Ajouter un article</h2>
+
+   {{ form_start(form) }}
+    
+    {{ form_row(form.title) }}
+
+    {{ form_row(form.content) }}
+
+   {{ form_end(form) }}
 {% endblock %}

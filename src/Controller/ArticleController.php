@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\ArticleType;
+use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,13 @@ class ArticleController extends AbstractController
     #[Route('/create', name: 'create')]
     public function edit(): Response
     {
-        return $this->render('article/edit.html.twig');
+        $article = new Article();
+
+        $form = $this->createForm(ArticleType::class, $article);
+
+        return $this->render('article/edit.html.twig', [
+            'form' => $form
+        ]);
     }
 
     #[Route('/delete/{id}', name: 'delete')]
