@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ArticleController extends AbstractController
 {
@@ -35,8 +35,8 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'article.new')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new', name: 'article.new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $article = new Article(); // Création d'un nouvel article
 
@@ -44,36 +44,52 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($article);
-            $entityManager->flush();
+            // Gestion automatique du slug s'il est vide
+            if (!$article->getSlug()) {
+                $article->setSlug(strtolower($slugger->slug($article->getTitle())));
+            }
+
+            $article->setStatus('DRAFT');
+
+            $em->persist($article);
+            $em->flush();
+
+            $this->addFlash('success', 'Article créé avec succès !');
 
             return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);
         }
 
         return $this->render('article/new.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'article.edit', requirements: ['id' => '\d+'])]
-    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    #[Route('/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Article $article, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush(); // Pas besoin de `persist()`, l'entité existe déjà
-    
-            return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);
+            $em->flush();
+            $this->addFlash('success', 'Article modifié avec succès !');
+            return $this->redirectToRoute('article.index');
         }
-    
+
         return $this->render('article/edit.html.twig', [
-            'form' => $form->createView(),
             'article' => $article,
+            'form' => $form
         ]);
+    }    
+
+    #[Route('/delete/{id}', name: 'article.delete', methods: ['DELETE'])]
+    public function remove(Article $article, EntityManagerInterface $em)
+    {
+        $em->remove($article);
+        $em->flush();
+        $this->addFlash('success', 'L\'article a bien été supprimé');
+        return $this->redirectToRoute('article.index');
     }
-    
-    
 }
 
 /*
@@ -115,12 +131,7 @@ class ArticleController extends AbstractController
 
 
 
-    #[Route('/delete/{id}', name: 'delete')]
-    public function delete(): RedirectResponse
-    {
-        $this->addFlash('success', 'L\'article a été supprimé');
-        return $this->redirectToRoute('articles_list');
-    }
+
 }
 
 */
