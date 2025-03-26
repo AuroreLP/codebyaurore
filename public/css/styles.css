@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Young+Serif&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* permet d'inclure le padding et la bordure */
+}
+
+
+body {
+  font-family: 'montserrat', sans-serif;
+  line-height: 1.5;
+  color: #2b4743;
+  background-color: rgb(250, 235, 215);
+}
+
+/* Barre de navigation */
+header.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(250, 235, 215);
+    color: #2b4743;
+    z-index: 1000;
+    border-bottom: solid 1px rgb(250, 235, 215);
+    box-shadow: 0px 8px 8px -6px rgba(209, 193, 172, 0.3);
+    height: 80px;
+  }
+
+
+header.navbar .container {
+  display: flex;
+  justify-content: space-between; /* Par défaut pour gérer logo et burger */
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+
+
+header.navbar .logo {
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+
+header.navbar .burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+header.navbar .burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #2b4743;
+  border-radius: 3px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Default state for the nav-menu (hidden for mobile) */
+header.navbar .nav-menu {
+  display: none; /* Hidden by default on mobile */
+  flex-direction: column; /* Stack links vertically by default */
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+  right: 0;
+  width: 100%; /* Full width for mobile */
+  background: #2b4743; /* Dark background for mobile menu */
+  padding: 1rem 0;
+  z-index: 1000; /* Ensure it appears above content */
+  gap: 1rem; /* Add spacing between links */
+}
+
+/* Style for the list */
+header.navbar .nav-menu ul {
+  display: flex; /* Ensure flex layout */
+  flex-direction: column; /* Stack items in a column */
+  align-items: right; /* Align links to the center */
+  gap: 1rem; /* Add spacing between items */
+  list-style: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+header.navbar .nav-menu li {
+  display: inline; /* Assurez-vous que chaque <li> soit inline */
+}
+
+/* Style for the links */
+header.navbar .nav-menu a {
+
+  color: antiquewhite;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem; /* Ajout d'espace autour des liens */
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for links */
+header.navbar .nav-menu a:hover {
+  color: #38d6c2; /* Couleur au survol */
+  font-weight: bold;
+}
+
+/* When the menu is open on mobile */
+header.navbar .nav-menu.open {
+  display: flex;
+  z-index: 1001; /* Ensure it displays above everything else */
+  border: solid 1px #efe4d5;
+}
+
+/* Bouton de fermeture (croix) */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #efe4d5;
+  display: none; /* Caché par défaut */
+}
+
+/* Lorsque le menu est ouvert */
+.nav-menu.open .close-btn {
+  display: block; /* S'affiche seulement quand le menu est ouvert */
+}
+
+/* Empêcher la croix d'apparaître sur les grands écrans */
+@media (min-width: 769px) {
+  .close-btn {
+    display: none !important;
+  }
+}
+
+
+/* Ajustement pour le contenu principal */
+main {
+  margin-top: 80px; /* Compense la hauteur de la navbar */
+}
+
+
+/* FORMAT DESKTOP ET TABLETTE */
+/* NAVBAR POUR TABLET ET PLUS */
+@media (min-width: 768px) {
+  header.navbar {
+    display: flex;
+    justify-content: right;
+  }
+
+  header.navbar .container {
+    justify-content: center; /* Centre tout */
+  }
+
+  header.navbar .burger {
+    display: none; /* Le burger disparaît */
+  }
+
+  header.navbar .nav-menu {
+    display: flex; /* Always visible on tablet/desktop */
+    flex-direction: row; /* Align links horizontally */
+    justify-content: center;
+    background: none; /* No background on desktop */
+    position: static; /* Reset positioning */
+    width: auto; /* Remove full width */
+    padding: 0;
+    gap: 2rem; /* Add spacing between links */
+  }
+
+  header.navbar .nav-menu ul {
+    flex-direction: row; /* Inline links */
+    justify-content: center; /* Centrage horizontal */
+  }
+
+  header.navbar .nav-menu a {
+    color: #2b4743;
+  }
+
+  header.navbar .logo {
+    position: absolute;
+    left: 2rem; /* Repositionne le logo */
+  }
+
+}
+

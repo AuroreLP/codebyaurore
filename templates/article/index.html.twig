@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Tous les articles" %}
+
+{% block body %}
+    <h1>BLOG</h1>
+    <ul>
+        {% for article in articles %}
+
+        <li>
+            <a href="{{ path('article.show', {slug: article.slug}) }}">{{ article.title }}</a>
+        </li>
+
+
+        {% endfor %}
+
+    </ul>
+
+    <p>
+        <a class="btn btn-primary btn-sm" href="{{ path('article.new')}}">Créer un article</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>
+                    <a href="{{ path('article.show', {slug: article.slug}) }}">{{ article.title }}</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
+
+                    <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+    {% endblock %}
