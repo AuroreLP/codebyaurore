@@ -4,15 +4,15 @@
 {% block body %}
 <main>
     <!-- Section 1 - Accueil -->
-    <section id="accueil" class="parallax parallax-1 home-section">
-      <!-- Image des accolades -->
-      <div class="image-container">
-        <img src="images/accolades.png" alt="Accolades" loading="lazy">
-        <div class="centered-text">
+    <section id="accueil" class="hero">
+      <div class="hero__container">
+        <!-- Image des accolades -->
+        <img class="hero__img" src="images/accolades.png" alt="Accolades" loading="lazy">
+        <div class="hero__text">
           <p>Bonjour, je m'appelle Aurore,</p>
-          <h1>DÉVELOPPEUSE WEB</h1>
+          <h1>Développeuse web</h1>
           <p>je suis actuellement en reconversion professionnelle <br> et <strong>recherche activement une alternance</strong> pour <br> mettre en pratique mes nouvelles compétences <br> en front et backend.</p>
-          <div class="button-container justify-content-center">
+          <div class="hero__buttons">
             <div>
               <a href="download.php" download>
                   <button class="btn">Téléchargez mon CV</button>
@@ -29,53 +29,53 @@
     </section>
 
     <!-- Section 2 - Compétences -->
-    <section id="competences" class="parallax parallax-1 skills-section">
+    <section id="competences" class="skills">
       <h1>Compétences</h1>
-      <div class="skills">
+      <div class="skills__container">
         <!-- HTML -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-html5"></i>
           <h3>HTML</h3>
           <p>Création de structures web sémantiques et conformes aux normes.</p>
         </div>
         <!-- CSS -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-css3-alt"></i>
           <h3>CSS</h3>
           <p>Design responsive, animations modernes et utilisation de frameworks CSS.</p>
         </div>
         <!-- JavaScript -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-js"></i>
           <h3>JavaScript</h3>
           <p>Interactions dynamiques, manipulation du DOM et programmation orientée objet.</p>
         </div>
         <!-- PHP -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-php"></i>
           <h3>PHP</h3>
           <p>Création de backends robustes, gestion des données et intégration serveur.</p>
         </div>
         <!-- SQL -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fas fa-database"></i>
           <h3>SQL</h3>
           <p>Conception, gestion et optimisation de bases de données relationnelles.</p>
         </div>
         <!-- GitHub -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-github"></i>
           <h3>GitHub</h3>
           <p>Gestion de version, collaboration en équipe et déploiement de projets.</p>
         </div>
         <!-- Figma -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fab fa-figma"></i>
           <h3>Figma</h3>
           <p>Conception d'interfaces utilisateur intuitives et prototypage rapide.</p>
         </div>
         <!-- Gestion de projets -->
-        <div class="skill-item">
+        <div class="skill__item">
           <i class="fas fa-tasks"></i>
           <h3>Gestion de Projets</h3>
           <p>Organisation d'équipes, planification agile et suivi des livrables.</p>
@@ -86,11 +86,11 @@
       
 
     <!-- Section 3 - Expérience -->
-    <section id="experience" class="parallax parallax-3 exp-section">
+    <section id="experience" class="parallax parallax-3 experience">
       <h1>Expérience</h1>
-      <div class="experience">
+      <div class="experience__pro">
         <!-- Section infos1 - Timeline -->
-        <div class="infos infos1">
+        <div class="infos timeline">
           <h2>Timeline</h2>
           <!-- Étape 1 -->
           <div class="timeline-item">
@@ -118,25 +118,25 @@
           </div>
         </div>
         <!-- Section infos2 - Diplômes -->
-        <div class="infos infos2 diploma-section">
+        <div class="infos diploma">
             <h2>Diplômes</h2>
-            <div class="diploma-grid">
+            <div class="diploma__grid">
               <!-- Graduate Développeur Web -->
-              <div class="diploma-card">
+              <div class="diploma__card">
                 <i class="fas fa-laptop-code"></i>
                 <h3>Graduate Développeur Web</h3>
                 <span class="date">2024 - 2025</span>
                 <p>En cours de formation avec Studi.com : langages de programmation, frameworks, déploiement.</p>
               </div>
               <!-- Master FLE -->
-              <div class="diploma-card">
+              <div class="diploma__card">
                 <i class="fas fa-globe"></i>
                 <h3>Master FLE</h3>
                 <span class="date">2011 - 2012</span>
                 <p>Université d'Artois, spécialisé dans l'enseignement du français comme langue étrangère.</p>
               </div>
               <!-- Maîtrise de Droit -->
-              <div class="diploma-card">
+              <div class="diploma__card">
                 <i class="fas fa-balance-scale"></i>
                 <h3>Maîtrise de Droit</h3>
                 <span class="date">2000 - 2004</span>
@@ -145,18 +145,18 @@
             </div>
             <div>
               <h2>Langues Étrangères</h2>
-              <div class="other-languages">
-                <div class="language">
+              <div class="languages">
+                <div class="language__item">
                   <span>Anglais</span>
-                  <div class="progress-bar">
-                    <div class="progress" style="width: 90%;"></div>
+                  <div class="language__progress-bar">
+                    <div class="language__percent" style="width: 90%;"></div>
                   </div>
                   <p>Niveau : Maîtrise (C2)</p>
                 </div>
-                <div class="language">
+                <div class="language__item">
                   <span>Grec</span>
-                  <div class="progress-bar">
-                    <div class="progress" style="width: 75%;"></div>
+                  <div class="language__progress-bar">
+                    <div class="language__percent" style="width: 75%;"></div>
                   </div>
                   <p>Niveau : Avancé (B2)</p>
                 </div>

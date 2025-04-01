@@ -2,11 +2,11 @@
 
     color: #2b4743; /* Default text color */
     padding: 5px 10px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     outline: none;
     border: solid 1px #2b4743;
     border-radius: 5px;
-    background-color: antiquewhite;
+    background-color: transparent;
     cursor: pointer;
     transition: transform 0.5s , color 0.3s ease;
   }
@@ -23,7 +23,7 @@
       border: solid 2px #2b4743;
       background-color: antiquewhite;
       padding: 10px 20px;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       border-radius: 5px;
       outline: none;
       cursor: pointer;

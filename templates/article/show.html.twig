@@ -4,8 +4,47 @@
 
 {% block body %}
 
-    <h1>{{ article.title }}</h1>
+<article>
+
+    <h2>{{ article.title }}</h2>
+    <h3>{{ article.category.name }}</h3>
 
     <p>{{ article.content | nl2br }}</p>
+
+    {% if article.publishedAt %}
+        <p>Article publié le {{ article.publishedAt | date("d.m.y") }}</p>
+    {% else  %}
+        <p>{{ article.status }}</p>
+    {% endif  %}
+
+</article>
+
+<div>
+    <!-- affichage des commentaires -->
+    <h3>Commentaires</h3>
+
+    {% for comment in article.comments %}
+        <div>
+            <p>{{ comment.comment }}</p>
+            <small>Posté le {{ comment.publishedAt|date('d/m/Y H:i') }}</small>
+    
+            <a href="{{ path('comment.edit', {id: comment.id}) }}">Modifier</a>
+            <form action="{{ path('comment.delete', {id: comment.id}) }}" method="POST">
+                <button type="submit">Supprimer</button>
+            </form>
+        </div>
+        {% else %}
+        <p>Aucun commentaire pour cet article.</p>
+    {% endfor %}
+    
+    <h3>Ajouter un commentaire</h3>
+    <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
+        {{ form_start(form) }}
+            {{ form_row(form.comment) }}
+            <button type="submit">Envoyer</button>
+        {{ form_end(form) }}
+    </form>
+
+</div>
 
 {% endblock %}

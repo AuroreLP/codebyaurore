@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Young+Serif&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* permet d'inclure le padding et la bordure */
+  background-color: rgb(250, 235, 215);
+}
+
+body {
+    font-family: 'montserrat', sans-serif;
+    line-height: 1.5;
+    color: #2b4743;
+  }
