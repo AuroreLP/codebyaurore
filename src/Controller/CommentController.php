@@ -54,6 +54,11 @@ class CommentController extends AbstractController
     #[Route('/comment/{id}/edit', name: 'comment.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Comment $comment, EntityManagerInterface $em): Response
     {
+        // Vérifier si le commentaire est bien lié à un article
+        if (!$comment->getArticle()) {
+            throw $this->createNotFoundException('Le commentaire n\'est pas associé à un article.');
+        }
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -64,7 +69,7 @@ class CommentController extends AbstractController
         }
 
         return $this->render('comment/edit.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
             'comment' => $comment
         ]);
     }
@@ -72,6 +77,11 @@ class CommentController extends AbstractController
     #[Route('/comment/{id}/delete', name: 'comment.delete', methods: ['POST'])]
     public function delete(Comment $comment, EntityManagerInterface $em): Response
     {
+        // Vérifier si l'article existe avant de supprimer le commentaire
+        if (!$comment->getArticle()) {
+            throw $this->createNotFoundException('Le commentaire n\'est pas associé à un article.');
+        }
+        
         $articleSlug = $comment->getArticle()->getSlug();
         $em->remove($comment);
         $em->flush();

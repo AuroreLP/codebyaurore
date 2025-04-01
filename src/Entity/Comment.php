@@ -21,7 +21,7 @@ class Comment
 
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)] // Un commentaire DOIT être rattaché à un article
-    private Article $article;
+    private ?Article $article = null;
 
     public function __construct()
     {
@@ -57,12 +57,12 @@ class Comment
     return $this;
 }
 
-    public function getArticle(): Article
+    public function getArticle(): ?Article
     {
         return $this->article;
     }
 
-    public function setArticle(Article $article): self
+    public function setArticle(?Article $article): self
     {
         $this->article = $article;
 

@@ -22,14 +22,17 @@ class Article
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $published_at = null;
 
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_PUBLISHED = 'published';
+
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $status = self::STATUS_DRAFT; // Valeur par défaut
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'article')]
     private Collection $comments;
@@ -49,6 +52,12 @@ class Article
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
 
     public function getId(): ?int
     {
@@ -110,8 +119,12 @@ class Article
 
     public function setStatus(string $status): static
     {
-        $this->status = $status;
+        $validStatuses = [self::STATUS_DRAFT, self::STATUS_PUBLISHED];
+        if (!in_array($status, $validStatuses, true)) {
+            throw new \InvalidArgumentException("Invalid status: $status");
+        }
 
+        $this->status = $status;
         return $this;
     }
 

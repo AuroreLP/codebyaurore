@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Article;
 use App\Entity\Comment;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,8 +18,11 @@ class CommentType extends AbstractType
     {
         $builder
             ->add(child: 'comment', type: TextareaType::class)
-            ->add(child: 'article', type: HiddenType::class)
-            ->add(child: 'submit', type: SubmitType::class);
+
+            ->add('article', EntityType::class, [
+                'class' => Article::class,
+                'choice_label' => 'title', // Affiche le titre de l'article
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
