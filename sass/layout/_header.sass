@@ -1,0 +1,40 @@
+@use "../abstracts/variables" as var
+@use "../abstracts/functions" as fct
+
+
+.header
+    top: 0
+    left: 0
+    width: 100%
+    border-bottom: solid 1px var.$dark-green
+    box-shadow: 0px 8px 8px -6px var.$dark-green
+    z-index: 1000
+    height: fct.rem(80)
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding-left: fct.rem(30)
+
+    &__logo
+        width: fct.rem(50)
+        height: fct.rem(50)
+    
+    &__burger
+        color: var.$dark-green
+        background: none
+        border: none
+        cursor: pointer
+        width: 25px
+        height: 20px
+
+        span
+            display: block
+            height: 3px
+            width: 100%
+            background: var.$dark-green
+            transition: transform 0.3s ease, opacity 0.3 ease
+
+    &__nav
+        display: flex
+        align-items: center
+        padding-right: fct.rem(30)

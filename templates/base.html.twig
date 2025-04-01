@@ -7,10 +7,7 @@
         <meta name="keywords" content="Développeur web, Développeuse web, Stage, Frontend, Backend, PHP, JavaScript">  
         <title>{% block title %}Code by Aurore{% endblock %}</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/styles-header-footer.css">
-        <link rel="stylesheet" href="css/styles-home.css">
-        <link rel="stylesheet" href="css/components.css">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         {% block stylesheets %}
         {% endblock %}
 
@@ -20,7 +17,7 @@
     </head>
     <body>
         <header class="header">
-                <img class="header__logo" src="{{ asset('images/logo AL dark.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
+            <img class="header__logo" src="{{ asset('assets/images/logo AL dark.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
 
             <button class="header__burger" aria-label="Menu">
                 <span></span>

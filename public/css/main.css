@@ -1,0 +1,98 @@
+/* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* colors */
+body {
+  background-color: #efe4d5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: solid 1px #2b4743;
+  box-shadow: 0px 8px 8px -6px #2b4743;
+  z-index: 1000;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1.875rem;
+}
+.header__logo {
+  width: 3.125rem;
+  height: 3.125rem;
+}
+.header__burger {
+  color: #2b4743;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 25px;
+  height: 20px;
+}
+.header__burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #2b4743;
+  transition: transform 0.3s ease, opacity 0.3 ease;
+}
+.header__nav {
+  display: flex;
+  align-items: center;
+  padding-right: 1.875rem;
+}
