@@ -44,25 +44,31 @@
         max-width: 748px
         margin: auto
 
-        .nav__burger
-            display: none
+    .nav__burger
+        display: none
             
-        .nav__menu
-            display: initial
-            position: static
-            box-shadow: unset
+    .nav__menu
+        display: initial
+        position: static
+        box-shadow: unset
 
-            .nav__menu--item
-                display: inline-block
-                border-top: 2px solid transparent
-                border-bottom: 2px solid transparent
-                line-height: 44px
+        .nav__menu--item
+            display: inline-block
+            border-top: 2px solid transparent
+            border-bottom: 2px solid transparent
+            line-height: 44px
 
-                &:hover, &.active
-                    border-top: 3px solid var.$light-green
-                    border-bottom: 3px solid var.$light-green
-                    font-weight: 700
-                    color: var.$dark-green
+            &:hover
+                border-top: 3px solid var.$light-green
+                border-bottom: 3px solid var.$light-green
+                font-weight: 700
+                color: var.$dark-green
+                
+            .nav__menu--item a.active
+                border-top: 3px solid var.$light-green
+                border-bottom: 3px solid var.$light-green
+                font-weight: 700
+                color: var.$dark-green
                     
 
 

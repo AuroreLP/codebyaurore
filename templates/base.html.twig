@@ -34,14 +34,14 @@
                 </span>
     
                 <ul class="nav__menu">
-                    <li class="nav__menu--item active">
+                    <li class="nav__menu--item">
                         <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Accueil</a>
                     </li>
                     <li class="nav__menu--item">
                         <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('article.index')}}">Blog</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a href="#experience">A propos</a>
+                        <a class="{{ app.current_route == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
                     </li>
                     <li class="nav__menu--item">
                         <a href="#contact">Contact</a>
@@ -53,6 +53,19 @@
             {% include 'partials/_flash_messages.html.twig' %}
             {% block body %}{% endblock %}
         </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <img class="footer__container-logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
+                <ul class="footer__list-links">
+                    <li class="footer__list--item">
+                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Mentions légales</a>
+                    </li>
+                    <li class="footer__list--item">
+                        <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('article.index')}}">Politique de confidentialité</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
         <script src="{{ asset('js/navbar.js') }}"></script>
     </body>
 </html>
