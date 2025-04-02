@@ -1,40 +1,84 @@
 @use "../abstracts/variables" as var
 @use "../abstracts/functions" as fct
 
+.nav
+    background-color: var.$white
+    box-shadow: 0 2px 2px var.$light-grey
+    position: relative
+    z-index: 2
 
-.header
-    top: 0
-    left: 0
-    width: 100%
-    border-bottom: solid 1px var.$dark-green
-    box-shadow: 0px 8px 8px -6px var.$dark-green
-    z-index: 1000
-    height: fct.rem(80)
-    display: flex
-    justify-content: space-between
-    align-items: center
-    padding-left: fct.rem(30)
-
-    &__logo
-        width: fct.rem(50)
-        height: fct.rem(50)
+    &__container
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: fct.rem(10)
+        margin: 0 fct.rem(20)
+        height: fct.rem(70)
     
     &__burger
-        color: var.$dark-green
-        background: none
-        border: none
         cursor: pointer
-        width: 25px
-        height: 20px
 
-        span
-            display: block
-            height: 3px
-            width: 100%
-            background: var.$dark-green
-            transition: transform 0.3s ease, opacity 0.3 ease
+    &__menu
+        display: none
+        position: absolute
+        top: fct.rem(70)
+        left: 0
+        right: 0
+        background-color: var.$white
+        box-shadow: 0 2px 2px var.$dark-green
+        padding: 0
 
-    &__nav
-        display: flex
-        align-items: center
-        padding-right: fct.rem(30)
+        &.show
+            display: initial
+
+        &--item
+            padding: fct.rem(10) fct.rem(20)
+
+            &:hover
+                color: var.$light-green
+                font-weight: 600
+
+
+@media screen and (min-width: 768px) 
+    .nav__container
+        max-width: 748px
+        margin: auto
+
+        .nav__burger
+            display: none
+            
+        .nav__menu
+            display: initial
+            position: static
+            box-shadow: unset
+
+            .nav__menu--item
+                display: inline-block
+                border-top: 2px solid transparent
+                border-bottom: 2px solid transparent
+                line-height: 44px
+
+                &:hover, &.active
+                    border-top: 3px solid var.$light-green
+                    border-bottom: 3px solid var.$light-green
+                    font-weight: 700
+                    color: var.$dark-green
+                    
+
+
+@media screen and (min-width: 992px) 
+    .nav__container
+        max-width: 972px
+
+@media screen and (min-width: 1200px) 
+    .nav__container
+        max-width: 1180px
+
+@media screen and (min-width: 1500px) 
+    .nav__container
+        max-width: 1480px
+
+@media screen and (min-width: 1900px) 
+    .nav__container
+        max-width: 1880px
+

@@ -1,0 +1,65 @@
+@use "../abstracts/variables" as var
+@use "../abstracts/mixins" as mixin
+@use "../abstracts/functions" as fct
+    
+.hero
+    display: flex
+    justify-content: center
+    align-items: center
+    min-height: 100vh
+    text-align: center
+    background-color: var.$white
+    color: var.$white
+    position: relative // Pour que les éléments enfants soient positionnés par rapport à la section hero
+    z-index: 1 // Ajoute un z-index pour s'assurer que cette section reste au-dessus de la navbar, si nécessaire
+
+
+    &__container
+        position: relative // Pour permettre le positionnement absolu de l'image à l'intérieur
+        background: var.$dark-green
+        padding: fct.rem(60)
+        max-width: 800px
+        width: 80%
+        margin: 0 auto // Ceci va centrer horizontalement le conteneur
+        border-radius: 10px
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+        display: flex // Ajoute display: flex pour pouvoir aligner les éléments à l'intérieur si nécessaire
+        flex-direction: column // Assure que les éléments sont disposés verticalement
+        justify-content: center // Aligne les éléments verticalement au centre
+        align-items: center
+
+    &__subtitle
+        @include mixin.font(0.75rem, 600)
+        margin-bottom: 0.75rem
+
+    &__title
+        @include mixin.font(2rem, 600)
+        margin-bottom: fct.rem(35)
+
+
+    &__description
+        @include mixin.font(1rem)
+        margin-bottom: fct.rem(32)
+
+    &__avatar
+        position: absolute
+        top: fct.rem(-10)
+        right: fct.rem(-35)
+        @include mixin.circle(fct.rem(130))
+
+        img
+            width: 100%
+            height: 100%
+            object-fit: cover
+    
+    &__button-item
+        margin: fct.rem(10) 0 // Ajoute un espace vertical entre les boutons
+
+    
+@media screen and (min-width: 768px)
+    .hero__buttons
+        flex-direction: row
+        justify-content: center
+
+    .hero__button-item
+        margin: 0 10px // Espace horizontal entre les boutons
