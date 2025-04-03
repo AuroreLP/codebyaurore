@@ -28,7 +28,14 @@ class Article
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $published_at = null;
 
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(type: Types::TEXT, length: 160, nullable: true)]
+    private ?string $meta_description = null;
+
     public const STATUS_DRAFT = 'draft';
+    public const STATUS_READY = 'ready';
     public const STATUS_PUBLISHED = 'published';
 
     #[ORM\Column(length: 255)]
@@ -51,6 +58,15 @@ class Article
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        if (!$this->created_at) {
+            $this->created_at = new \DateTimeImmutable();
+        }
     }
 
     public function __toString(): string
@@ -112,6 +128,25 @@ class Article
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function getMetaDescription(): ?string
+    {
+        return $this->meta_description;
+    }
+
+    public function setMetaDescription(?string $meta_description): static
+    {
+        if ($meta_description && strlen($meta_description) > 160) {
+            throw new \InvalidArgumentException("La méta-description ne peut pas dépasser 160 caractères.");
+        }
+        $this->meta_description = $meta_description;
+        return $this;
+    }
+
     public function getStatus(): ?string
     {
         return $this->status;
@@ -119,7 +154,7 @@ class Article
 
     public function setStatus(string $status): static
     {
-        $validStatuses = [self::STATUS_DRAFT, self::STATUS_PUBLISHED];
+        $validStatuses = [self::STATUS_DRAFT, self::STATUS_READY, self::STATUS_PUBLISHED];
         if (!in_array($status, $validStatuses, true)) {
             throw new \InvalidArgumentException("Invalid status: $status");
         }

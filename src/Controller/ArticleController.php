@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Form\ArticleType;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Tag;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,12 +20,19 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ArticleController extends AbstractController
 {
     #[Route('/blog', name: 'article.index')]
-    public function index(Request $request, ArticleRepository $repository): Response
+    public function index(Request $request, ArticleRepository $repository, EntityManagerInterface $em): Response
     {
-        $articles = $repository->findAll();
+        // $articles = $repository->findAll(); test:
+        $articles = $repository->findBy([], ['published_at' => 'DESC']);
+
+        // Récupérer toutes les catégories et tous les tags
+        $categories = $em->getRepository(Category::class)->findAll();
+        $tags = $em->getRepository(Tag::class)->findAll();
 
         return $this->render('article/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -72,6 +81,10 @@ class ArticleController extends AbstractController
             // Gestion automatique du slug s'il est vide
             if (!$article->getSlug()) {
                 $article->setSlug(strtolower($slugger->slug($article->getTitle())));
+            }
+
+            if (!$article->getPublishedAt()) {
+                $article->setPublishedAt(new \DateTimeImmutable());
             }
 
             $article->setStatus('DRAFT');
