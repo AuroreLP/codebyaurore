@@ -1,0 +1,27 @@
+@use "../abstracts/variables" as var
+    
+@mixin font($font-size, $font-weight: 400)
+    font-weight:$font-weight
+    font-size: $font-size
+
+@mixin circle($size)
+    width: $size
+    height: $size
+    border-radius: 100%
+    overflow: hidden
+
+@mixin container-style
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 80vh
+  text-align: center
+  background-color: var.$white
+  color: var.$white
+  position: relative
+    
+@mixin flex-center($flex-center)
+    display: flex
+    justify-content: center
+    align-items: center
+

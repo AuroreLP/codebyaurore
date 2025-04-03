@@ -32,6 +32,11 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'attr' => ['placeholder' => 'Généré automatiquement si vide']
             ])
+            ->add('metaDescription', TextType::class, [
+                'label' => 'Résumé',
+                'required' => false,
+                'attr' => ['placeholder' => 'Résumé de 160 caractères max']
+            ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
                 'attr' => ['placeholder' => 'Écrivez votre article ici...']

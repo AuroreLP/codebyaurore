@@ -13,50 +13,56 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $comment = null;
+    #[ORM\Column(type: 'text')]
+    private string $comment;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $published_at = null;
+    private \DateTimeImmutable $published_at;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    private Article $article;
+    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)] // Un commentaire DOIT être rattaché à un article
+    private ?Article $article = null;
+
+    public function __construct()
+    {
+        $this->published_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getComment(): ?string
+    public function getComment(): string
     {
         return $this->comment;
     }
 
-    public function setComment(string $comment): static
+    public function setComment(string $comment): self
     {
         $this->comment = $comment;
 
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeImmutable
+    public function getPublishedAt(): \DateTimeImmutable
     {
         return $this->published_at;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $published_at): static
-    {
-        $this->published_at = $published_at;
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
+{
+    $this->published_at = $publishedAt;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getArticle(): Article
+    public function getArticle(): ?Article
     {
         return $this->article;
     }
 
-    public function setArticle(Article $article): static
+    public function setArticle(?Article $article): self
     {
         $this->article = $article;
 

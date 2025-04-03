@@ -1,0 +1,32 @@
+@use "../abstracts/variables" as var
+@use "../abstracts/mixins" as mixin
+    
+.button
+    background-color: transparent
+    border: solid 2px var.$white
+    color: var.$white
+    border-radius: 0.5rem
+    padding: 0.5rem 0.75rem
+    display: inline-flex
+    align-items: center
+    column-gap: 0.5rem
+    cursor: pointer
+    &:hover
+        border: solid 2px var.$light-green
+        color: var.$light-green
+        
+
+    &--secondary
+        @extend .button
+        border: solid 2px var.$light-green
+        background-color: transparent
+        &:hover
+            border: solid 2px var.$white
+
+
+    &__icon
+        width:1.25rem
+        height:1.25rem
+
+    &__label
+        @include mixin.font(0.75, $font-weight: 400)

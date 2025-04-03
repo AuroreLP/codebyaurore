@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use App\Form\ArticleType;
 use App\Entity\Article;
+use App\Entity\Category;
+use App\Entity\Comment;
+use App\Entity\Tag;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,26 +20,56 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ArticleController extends AbstractController
 {
     #[Route('/blog', name: 'article.index')]
-    public function index(Request $request, ArticleRepository $repository): Response
+    public function index(Request $request, ArticleRepository $repository, EntityManagerInterface $em): Response
     {
-        $articles = $repository->findAll();
+        // $articles = $repository->findAll(); test:
+        $articles = $repository->findBy([], ['published_at' => 'DESC']);
+
+        // Récupérer toutes les catégories et tous les tags
+        $categories = $em->getRepository(Category::class)->findAll();
+        $tags = $em->getRepository(Tag::class)->findAll();
 
         return $this->render('article/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
-    
     #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
-    public function show(Request $request, string $slug, ArticleRepository $repository): Response
+    public function show(Request $request, string $slug, ArticleRepository $repository, EntityManagerInterface $em): Response
     {
         $article = $repository->findOneBy(['slug' => $slug]);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Article non trouvé');
+        }
+
+            // Création d'un nouveau commentaire
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setArticle($article);
+            $comment->setPublishedAt(new \DateTimeImmutable());
+
+            $em->persist($comment);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre commentaire a été ajouté !');
+            return $this->redirectToRoute('article.show', ['slug' => $slug]);
+        }
+
         return $this->render('article/show.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'form' => $form->createView() // Passer le formulaire à Twig
         ]);
     }
 
+
     #[Route('/new', name: 'article.new', methods: ['GET', 'POST'])]
+
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $article = new Article(); // Création d'un nouvel article
@@ -47,6 +81,10 @@ class ArticleController extends AbstractController
             // Gestion automatique du slug s'il est vide
             if (!$article->getSlug()) {
                 $article->setSlug(strtolower($slugger->slug($article->getTitle())));
+            }
+
+            if (!$article->getPublishedAt()) {
+                $article->setPublishedAt(new \DateTimeImmutable());
             }
 
             $article->setStatus('DRAFT');
@@ -91,47 +129,3 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('article.index');
     }
 }
-
-/*
-
-    #[Route('/create', name: 'create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
-    {
-        $article = new Article();
-
-        $form = $this->createForm(ArticleType::class, $article);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $article = $form->getData();
-            $article->setStatus('DRAFT');
-            
-            $em->persist($article);
-            $em->flush();
-
-            return $this->redirectToRoute('articles_list');
-        }
-
-        return $this->render('article/edit.html.twig', [
-            'form' => $form
-        ]);
-    }
-
-}
-
-
-#[Route('/articles', name: 'articles_')]
-class ArticleController extends AbstractController
-{
-    #[Route('/', name: 'list')]
-    public function list(): Response
-    {
-        return $this->render('article/list.html.twig');
-    }
-
-
-
-
-}
-
-*/

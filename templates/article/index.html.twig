@@ -1,43 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title "Tous les articles" %}
+{% block title "Blog | Code by Aurore" %}
 
 {% block body %}
-    <h1>BLOG</h1>
-    <ul>
+
+<section class="blog">
+
+    <!-- Filtres -->
+    <div class="blog__filters">
+        <select name="categories">
+            <option value="">Toutes les catégories</option>
+            {% for category in categories %}
+                <option value="{{ category.slug }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="tags">
+            <option value="">Tous les tags</option>
+            {% for tag in tags %}
+                <option value="{{ tag.slug }}">#{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Liste des articles -->
+    <div class="blog__articles">
         {% for article in articles %}
-
-        <li>
-            <a href="{{ path('article.show', {slug: article.slug}) }}">{{ article.title }}</a>
-        </li>
-
-
+            <article class="blog__article">
+                <div class="blog__article-header">
+                    <h2 class="title">
+                        <a href="{{ path('article.show', {'slug': article.slug}) }}">{{ article.title }}</a>
+                    </h2>
+                    <span class="category">{{ article.category.name }}</span>
+                </div>
+                <p class="blog__article-meta">{{ article.metaDescription }}</p>
+                <div class="blog__article-separator"></div>
+                <div class="blog__article-footer">
+                    <span class="date">Publié le {{ article.publishedAt | date("d.m.y") }}
+                    </span>
+                    <div class="tags">
+                        {% for tag in article.tags %}
+                            <span>#{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+        {% else %}
+            <p>Aucun article trouvé.</p>
         {% endfor %}
+    </div>
 
-    </ul>
+</section>
+
+
 
     <p>
-        <a class="btn btn-primary btn-sm" href="{{ path('article.new')}}">Créer un article</a>
+        <a href="{{ path('article.new')}}">Créer un article</a>
     </p>
     <table class="table">
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Statut</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for article in articles %}
             <tr>
-                <td>
-                    <a href="{{ path('article.show', {slug: article.slug}) }}">{{ article.title }}</a>
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
+                <td>{{ article.title }}</td>
+                <td>{{ article.status }}</td>
+                <td class="d-flex gap-1">
+                    <a href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>
+
+                    <a href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
 
                     <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        <button type="submit">Supprimer</button>
                     </form>
                 </td>
             </tr>
