@@ -53,19 +53,6 @@
 </section>
 
 
-  
-    <h1>BLOG</h1>
-    <ul>
-        {% for article in articles %}
-
-        <li>
-            <a href="{{ path('article.show', {slug: article.slug}) }}">{{ article.title }}</a>
-        </li>
-
-
-        {% endfor %}
-
-    </ul>
 
     <p>
         <a href="{{ path('article.new')}}">Créer un article</a>
