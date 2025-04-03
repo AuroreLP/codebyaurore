@@ -11,7 +11,6 @@ use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ArticleController extends AbstractController
 {
     #[Route('/blog', name: 'article.index')]
-    public function index(Request $request, ArticleRepository $repository, EntityManagerInterface $em): Response
+    public function index(ArticleRepository $repository, EntityManagerInterface $em): Response
     {
         // $articles = $repository->findAll(); test:
         $articles = $repository->findBy([], ['published_at' => 'DESC']);
@@ -29,7 +28,7 @@ class ArticleController extends AbstractController
         $categories = $em->getRepository(Category::class)->findAll();
         $tags = $em->getRepository(Tag::class)->findAll();
 
-        return $this->render('article/index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
             'tags' => $tags
