@@ -488,7 +488,7 @@ a {
   flex-direction: column;
   gap: 1rem;
   margin: 2.5rem auto;
-  padding: 1.25rem;
+  padding: 1.875rem 3.75rem;
   border: 2px solid #2b4743;
   border-radius: 0.625rem;
   width: 80%;
@@ -512,7 +512,7 @@ a {
 }
 .contact__form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 1.25rem;
 }

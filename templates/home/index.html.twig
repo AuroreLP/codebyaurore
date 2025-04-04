@@ -51,37 +51,5 @@
     
     </section>
     
-    
-    
-        <p>
-            <a href="{{ path('article.new')}}">Créer un article</a>
-        </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for article in articles %}
-                <tr>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.status }}</td>
-                    <td class="d-flex gap-1">
-                        <a href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>
-    
-                        <a href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
-    
-                        <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
   </main>
 {% endblock %}
