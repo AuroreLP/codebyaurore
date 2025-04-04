@@ -66,6 +66,18 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    // ADMIN PART
+    // liste des articles par ordre chronologique DESC
+    #[Route('/admin/articles', name: 'admin_articles')]
+    public function list(EntityManagerInterface $entityManager): Response
+    {
+        $articles = $entityManager->getRepository(Article::class)->findBy([], ['created_at' => 'DESC']);
+
+        return $this->render('admin/article/list.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
 
     #[Route('/new', name: 'article.new', methods: ['GET', 'POST'])]
 
@@ -96,7 +108,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);
         }
 
-        return $this->render('article/new.html.twig', [
+        return $this->render('admin/article/new.html.twig', [
             'form' => $form
         ]);
     }
@@ -113,7 +125,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article.index');
         }
 
-        return $this->render('article/edit.html.twig', [
+        return $this->render('admin/article/edit.html.twig', [
             'article' => $article,
             'form' => $form
         ]);
@@ -125,6 +137,6 @@ class ArticleController extends AbstractController
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', 'L\'article a bien été supprimé');
-        return $this->redirectToRoute('article.index');
+        return $this->redirectToRoute('admin_articles');
     }
 }
