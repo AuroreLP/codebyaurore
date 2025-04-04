@@ -41,7 +41,7 @@
                         <a class="{{ app.current_route == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a href="#contact">Contact</a>
+                        <a class="{{ app.current_route == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
                     </li>
                 </ul>
             </div>

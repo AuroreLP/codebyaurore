@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AboutController!{% endblock %}
+{% block title %}A propos | Code by Aurore{% endblock %}
 
 {% block body %}
 <section class="hero">
@@ -74,50 +74,4 @@
     </div>
 </section>
 
-<!-- Section Contact -->
-<section id="contact" class="parallax parallax-4 contact-section">
-
-  <form action="contact.php" method="post" id="contactForm">
-    <div>
-        <h1>Contactez-moi</h1>
-        <p>Pour en savoir plus sur mon parcours et mes disponibilités, veuillez remplir ce formulaire. Je ferai en sorte de vous répondre dans les 24h.</p>
-    </div>
-    <div class="separation"></div>
-    <div class="formulaire">
-        <div class="gauche">
-            <div class="groupe">
-                <label for="lastname">Votre nom<sup>*</sup></label>
-                <input type="text" name="lastname" id="lastname" placeholder="Entrez votre nom" required>
-            </div>
-            <div class="groupe">
-                <label for="name">Votre prénom<sup>*</sup></label>
-                <input type="text" name="name" id="name" placeholder="Entrez votre prénom" required>
-            </div>
-            <div class="groupe">
-                <label for="email">Votre adresse email<sup>*</sup></label>
-                <input type="email" name="email" id="email" placeholder="Entrez votre email" required>
-            </div>
-            <div class="groupe">
-                <label for="tel">Votre téléphone<sup>*</sup></label>
-                <input type="text" name="tel" id="tel" placeholder="Entrez votre téléphone" required>
-            </div>
-        </div>
-        <div class="droite">
-            <div class="groupe">
-                <label for="subject">Sujet<sup>*</sup></label>
-                <input type="text" id="subject" name="subject" placeholder="Entrez le sujet de votre message" required></input> <!-- Ajout du required ici -->
-            </div>
-            <div class="groupe">
-                <label for="msg">Votre message<sup>*</sup></label>
-                <textarea id="msg" name="msg" placeholder="Ecrivez votre message" maxlength="150" rows="13" required></textarea> <!-- Ajout du required ici -->
-            </div>
-        </div>
-    </div>
-    <div class="pied-formulaire">
-        <input class="btn btn-dark" type="submit" value="Envoyer le message">
-    </div>
-    <div id="notification" style="display:none; color: green;"></div>
-  </form>
-
-  </section>
 {% endblock %}

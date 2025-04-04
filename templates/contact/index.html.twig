@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Me contacter | Code by Aurore{% endblock %}
+
+{% block body %}
+<section id="contact" class="contact">
+
+    <div class="contact__intro">
+        <h1>Contactez-moi</h1>
+        <p>Pour en savoir plus sur mon parcours et mes disponibilités, veuillez remplir ce formulaire. Je ferai en sorte de vous répondre dans les 24h.</p>
+    </div>
+          
+    <div class="contact__separator"></div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+
+    <div class="contact__form">
+        <div class="contact__left">
+            <div class="group">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+                {{ form_errors(form.lastname) }}
+            </div>
+            <div class="group">
+                {{ form_label(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+                {{ form_errors(form.firstname) }}
+            </div>
+            <div class="group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="group">
+                {{ form_label(form.phone) }}
+                {{ form_widget(form.phone) }}
+                {{ form_errors(form.phone) }}
+            </div>
+        </div>
+        <div class="contact__right">
+            <div class="group">
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject) }}
+                {{ form_errors(form.subject) }}
+            </div>
+            <div class="group">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+                {{ form_errors(form.message) }}
+            </div>
+        </div>
+        <div class="contact__submit button">
+            {{ form_widget(form.submit) }}
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+  
+</section>
+{% endblock %}
