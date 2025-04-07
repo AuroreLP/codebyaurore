@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         $categories = $em->getRepository(Category::class)->findAll();
         $tags = $em->getRepository(Tag::class)->findAll();
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('/main/home/index.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
             'tags' => $tags

@@ -66,8 +66,20 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    // ADMIN PART
+    // liste des articles par ordre chronologique DESC
+    #[Route('/admin/articles', name: 'admin.articles')]
+    public function list(EntityManagerInterface $entityManager): Response
+    {
+        $articles = $entityManager->getRepository(Article::class)->findBy([], ['created_at' => 'DESC']);
 
-    #[Route('/new', name: 'article.new', methods: ['GET', 'POST'])]
+        return $this->render('admin/article/list.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+
+    #[Route('/admin/new', name: 'article.new', methods: ['GET', 'POST'])]
 
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
@@ -96,12 +108,12 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);
         }
 
-        return $this->render('article/new.html.twig', [
+        return $this->render('admin/article/new.html.twig', [
             'form' => $form
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
@@ -110,10 +122,10 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Article modifié avec succès !');
-            return $this->redirectToRoute('article.index');
+            return $this->redirectToRoute('admin.articles');
         }
 
-        return $this->render('article/edit.html.twig', [
+        return $this->render('admin/article/edit.html.twig', [
             'article' => $article,
             'form' => $form
         ]);
@@ -125,6 +137,6 @@ class ArticleController extends AbstractController
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', 'L\'article a bien été supprimé');
-        return $this->redirectToRoute('article.index');
+        return $this->redirectToRoute('admin.articles');
     }
 }

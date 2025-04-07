@@ -1,0 +1,22 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<div class="tag-form">
+  <h1 class="tag-form__title">{{ title }}</h1>
+
+  {{ form_start(form, {'attr': {'class': 'tag-form__form'}}) }}
+    <div class="tag-form__group">
+      {{ form_label(form.name, null, {'label_attr': {'class': 'tag-form__label'}}) }}
+      {{ form_widget(form.name, {'attr': {'class': 'tag-form__input'}}) }}
+      {{ form_errors(form.name) }}
+    </div>
+
+    <div class="tag-form__actions">
+      <button type="submit" class="tag-form__button tag-form__button--submit">Enregistrer</button>
+      <a href="{{ path('admin.tags.index') }}" class="tag-form__button tag-form__button--back">Retour</a>
+    </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

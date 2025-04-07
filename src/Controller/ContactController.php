@@ -44,7 +44,7 @@ class ContactController extends AbstractController
         }
 
         // Passage du formulaire à la vue
-        return $this->render('contact/index.html.twig', [
+        return $this->render('main/contact/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }

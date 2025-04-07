@@ -13,4 +13,8 @@ when@test:
     framework:
         test: true
         session:
-            storage_factory_id: session.storage.factory.mock_file
+            handler_id: null
+            storage_id: session.storage.native
+            cookie_lifetime: 3600  # Durée de vie du cookie en secondes (1 heure ici)
+            cookie_secure: auto     # Le cookie sera sécurisé en fonction de l'environnement (en HTTPS en production)
+            cookie_httponly: true   # Assure que les cookies ne sont accessibles que par le serveur, pas via JavaScript

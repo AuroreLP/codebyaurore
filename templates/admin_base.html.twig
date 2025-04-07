@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Développeuse web en reconversion, recherche un stage en développement front et back-end. Découvrez mon CV et mes compétences.">
+        <meta name="keywords" content="Développeur web, Développeuse web, Stage, Frontend, Backend, PHP, JavaScript">  
+        <title>{% block title %}Code by Aurore{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app')}}{% endblock %}
+        {% endblock %}
+
+    </head>
+    <body>
+        <nav class="nav" id="main-navbar">
+            <div class="nav__container">
+                <a class="nav__logo" href="{{ path('home')}}">
+                    <img style="width: 50px;" src="{{ asset('assets/images/logo AL dark.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
+                </a>
+    
+                <span class="nav__burger" aria-label="Menu">
+                    <svg viewbox="0 0 100 80" width="30" height="30">
+                        <rect width="100" height="15" rx="8"></rect>
+                        <rect y="35" width="100" height="15" rx="8"></rect>
+                        <rect y="70" width="100" height="15" rx="8"></rect>
+                    </svg>
+                </span>
+    
+                <ul class="nav__menu">
+                    <li class="nav__menu--item">
+                        {% if not app.user %}
+                            <a href="{{ path('app_login') }}">Connexion</a>
+                        {% else %}
+                            <a  href="{{ path('app_logout') }}">Déconnexion</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="dashboard">
+            {% include 'partials/_flash_messages.html.twig' %}
+            {% include 'partials/_sidebar.html.twig' %}
+            <section class="content">
+                <div class="content__body">
+                    <!-- Contenu principal ici -->
+                    {% block body %}{% endblock %}
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <img class="footer__container-logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
+                <ul class="footer__list-links">
+                    <li class="footer__list--item">
+                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Mentions légales</a>
+                    </li>
+                    <li class="footer__list--item">
+                        <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('article.index')}}">Politique de confidentialité</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        <script src="{{ asset('js/navbar.js') }}"></script>
+    </body>
+</html>
