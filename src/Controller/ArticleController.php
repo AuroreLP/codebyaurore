@@ -68,7 +68,7 @@ class ArticleController extends AbstractController
 
     // ADMIN PART
     // liste des articles par ordre chronologique DESC
-    #[Route('/admin/articles', name: 'admin_articles')]
+    #[Route('/admin/articles', name: 'admin.articles')]
     public function list(EntityManagerInterface $entityManager): Response
     {
         $articles = $entityManager->getRepository(Article::class)->findBy([], ['created_at' => 'DESC']);
@@ -79,7 +79,7 @@ class ArticleController extends AbstractController
     }
 
 
-    #[Route('/new', name: 'article.new', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'article.new', methods: ['GET', 'POST'])]
 
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
@@ -113,7 +113,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
@@ -122,7 +122,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Article modifié avec succès !');
-            return $this->redirectToRoute('article.index');
+            return $this->redirectToRoute('admin.articles');
         }
 
         return $this->render('admin/article/edit.html.twig', [
@@ -137,6 +137,6 @@ class ArticleController extends AbstractController
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', 'L\'article a bien été supprimé');
-        return $this->redirectToRoute('admin_articles');
+        return $this->redirectToRoute('admin.articles');
     }
 }

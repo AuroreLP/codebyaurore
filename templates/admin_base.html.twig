@@ -35,7 +35,7 @@
     
                 <ul class="nav__menu">
                     <li class="nav__menu--item">
-                        <a class="{{ app.current_route == 'admin_articles' ? 'active' : ''}}" href="{{ path('admin_articles')}}">Liste des articles</a>
+                        <a class="{{ app.current_route == 'admin.articles' ? 'active' : ''}}" href="{{ path('admin.articles')}}">Liste des articles</a>
                     </li>
                     <li class="nav__menu--item">
                         {% if not app.user %}
@@ -47,9 +47,15 @@
                 </ul>
             </div>
         </nav>
-        <main>
+        <main class="dashboard">
             {% include 'partials/_flash_messages.html.twig' %}
-            {% block body %}{% endblock %}
+            {% include 'partials/_sidebar.html.twig' %}
+            <section class="content">
+                <div class="content__body">
+                  <!-- Contenu principal ici -->
+                  {% block body %}{% endblock %}
+                </div>
+            </section>
         </main>
         <footer class="footer">
             <div class="footer__container">
