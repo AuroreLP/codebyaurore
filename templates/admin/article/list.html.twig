@@ -12,7 +12,9 @@
         <table class="list">
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Titre</th>
+                    <th>Slug</th>
                     <th>Statut</th>
                     <th>Actions</th>
                 </tr>
@@ -20,7 +22,9 @@
             <tbody>
                 {% for article in articles %}
                 <tr>
+                    <td>{{ article.id }}</td>
                     <td>{{ article.title }}</td>
+                    <td>{{ article.slug }}</td>
                     <td>{{ article.status }}</td>
                     <td class="d-flex gap-1">
                         <a href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>

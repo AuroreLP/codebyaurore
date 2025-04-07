@@ -35,9 +35,6 @@
     
                 <ul class="nav__menu">
                     <li class="nav__menu--item">
-                        <a class="{{ app.current_route == 'admin.articles' ? 'active' : ''}}" href="{{ path('admin.articles')}}">Liste des articles</a>
-                    </li>
-                    <li class="nav__menu--item">
                         {% if not app.user %}
                             <a href="{{ path('app_login') }}">Connexion</a>
                         {% else %}
@@ -52,8 +49,8 @@
             {% include 'partials/_sidebar.html.twig' %}
             <section class="content">
                 <div class="content__body">
-                  <!-- Contenu principal ici -->
-                  {% block body %}{% endblock %}
+                    <!-- Contenu principal ici -->
+                    {% block body %}{% endblock %}
                 </div>
             </section>
         </main>

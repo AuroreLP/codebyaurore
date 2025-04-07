@@ -1,0 +1,22 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<div class="category-form">
+  <h1 class="category-form__title">{{ title }}</h1>
+
+  {{ form_start(form, {'attr': {'class': 'category-form__form'}}) }}
+    <div class="category-form__group">
+      {{ form_label(form.name, null, {'label_attr': {'class': 'category-form__label'}}) }}
+      {{ form_widget(form.name, {'attr': {'class': 'category-form__input'}}) }}
+      {{ form_errors(form.name) }}
+    </div>
+
+    <div class="category-form__actions">
+      <button type="submit" class="category-form__button category-form__button--submit">Enregistrer</button>
+      <a href="{{ path('admin.categories.index') }}" class="category-form__button category-form__button--back">Retour</a>
+    </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}
