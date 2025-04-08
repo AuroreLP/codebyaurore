@@ -2,8 +2,17 @@
 framework:
     secret: '%env(APP_SECRET)%'
 
+    # protection CSRF activée globalement
+    csrf_protection: true
+
     # Note that the session will be started ONLY if you read or write from it.
-    session: true
+        # Gestion des sessions
+    session:
+        handler_id: null
+        cookie_lifetime: 3600   # 1 heure
+        cookie_secure: auto     # Sécurisation du cookie selon l'environnement
+        cookie_httponly: true   # Empêche l'accès aux cookies depuis JavaScript
+
 
     #esi: true
     #fragments: true
@@ -12,6 +21,7 @@ framework:
 when@test:
     framework:
         test: true
+        csrf_protection: true
         session:
             handler_id: null
             storage_id: session.storage.native

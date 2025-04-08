@@ -2,49 +2,57 @@
 
 namespace App\Controller;
 
-use App\Form\ContactType;
+use App\Document\Message;
+use App\Form\MessageType;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'contact', methods: ['GET', 'POST'])]
-    public function contact(Request $request, MailerInterface $mailer): Response
+    private $documentManager;
+
+    public function __construct(DocumentManager $documentManager)
     {
-        // Création du formulaire
-        $form = $this->createForm(ContactType::class);
+        $this->documentManager = $documentManager;
+    }
+    
+    #[Route('/contact', name: 'contact')]
+    public function index(
+        Request $request,
+        MailerInterface $mailer,
+        DocumentManager $dm
+    ): Response {
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
-        // Traitement du formulaire après soumission
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            // Enregistrement dans MongoDB
+            $dm->persist($message);
+            $dm->flush();
 
-            // Création de l'email
-            $email = (new Email())
-                ->from($data['email']) 
-                ->to('aleperff@gmail.com')
-                ->subject('Nouveau message de ' . $data['firstname'] . ' ' . $data['lastname'])
-                ->html("
-                    <p><strong>Email :</strong> {$data['email']}</p>
-                    <p><strong>Téléphone :</strong> " . ($data['phone'] ?? 'Non renseigné') . "</p>
-                    <p><strong>Message :</strong><br>" . nl2br($data['message']) . "</p>
-                ");
+            // Envoi de l'e-mail
+            $email = (new TemplatedEmail())
+                ->from($message->getEmail())
+                ->to('aleperff@gmail.com') // L'adresse à laquelle tu reçois le mail
+                ->subject('Nouveau message de contact : ' . $message->getSubject())
+                ->htmlTemplate('emails/contact.html.twig')
+                ->context([
+                    'message' => $message,
+                ]);
 
-            // Envoi de l'email
             $mailer->send($email);
 
-            // Flash message pour informer l'utilisateur
-            $this->addFlash('success', 'Votre message a bien été envoyé !');
-
+            $this->addFlash('success', 'Votre message a été envoyé avec succès !');
             return $this->redirectToRoute('contact');
         }
 
-        // Passage du formulaire à la vue
-        return $this->render('main/contact/index.html.twig', [
+        return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -1,0 +1,17 @@
+doctrine_mongodb:
+    connections:
+        default:
+            server: '%env(resolve:MONGODB_URL)%'
+            options: {}
+
+    default_database: codebyaurore # ou autre nom que tu veux
+
+    document_managers:
+        default:
+            mappings:
+                App:
+                    type: attribute
+                    dir: '%kernel.project_dir%/src/Document'
+                    prefix: 'App\Document'
+                    is_bundle: false
+

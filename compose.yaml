@@ -8,6 +8,8 @@ services:
     volumes:
       - ./:/var/www/html
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
+    depends_on:
+      - mongodb
     networks:
       - codebyaurore
 ###> doctrine/doctrine-bundle ###
@@ -38,5 +40,16 @@ services:
     networks:
       - codebyaurore
 
+  mongodb:
+    image: mongo:6
+    container_name: codebyaurore_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  
+
 networks:
   codebyaurore:
+volumes:
+  mongo_data:
