@@ -17,6 +17,9 @@
             <p>{{ message }}</p>
         </div>
     {% endfor %}
+    {% for error in form.content.vars.errors %}
+    <div class="error">{{ error.message }}</div>
+    {% endfor %}
 
     {{ form_start(form) }}
 
@@ -50,12 +53,12 @@
                 {{ form_errors(form.subject) }}
             </div>
             <div class="group">
-                {{ form_label(form.message) }}
-                {{ form_widget(form.message) }}
-                {{ form_errors(form.message) }}
+                {{ form_label(form.content) }}
+                {{ form_widget(form.content) }}
+                {{ form_errors(form.content) }}
             </div>
         </div>
-        <button class="button">Envoyer</button>
+        <button type="submit" class="button">Envoyer</button>
     </div>
 
     {{ form_end(form) }}

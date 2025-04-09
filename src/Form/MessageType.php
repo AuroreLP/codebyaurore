@@ -18,12 +18,12 @@ class MessageType extends AbstractType
         $builder
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('subject', TextType::class)
-            ->add('content', TextareaType::class)
             ->add('phone', TelType::class, [
                 'required' => false,
-            ]);
+            ])
+            ->add('email', EmailType::class)
+            ->add('subject', TextType::class)
+            ->add('content', TextareaType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

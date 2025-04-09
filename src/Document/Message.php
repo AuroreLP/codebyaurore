@@ -12,8 +12,15 @@ class Message
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
+    #[Assert\NotBlank(message: 'Le prénom est requis.')]
+    private string $firstname;
+
+    #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'Le nom est requis.')]
-    private string $name;
+    private string $lastname;
+
+    #[MongoDB\Field(type: 'string', nullable: true)]
+    private ?string $phone = null;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'L\'adresse email est requise.')]
@@ -28,9 +35,6 @@ class Message
     #[Assert\NotBlank(message: 'Le message est requis.')]
     private string $content;
 
-    #[MongoDB\Field(type: 'string', nullable: true)]
-    private ?string $phone = null;
-
     #[MongoDB\Field(type: 'date')]
     private \DateTime $createdAt;
 
@@ -44,14 +48,37 @@ class Message
         return $this->id;
     }
 
-    public function getName(): string
+    public function getFirstname(): ?string
     {
-        return $this->name;
+        return $this->firstname;
     }
 
-    public function setName(string $name): self
+    public function setFirstname(string $firstname): self
     {
-        $this->name = $name;
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
         return $this;
     }
 
@@ -85,17 +112,6 @@ class Message
     public function setContent(string $content): self
     {
         $this->content = $content;
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): self
-    {
-        $this->phone = $phone;
         return $this;
     }
 

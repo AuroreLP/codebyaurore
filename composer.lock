@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f6e631356124af2fa725400c0fc0ed1",
+    "content-hash": "7e66891388122d2e7ffe4f6d62c5e00a",
     "packages": [
         {
             "name": "composer/semver",
@@ -1176,23 +1176,23 @@
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
-            "version": "5.2.1",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMongoDBBundle.git",
-                "reference": "e7510b4276232632c029d5015f0f250bfaddb748"
+                "reference": "e0a1b4342fb5f82abceef0098302b398ec2f67d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMongoDBBundle/zipball/e7510b4276232632c029d5015f0f250bfaddb748",
-                "reference": "e7510b4276232632c029d5015f0f250bfaddb748",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMongoDBBundle/zipball/e0a1b4342fb5f82abceef0098302b398ec2f67d7",
+                "reference": "e0a1b4342fb5f82abceef0098302b398ec2f67d7",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.0",
                 "doctrine/mongodb-odm": "^2.6",
-                "doctrine/persistence": "^3.0",
-                "ext-mongodb": "^1.16",
+                "doctrine/persistence": "^3.0 || ^4.0",
+                "ext-mongodb": "^1.16 || ^2",
                 "php": "^8.1",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "symfony/config": "^6.4 || ^7.0",
@@ -1256,9 +1256,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineMongoDBBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineMongoDBBundle/tree/5.2.1"
+                "source": "https://github.com/doctrine/DoctrineMongoDBBundle/tree/5.3.0"
             },
-            "time": "2025-03-21T14:35:28+00:00"
+            "time": "2025-04-08T16:32:24+00:00"
         },
         {
             "name": "doctrine/orm",

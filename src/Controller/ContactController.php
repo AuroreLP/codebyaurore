@@ -1,58 +1,72 @@
 <?php
 
+// src/Controller/ContactController.php
+
 namespace App\Controller;
 
 use App\Document\Message;
 use App\Form\MessageType;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Service\MongoDBMessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
-    private $documentManager;
+    private MongoDBMessageService $mongoDBMessageService;
+    private MailerInterface $mailer;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(MongoDBMessageService $mongoDBMessageService, MailerInterface $mailer)
     {
-        $this->documentManager = $documentManager;
+        $this->mongoDBMessageService = $mongoDBMessageService;
+        $this->mailer = $mailer;
     }
-    
+
     #[Route('/contact', name: 'contact')]
-    public function index(
-        Request $request,
-        MailerInterface $mailer,
-        DocumentManager $dm
-    ): Response {
+    public function contact(Request $request, MailerInterface $mailer): Response
+    {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Enregistrement dans MongoDB
-            $dm->persist($message);
-            $dm->flush();
 
-            // Envoi de l'e-mail
-            $email = (new TemplatedEmail())
+            // 1. Enregistrement en base MongoDB
+            $this->mongoDBMessageService->saveMessage(
+                $message->getLastname(),
+                $message->getFirstname(),
+                $message->getPhone(),
+                $message->getEmail(),
+                $message->getSubject(),
+                $message->getContent()
+            );
+
+            // 2. Envoi de l'e-mail via Mailer
+            $email = (new Email())
                 ->from($message->getEmail())
-                ->to('aleperff@gmail.com') // L'adresse à laquelle tu reçois le mail
-                ->subject('Nouveau message de contact : ' . $message->getSubject())
-                ->htmlTemplate('emails/contact.html.twig')
-                ->context([
-                    'message' => $message,
-                ]);
+                ->to('aleperff@gmail.com') // adresse de réceptio
+                ->subject('Nouveau message de contact')
+                ->text(
+                    "Nom : {$message->getLastname()} {$message->getFirstname()}\n" .
+                    "Email : {$message->getEmail()}\n" .
+                    "Téléphone : {$message->getPhone()}\n" .
+                    "Sujet : {$message->getSubject()}\n\n" .
+                    "Message : {$message->getContent()}"
+                );
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Votre message a été envoyé avec succès !');
+            // Afficher un message de confirmation (alt: utiliser des flash messages)
+            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+
+            // Rediriger ou afficher la page de contact
             return $this->redirectToRoute('contact');
         }
 
-        return $this->render('contact/index.html.twig', [
+        return $this->render('main/contact/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
