@@ -25,8 +25,8 @@ class ContactController extends AbstractController
         $this->mailer = $mailer;
     }
 
-    #[Route('/contact', name: 'contact')]
-    public function contact(Request $request, MailerInterface $mailer): Response
+    #[Route('/contact', name: 'contact', methods: ['GET', 'POST'])]
+    public function contact(Request $request): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -45,6 +45,7 @@ class ContactController extends AbstractController
             );
 
             // 2. Envoi de l'e-mail via Mailer
+
             $email = (new Email())
                 ->from($message->getEmail())
                 ->to('aleperff@gmail.com') // adresse de réceptio
@@ -57,7 +58,8 @@ class ContactController extends AbstractController
                     "Message : {$message->getContent()}"
                 );
 
-            $mailer->send($email);
+
+            $this->mailer->send($email);
 
             // Afficher un message de confirmation (alt: utiliser des flash messages)
             $this->addFlash('success', 'Votre message a été envoyé avec succès.');
@@ -70,4 +72,5 @@ class ContactController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

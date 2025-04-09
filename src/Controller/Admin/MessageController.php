@@ -16,9 +16,7 @@ class MessageController extends AbstractController
         $this->documentManager = $documentManager;
     }
 
-    /**
-     * @Route("/admin/messages", name="admin_messages")
-     */
+    #[Route('/admin/messages', name: 'admin.messages.index')]
     public function index()
     {
         // Récupérer tous les messages

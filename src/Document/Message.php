@@ -29,7 +29,7 @@ class Message
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'L\'objet est requis.')]
-    private string $subject;
+    private string $subject = '';
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'Le message est requis.')]
@@ -41,6 +41,7 @@ class Message
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->subject = ''; // Initialisation de la propriété subject
     }
 
     public function getId(): ?string

@@ -15,12 +15,14 @@ class MongoDBMessageService
     }
 
     // Enregistrer le message dans MongoDB
-    public function saveMessage($lastname, $firstname, $email, $content)
+    public function saveMessage($lastname, $firstname, $phone, $email, $subject, $content)
     {
         $messageDoc = new Message();
         $messageDoc->setLastname($lastname);
         $messageDoc->setFirstname($firstname);
+        $messageDoc->setPhone($phone);
         $messageDoc->setEmail($email);
+        $messageDoc->setSubject($subject);
         $messageDoc->setContent($content);
         $messageDoc->setCreatedAt(new \DateTime());
 
