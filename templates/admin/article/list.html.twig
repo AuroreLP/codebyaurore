@@ -7,9 +7,9 @@
     <section>
         <h1>Liste des articles</h1>
         <p>
-            <a class="button--secondary" href="{{ path('article.new')}}">Créer un article</a>
+            <a class="button--dark-green" href="{{ path('article.new')}}">Créer un article</a>
         </p>
-        <table class="list">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -27,13 +27,13 @@
                     <td>{{ article.slug }}</td>
                     <td>{{ article.status }}</td>
                     <td class="d-flex gap-1">
-                        <a href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>
+                        <a class="button--light-green" href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>
     
-                        <a href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
+                        <a class="button--light-green" href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
     
                         <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Supprimer</button>
+                            <button class="button--delete" type="submit">Supprimer</button>
                         </form>
                     </td>
                 </tr>

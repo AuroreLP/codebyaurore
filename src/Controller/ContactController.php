@@ -73,4 +73,23 @@ class ContactController extends AbstractController
         ]);
     }
 
+    #[Route('/test-email', name: 'test_email')]
+    public function testEmail(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('test@example.com')
+            ->to('aleperff@gmail.com') // remplace par ton adresse
+            ->subject('Test Mailtrap')
+            ->text('Ceci est un test simple')
+            ->html('<p>Mail HTML de test</p>');
+
+        try {
+            $mailer->send($email);
+            return new Response('Email envoyé avec succès');
+        } catch (\Throwable $e) {
+            return new Response('Erreur lors de l\'envoi de l\'email: ' . $e->getMessage());
+        }
+    }
+
+
 }

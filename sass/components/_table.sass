@@ -1,0 +1,61 @@
+@use "../abstracts/variables" as var
+@use "../components/button"
+
+    
+.table
+  width: 100%
+  border-collapse: collapse
+  margin-top: 30px
+  color: var.$white
+  border: solid 2px var.$dark-green
+  background-color: var.$dark-green
+  border-radius: 10px
+  box-shadow: 0 2px 5px var.$light-grey
+
+  thead
+    background-color: var.$white 
+    color: var.$dark-green
+    th
+      padding: 12px 15px
+      text-align: start
+      font-weight: bold
+      text-transform: uppercase
+      align-items: center
+
+  tbody
+    tr
+      &:nth-child(even)
+        background-color: var.$white
+        color: var.$dark-green
+      td
+        padding: 12px 15px
+        align-content: center
+
+      // Boutons dans les lignes paires (background-color: var.$white)
+    tr:nth-child(even) td .button
+      @extend .button
+      border: solid 2px var.$dark-green
+      color: var.$dark-green
+      background-color: transparent
+      &:hover
+        background-color: var.$light-green
+        color: var.$dark-green
+
+    // Boutons dans les lignes impaires (background-color: var.dark-green)
+    tr:nth-child(odd) td .button
+      background-color: var.$dark-green
+      color: var.$white
+      &:hover
+        background-color: var.$light-green
+        color: var.$dark-green
+
+
+  .d-flex
+    display: flex
+    gap: 10px
+    justify-content: center
+    align-items: center
+
+
+
+  

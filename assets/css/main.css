@@ -410,7 +410,7 @@ a {
   border-radius: 0.5rem;
   background-color: #fff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  color: #38d6c2;
+  color: #2b4743;
 }
 .contact__form .group input:focus,
 .contact__form .group textarea:focus,
@@ -636,65 +636,12 @@ body {
   margin-bottom: 20px;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: red;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.table thead {
-  background-color: #f4f4f4;
-  color: #333;
-}
-.table thead th {
-  padding: 12px 15px;
-  text-align: left;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-.table tbody tr td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-}
-.table .d-flex {
-  display: flex;
-  gap: 8px;
-}
-.table a {
-  color: #007bff;
-  text-decoration: none;
-  padding: 5px 10px;
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
-}
-.table a:hover {
-  background-color: #007bff;
-  color: white;
-}
-.table button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.table button:hover {
-  background-color: #c0392b;
-}
-
-.button, .button--secondary {
+.button, .table tbody tr:nth-child(even) td .button, .button--delete, .button--dark-green, .button--light-green {
   background-color: transparent;
   border: solid 2px #efe4d5;
   color: #efe4d5;
   border-radius: 0.5rem;
+  margin-top: 0.5rem;
   padding: 0.5rem 0.75rem;
   display: inline-flex;
   align-items: center;
@@ -702,16 +649,27 @@ body {
        column-gap: 0.5rem;
   cursor: pointer;
 }
-.button:hover, .button--secondary:hover {
+.button:hover, .table tbody tr:nth-child(even) td .button:hover, .button--delete:hover, .button--dark-green:hover, .button--light-green:hover {
   border: solid 2px #38d6c2;
   color: #38d6c2;
 }
-.button--secondary {
+.button--light-green {
   border: solid 2px #38d6c2;
+  color: #38d6c2;
   background-color: transparent;
 }
-.button--secondary:hover {
-  border: solid 2px #efe4d5;
+.button--light-green:hover {
+  background-color: #38d6c2;
+  color: #2b4743;
+}
+.button--dark-green {
+  border: solid 2px #2b4743;
+  color: #2b4743;
+  background-color: transparent;
+}
+.button--dark-green:hover {
+  background-color: #38d6c2;
+  color: #2b4743;
 }
 .button__icon {
   width: 1.25rem;
@@ -720,4 +678,67 @@ body {
 .button__label {
   font-weight: 400;
   font-size: 0.75;
+}
+.button--delete {
+  border: solid 2px #ea638c;
+  color: #ea638c;
+  background-color: transparent;
+}
+.button--delete:hover {
+  background-color: #ea638c;
+  color: #efe4d5;
+  border: #ea638c;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  color: #efe4d5;
+  border: solid 2px #2b4743;
+  background-color: #2b4743;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #d5d5d5;
+}
+.table thead {
+  background-color: #efe4d5;
+  color: #2b4743;
+}
+.table thead th {
+  padding: 12px 15px;
+  text-align: start;
+  font-weight: bold;
+  text-transform: uppercase;
+  align-items: center;
+}
+.table tbody tr:nth-child(even) {
+  background-color: #efe4d5;
+  color: #2b4743;
+}
+.table tbody tr td {
+  padding: 12px 15px;
+  align-content: center;
+}
+.table tbody tr:nth-child(even) td .button {
+  border: solid 2px #2b4743;
+  color: #2b4743;
+  background-color: transparent;
+}
+.table tbody tr:nth-child(even) td .button:hover {
+  background-color: #38d6c2;
+  color: #2b4743;
+}
+.table tbody tr:nth-child(odd) td .button {
+  background-color: #2b4743;
+  color: #efe4d5;
+}
+.table tbody tr:nth-child(odd) td .button:hover {
+  background-color: #38d6c2;
+  color: #2b4743;
+}
+.table .d-flex {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=main.css.map */

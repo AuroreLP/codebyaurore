@@ -49,7 +49,9 @@ COPY vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default.conf && \
     a2enmod rewrite
 
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install mongodb
+RUN docker-php-ext-enable mongodb
+
 
 # Définition du répertoire de travail
 WORKDIR /var/www/html

@@ -6,9 +6,9 @@
 <div class="tag-list">
   <h1 class="tag-list__title">{{ title }}</h1>
 
-  <a href="{{ path('admin.tags.new') }}" class="tag-list__add-button">+ Nouveau tag</a>
+  <a class="button--dark-green" href="{{ path('admin.tags.new') }}" class="tag-list__add-button">+ Nouveau tag</a>
 
-  <table class="tag-list__table">
+  <table class="table">
     <thead>
       <tr>
         <th>ID</th>
@@ -24,10 +24,10 @@
           <td>{{ tag.name }}</td>
           <td>{{ tag.slug }}</td>
           <td>
-            <a href="{{ path('admin.tags.edit', {id: tag.id}) }}">Modifier</a>
+            <a class="button--light-green" href="{{ path('admin.tags.edit', {id: tag.id}) }}">Modifier</a>
             <form method="post" action="{{ path('admin.tags.delete', {id: tag.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer ce tag ?');">
               <input type="hidden" name="_token" value="{{ csrf_token('delete_tag_' ~ tag.id) }}">
-              <button type="submit">Supprimer</button>
+              <button class="button--delete" type="submit">Supprimer</button>
             </form>
           </td>
         </tr>

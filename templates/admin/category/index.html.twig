@@ -10,35 +10,35 @@
     <div class="category-list__flash category-list__flash--success">{{ message }}</div>
   {% endfor %}
 
-  <a href="{{ path('admin.categories.new') }}" class="category-list__add-button">+ Ajouter une catégorie</a>
+  <a href="{{ path('admin.categories.new') }}" class="button--dark-green">+ Ajouter une catégorie</a>
 
-  <table class="category-list__table">
-    <thead class="category-list__thead">
-      <tr class="category-list__row">
-        <th class="category-list__cell category-list__cell--head">ID</th>
-        <th class="category-list__cell category-list__cell--head">Nom</th>
-        <th class="category-list__cell category-list__cell--head">Slug</th>
-        <th class="category-list__cell category-list__cell--head">Actions</th>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Slug</th>
+        <th>Actions</th>
       </tr>
     </thead>
-    <tbody class="category-list__tbody">
+    <tbody>
     {% for category in categories %}
-      <tr class="category-list__row">
-        <td class="category-list__cell">{{ category.id }}</td>
-        <td class="category-list__cell">{{ category.name }}</td>
-        <td class="category-list__cell">{{ category.slug }}</td>
-        <td class="category-list__cell">
-          <a href="{{ path('admin.categories.edit', {'id': category.id}) }}" class="category-list__action category-list__action--edit">Modifier</a>
+      <tr>
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.slug }}</td>
+        <td class="d-flex gap-1">
+          <a class="button--light-green" href="{{ path('admin.categories.edit', {'id': category.id}) }}">Modifier</a>
 
-          <form method="post" action="{{ path('admin.categories.delete', {'id': category.id}) }}" class="category-list__form" onsubmit="return confirm('Confirmer la suppression ?')">
+          <form method="post" action="{{ path('admin.categories.delete', {'id': category.id}) }}" onsubmit="return confirm('Confirmer la suppression ?')">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
-            <button class="category-list__action category-list__action--delete">Supprimer</button>
+            <button class="button--delete">Supprimer</button>
           </form>
         </td>
       </tr>
     {% else %}
-      <tr class="category-list__row">
-        <td class="category-list__cell" colspan="3">Aucune catégorie enregistrée.</td>
+      <tr>
+        <td colspan="3">Aucune catégorie enregistrée.</td>
       </tr>
     {% endfor %}
     </tbody>

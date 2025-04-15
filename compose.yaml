@@ -8,6 +8,8 @@ services:
     volumes:
       - ./:/var/www/html
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
+    env_file:
+      - .env.local
     depends_on:
       - mongodb
     networks:

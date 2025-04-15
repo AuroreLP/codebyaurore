@@ -333,7 +333,7 @@
   border-radius: 0.5rem;
   background-color: #fff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  color: #38d6c2;
+  color: #2b4743;
 }
 .contact__form .group input:focus,
 .contact__form .group textarea:focus,
