@@ -37,13 +37,13 @@
     
                 <ul class="nav__menu">
                     <li class="nav__menu--item">
-                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.current_route == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.current_route == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -57,10 +57,10 @@
                 <img class="footer__container-logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
                 <ul class="footer__list-links">
                     <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Mentions légales</a>
+                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('mentions_legales') }}">Mentions légales</a>
                     </li>
                     <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('article.index')}}">Politique de confidentialité</a>
+                        <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('politique_confidentialite') }}">Politique de confidentialité</a>
                     </li>
                 </ul>
             </div>
