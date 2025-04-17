@@ -77,11 +77,10 @@ class ContactController extends AbstractController
     public function testEmail(MailerInterface $mailer): Response
     {
         $email = (new Email())
-            ->from('test@example.com')
-            ->to('aleperff@gmail.com') // remplace par ton adresse
+            ->from('no-reply@mailtrap.club')
+            ->to('aleperff@yopmail.com') // remplace par ton adresse
             ->subject('Test Mailtrap')
-            ->text('Ceci est un test simple')
-            ->html('<p>Mail HTML de test</p>');
+            ->text('Ceci est un test simple');
 
         try {
             $mailer->send($email);

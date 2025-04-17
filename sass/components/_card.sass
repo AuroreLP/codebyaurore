@@ -1,0 +1,47 @@
+@use "../abstracts/variables" as var
+
+.page-view
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    min-height: 100vh
+    padding: 1rem
+
+.card-message
+    width: 100%
+    max-width: 600px
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1)
+    border-radius: 12px
+    overflow: hidden
+    background-color: var.$white
+
+    .card-header
+        background-color: var.$dark-green
+        color: var.$white
+        padding: 1rem
+        font-weight: bold
+
+        p
+            margin: 0
+        strong
+            display: block
+            margin-top: 0.5rem
+
+    .card-body
+        padding: 1.5rem
+
+        p
+            margin-bottom: 0.75rem
+
+        a
+            color: var.$dark-green
+            text-decoration: underline
+
+        .message-content
+            background-color: var.$white
+            border-radius: 8px
+            padding: 1rem
+            font-style: italic
+            white-space: pre-wrap
+

@@ -3,18 +3,23 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<div class="tag-form">
-  <h1 class="tag-form__title">{{ title }}</h1>
+<div class="form">
+  <h1>{{ title }}</h1>
 
   {{ form_start(form, {'attr': {'class': 'tag-form__form'}}) }}
     <div class="tag-form__group">
-      {{ form_label(form.name, null, {'label_attr': {'class': 'tag-form__label'}}) }}
-      {{ form_widget(form.name, {'attr': {'class': 'tag-form__input'}}) }}
+      {{ form_label(form.name, null, {'label_attr': {'class': 'label'}}) }}
+      {{ form_widget(form.name, {'attr': {'class': 'input'}}) }}
       {{ form_errors(form.name) }}
+    </div>
+    <div>
+      {{ form_label(form.slug, null, {'label_attr': {'class': 'label'}}) }}
+      {{ form_widget(form.slug, {'attr': {'class': 'input'}}) }}
+      {{ form_errors(form.slug) }}
     </div>
 
     <div class="tag-form__actions">
-      <button type="submit" class="tag-form__button tag-form__button--submit">Enregistrer</button>
+      <button type="submit" class="button--dark-green">Enregistrer</button>
       <a href="{{ path('admin.tags.index') }}" class="tag-form__button tag-form__button--back">Retour</a>
     </div>
   {{ form_end(form) }}

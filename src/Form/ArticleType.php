@@ -7,6 +7,7 @@ use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -47,10 +48,18 @@ class ArticleType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Choisir une catégorie'
             ])
-            ->add('published_at', DateTimeType::class, [
+            ->add('created_at', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de création',
+                'html5' => true,
+                'input' => 'datetime_immutable'
+            ])
+            ->add('published_at', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de publication',
-                'required' => false
+                'required' => false,
+                'html5' => true,
+                'input' => 'datetime_immutable'
             ])
             
             ->add('save', SubmitType::class, [

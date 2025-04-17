@@ -11,9 +11,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
             {% block importmap %}{{ importmap('app')}}{% endblock %}
         {% endblock %}
 
@@ -63,6 +65,7 @@
                 </ul>
             </div>
         </footer>
-        <script src="{{ asset('js/navbar.js') }}"></script>
+        <script src="{{ asset('build/app.js') }}"></script>
+
     </body>
 </html>

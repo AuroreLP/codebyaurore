@@ -1,0 +1,31 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Message | Code by Aurore{% endblock %}
+
+{% block body %}
+<div class="page-view">
+  <div class="card-message">
+    <div class="card-header">
+      <p>Date : {{ message.createdAt|date('d/m/Y à H:i') }}</p>
+      Sujet : {{ message.subject }}</strong>
+    </div>
+
+    <div class="card-body">
+      <p><strong>Nom :</strong> {{ message.lastname }}</p>
+      <p><strong>Prénom :</strong> {{ message.firstname }}</p>
+      <p><strong>Téléphone :</strong> {{ message.phone }}</p>
+      <p><strong>Email :</strong> <a href="mailto:{{ message.email }}">{{ message.email }}</a></p>
+      <hr>
+      <p><strong>Contenu du message :</strong></p>
+      <div class="message-content">
+        {{ message.content|nl2br }}
+      </div>
+    </div>
+  </div>
+
+  <div class="return-button">
+    <a class="button--dark-green" href="{{ path('admin.messages.index') }}">← Retour à la liste des messages</a>
+  </div>
+</div>
+{% endblock %}
+
