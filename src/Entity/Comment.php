@@ -22,6 +22,9 @@ class Comment
     #[ORM\Column(type: 'text')]
     private string $comment;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $status;
+
     #[ORM\Column]
     private \DateTimeImmutable $publishedAt;
 
@@ -35,6 +38,7 @@ class Comment
     public function __construct()
     {
         $this->publishedAt = new \DateTimeImmutable();
+        $this->status = 'en attente';
     }
 
     public function getId(): ?int
@@ -72,6 +76,18 @@ class Comment
     public function setComment(string $comment): self
     {
         $this->comment = $comment;
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
         return $this;
     }
 

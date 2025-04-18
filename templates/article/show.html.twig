@@ -23,14 +23,18 @@
     <!-- affichage des commentaires -->
     <h3>Commentaires</h3>
 
-    {% for comment in article.comments %}
+    {% for existingComment in article.comments %}
         <div>
-            <p>{{ comment.comment }}</p>
-            <small>Posté le {{ comment.publishedAt|date('d/m/Y H:i') }}</small>
-    
-            <a href="{{ path('comment.edit', {id: comment.id}) }}">Modifier</a>
-            <form action="{{ path('comment.delete', {id: comment.id}) }}" method="POST">
-                <button type="submit">Supprimer</button>
+            <p>{{ existingComment.comment }}</p>
+            <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username}}</small>
+            
+            <!-- Afficher le formulaire de modification -->
+            <a class="button--dark-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
+
+            <!-- Afficher le formulaire de suppression -->
+            <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
+                {{ form_row(delete_forms[existingComment.id]._token) }}
+                <button class="button--delete" type="submit">Supprimer</button>
             </form>
         </div>
         {% else %}
@@ -40,6 +44,8 @@
     <h3>Ajouter un commentaire</h3>
     <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
         {{ form_start(form) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
             {{ form_row(form.comment) }}
             <button type="submit">Envoyer</button>
         {{ form_end(form) }}
