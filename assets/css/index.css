@@ -462,19 +462,19 @@
     position: static;
     box-shadow: unset;
   }
-  .nav__menu .nav__menu--item {
+  .nav__menu--item {
     display: inline-block;
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     line-height: 44px;
   }
-  .nav__menu .nav__menu--item:hover {
+  .nav__menu--item:hover {
     border-top: 3px solid #38d6c2;
     border-bottom: 3px solid #38d6c2;
     font-weight: 700;
     color: #2b4743;
   }
-  .nav__menu .nav__menu--item .nav__menu--item a.active {
+  .nav__menu--item .nav__menu--item a.active {
     border-top: 3px solid #38d6c2;
     border-bottom: 3px solid #38d6c2;
     font-weight: 700;

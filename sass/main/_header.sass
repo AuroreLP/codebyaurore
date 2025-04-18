@@ -2,7 +2,7 @@
 @use "../abstracts/functions" as fct
 
 .nav
-    background-color: var.$white
+    background-color: var.$background-color
     box-shadow: 0 2px 2px var.$light-grey
     position: relative
     z-index: 2
@@ -14,7 +14,7 @@
         padding: fct.rem(10)
         margin: 0 fct.rem(20)
         height: fct.rem(70)
-    
+
     &__burger
         cursor: pointer
 
@@ -39,52 +39,50 @@
                 font-weight: 600
 
 
-@media screen and (min-width: 768px) 
+@media screen and (min-width: 768px)
     .nav__container
         max-width: 748px
         margin: auto
 
     .nav__burger
         display: none
-            
+
     .nav__menu
         display: initial
         position: static
         box-shadow: unset
 
-        .nav__menu--item
-            display: inline-block
-            border-top: 2px solid transparent
-            border-bottom: 2px solid transparent
-            line-height: 44px
+    .nav__menu--item
+        display: inline-block
+        border-top: 2px solid transparent
+        border-bottom: 2px solid transparent
+        line-height: 44px
 
-            &:hover
-                border-top: 3px solid var.$light-green
-                border-bottom: 3px solid var.$light-green
-                font-weight: 700
-                color: var.$dark-green
-                
-            .nav__menu--item a.active
-                border-top: 3px solid var.$light-green
-                border-bottom: 3px solid var.$light-green
-                font-weight: 700
-                color: var.$dark-green
-                    
+        &:hover
+            border-top: 3px solid var.$light-green
+            border-bottom: 3px solid var.$light-green
+            font-weight: 700
+            color: var.$dark-green
+
+        .nav__menu--item a.active
+            border-top: 3px solid var.$light-green
+            border-bottom: 3px solid var.$light-green
+            font-weight: 700
+            color: var.$dark-green
 
 
-@media screen and (min-width: 992px) 
-    .nav__container
-        max-width: 972px
+@media screen and (min-width: 992px)
+  .nav__container
+    max-width: 972px
 
-@media screen and (min-width: 1200px) 
-    .nav__container
-        max-width: 1180px
+@media screen and (min-width: 1200px)
+  .nav__container
+    max-width: 1180px
 
-@media screen and (min-width: 1500px) 
-    .nav__container
-        max-width: 1480px
+@media screen and (min-width: 1500px)
+  .nav__container
+    max-width: 1480px
 
-@media screen and (min-width: 1900px) 
-    .nav__container
-        max-width: 1880px
-
+@media screen and (min-width: 1900px)
+  .nav__container
+    max-width: 1880px
