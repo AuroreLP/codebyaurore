@@ -1,7 +1,9 @@
 
 services:
   www:
-    build: docker/php
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: codebyaurore_php
     ports:
       - 8080:80

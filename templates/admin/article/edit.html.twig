@@ -12,10 +12,11 @@
 
          {{ form_row(form.title) }}
          {{ form_row(form.slug) }}
+         {{ form_widget(form.created_at, {'attr': {'class': 'input datepicker'}}) }}
          {{ form_row(form.category) }}
          {{ form_row(form.metaDescription) }}
          {{ form_row(form.content) }}
-         {{ form_row(form.published_at) }}
+         {{ form_widget(form.published_at, {'attr': {'class': 'input datepicker'}}) }}
          {{ form_row(form.save, { 'label': 'Modifier l\'article' }) }}
 
          {{ form_row(form._token) }}

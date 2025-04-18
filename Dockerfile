@@ -5,24 +5,26 @@ FROM php:8.4-apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Installation des dépendances système et extensions PHP nécessaires
-RUN apt-get update \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && apt-get install -qq -y --no-install-recommends \
-    cron \
-    locales \
-    coreutils \
-    apt-utils \
-    git \
-    libicu-dev \
-    g++ \
-    libpng-dev \
-    libxml2-dev \
-    libzip-dev \
-    libonig-dev \
-    libxslt-dev && \
+        cron \
+        locales \
+        coreutils \
+        apt-utils \
+        git \
+        libicu-dev \
+        g++ \
+        libpng-dev \
+        libxml2-dev \
+        libzip-dev \
+        libonig-dev \
+        libxslt-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Configuration de la langue et génération des locales
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
 # Installation de Composer
@@ -42,18 +44,32 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions amqp
 
-# Ajout du fichier vhost.conf dans le conteneur et activation du VirtualHost
-COPY vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
+# Installation de MongoDB via PECL
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-# Activation des sites et modules Apache nécessaires
-RUN a2ensite 000-default.conf && \
-    a2enmod rewrite
-
-RUN pecl install mongodb
-RUN docker-php-ext-enable mongodb
-
+# Installer Node.js et npm (ajoute cette étape avant "RUN npm install")
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Définition du répertoire de travail
 WORKDIR /var/www/html
+
+# Copier les fichiers nécessaires pour npm install
+COPY package*.json ./
+
+# Installation des dépendances Node.js
+RUN npm install
+
+# Copie tout le reste
+COPY . .
+
+
+# Copie et activation du VirtualHost Apache
+COPY docker/php/vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
+RUN a2ensite 000-default.conf && \
+    a2enmod rewrite
+
 
 
