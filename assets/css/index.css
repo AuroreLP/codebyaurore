@@ -129,6 +129,7 @@
   font-size: 1rem;
   color: #2b4743;
   margin-bottom: 0.9375rem;
+  justify-content: start;
 }
 .main__projects .js-home-project-tags-container {
   display: flex;
