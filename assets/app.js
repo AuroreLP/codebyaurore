@@ -2,6 +2,8 @@ import './bootstrap.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import './navbar.js';
+
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -12,8 +14,11 @@ import './navbar.js';
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 document.addEventListener('DOMContentLoaded', () => {
-    flatpickr('.flatpickr-date', {
+    flatpickr('.datepicker', {
       dateFormat: 'd/m/Y',
       allowInput: true
     })
   });
+
+
+

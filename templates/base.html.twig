@@ -64,7 +64,13 @@
                 </ul>
             </div>
         </footer>
+        <!-- Inclusion du CDN d'Octokit -->
+        <script src="https://cdn.jsdelivr.net/npm/@octokit/core@3.0.0/dist/index.min.js"></script>
+
+        <!-- Script JavaScript principal (compilé avec Webpack) -->
         <script src="{{ asset('build/app.js') }}"></script>
 
+        <!-- Script JavaScript personnalisé -->
+        <script type="module" src="{{ asset('js/modules/About.js') }}"></script>
     </body>
 </html>
