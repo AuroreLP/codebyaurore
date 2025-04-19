@@ -37,7 +37,7 @@
              </div>
              <div class="tag-form__group">
                {{ form_label(form.content, null, {'label_attr': {'class': 'label'}}) }}
-               {{ form_widget(form.content, {'attr': {'class': 'textarea'}}) }}
+               {{ form_widget(form.content, {'attr': {'class': 'textarea editor'}}) }}
                {{ form_errors(form.content) }}
              </div>
              {{ form_row(form.save, {
@@ -50,5 +50,17 @@
      </form>
 
    </div>
+
+   <!-- CDN pour CKEditor -->
+   <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+   <script>
+      // Initialiser CKEditor sur le champ de contenu
+      ClassicEditor
+          .create(document.querySelector('.editor'))
+          .catch(error => {
+              console.error(error);
+          });
+  </script>
 
 {% endblock %}

@@ -1,3 +1,5 @@
+@use "../abstracts/variables" as var
+  
 .dashboard-grid
   display: flex
   flex-direction: column
@@ -12,7 +14,7 @@
   margin-bottom: 2rem
 
 .stat-widget
-  background-color: #e9ecef
+  background-color: rgba(var.$light-green, 0.5)
   padding: 1rem
   text-align: center
   border-radius: 0.5rem
@@ -24,7 +26,7 @@
 .stat-number
   font-size: 2.5rem
   font-weight: bold
-  color: #007bff
+  color: var.$dark-green
 
 .stat-label
   margin-top: 0.5rem
@@ -53,13 +55,13 @@
   border-radius: 20px
 
 .badge--validated
-  background-color: #28a745  // Vert
+  background-color: var.$light-green
   color: white
   padding: 5px 10px
   border-radius: 20px
 
 .badge--refused
-  background-color: #dc3545  // Rouge
+  background-color: var.$pink
   color: white
   padding: 5px 10px
   border-radius: 20px

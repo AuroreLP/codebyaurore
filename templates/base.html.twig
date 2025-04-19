@@ -37,13 +37,13 @@
     
                 <ul class="nav__menu">
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
                     </li>
             </div>
         </nav>
@@ -72,5 +72,6 @@
 
         <!-- Script JavaScript personnalisé -->
         <script type="module" src="{{ asset('js/modules/About.js') }}"></script>
+
     </body>
 </html>
