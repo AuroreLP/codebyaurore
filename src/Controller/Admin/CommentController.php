@@ -31,7 +31,20 @@ final class CommentController extends AbstractController
             $this->addFlash('success', 'Commentaire validé.');
         }
 
-        return $this->redirectToRoute('admin.comments');
+        return $this->redirectToRoute('admin.comments.index');
+    }
+
+    #[Route('/admin/comment/{id}/refuse', name: 'admin.comment.refuse')]
+    public function refuse(Comment $comment, EntityManagerInterface $em): RedirectResponse
+    {
+        if ($comment->getStatus() !== 'refusé') {
+            $comment->setStatus('refusé');
+            $comment->setToken(null); // tu peux garder ça si tu utilises un token de modération
+            $em->flush();
+            $this->addFlash('success', 'Commentaire refusé.');
+        }
+
+        return $this->redirectToRoute('admin.comments.index');
     }
 
     #[Route('/admin/comment/{id}/delete', name: 'admin.comment.delete', methods: ['POST'])]

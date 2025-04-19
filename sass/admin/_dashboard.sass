@@ -1,60 +1,86 @@
-@use "../abstracts/variables" as var
-@use "../abstracts/mixins" as mixin
-@use "../abstracts/functions" as fct
-
-body
-  font-family: var.$font-family
-  margin: 0
-  padding: 0
-  background-color: var.$content-bg
-
-.dashboard
+.dashboard-grid
   display: flex
-  min-height: 100vh
+  flex-direction: column
+  gap: 1rem
+  margin-top: 1rem
+  
+.admin-dashboard-title
+  font-size: 2rem
+  margin-bottom: 1rem
 
-  .sidebar
-    width: 200px
-    background-color: var.$sidebar-bg
-    color: white
-    display: flex
-    flex-direction: column
-    align-items: center
-    padding: 20px
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1)
-    outline: red
+.dashboard-section
+  margin-bottom: 2rem
 
-    &__nav
-      width: 100%
+.stat-widget
+  background-color: #e9ecef
+  padding: 1rem
+  text-align: center
+  border-radius: 0.5rem
+  flex: 1
+  display: flex
+  flex-direction: column
+  justify-content: center
 
-      ul
-        list-style: none
-        padding: 0
-        margin: 0
+.stat-number
+  font-size: 2.5rem
+  font-weight: bold
+  color: #007bff
 
-      li
-        width: 100%
-        margin: 10px 0
-        gap: 10px
+.stat-label
+  margin-top: 0.5rem
+  font-size: 1rem
+  color: #6c757d
 
-        a
-          display: block
-          padding: 10px
-          color: white
-          text-decoration: none
-          border-radius: 5px
-          transition: background-color 0.3s
+.dashboard-table
+  width: 100%
+  border-collapse: collapse
 
-          &:hover
-            background-color: darken(var.$sidebar-bg, 10%)
+  th, td
+    padding: 10px
+    text-align: left
+    border-bottom: 1px solid #ccc
 
-          &.active
-            background-color: var.$active-link-color
+  th
+    background-color: #f8f8f8
 
-  // Content styles
-  .content
-    flex-grow: 1
-    background-color: var.$content-bg
-    padding: 20px
+  tr:hover
+    background-color: #f9f9f9
 
-    .content__header
-      margin-bottom: 20px
+.badge--pending
+  background-color: #ffc107  // Jaune
+  color: white
+  padding: 5px 10px
+  border-radius: 20px
+
+.badge--validated
+  background-color: #28a745  // Vert
+  color: white
+  padding: 5px 10px
+  border-radius: 20px
+
+.badge--refused
+  background-color: #dc3545  // Rouge
+  color: white
+  padding: 5px 10px
+  border-radius: 20px
+
+.btn--validate
+  background-color: #28a745
+  color: white
+  padding: 5px 10px
+  text-decoration: none
+  border-radius: 5px
+
+.btn--refuse
+  background-color: #dc3545
+  color: white
+  padding: 5px 10px
+  text-decoration: none
+  border-radius: 5px
+
+
+/* Desktop : côte à côte */
+@media (min-width: 768px)
+  .dashboard-grid
+    flex-direction: row
+    align-items: stretch

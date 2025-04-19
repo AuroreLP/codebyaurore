@@ -20,11 +20,12 @@
     &--light-green
         @extend .button
         border: solid 2px var.$light-green
-        color: var.$light-green
-        background-color: transparent
+        background-color: var.$light-green
+        color: var.$dark-green
+        
         &:hover
-            background-color: var.$light-green
-            color: var.$dark-green
+            color: var.$light-green
+            background-color: transparent
 
     &--dark-green
         @extend .button
@@ -45,9 +46,9 @@
     &--delete
         @extend .button
         border: solid 2px var.$pink
-        color: var.$pink
-        background-color: transparent
+        background-color: var.$pink
+        color: var.$white
         &:hover
-            background-color: var.$pink
-            color: var.$white
-            border: var.$pink
+            color: var.$pink
+            background-color: transparent
+            border: solid 2px var.$pink

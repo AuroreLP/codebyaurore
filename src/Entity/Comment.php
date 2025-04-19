@@ -91,6 +91,18 @@ class Comment
         return $this;
     }
 
+    public function validate(): self
+    {
+        $this->status = 'validé';
+        return $this;
+    }
+
+    public function refuse(): self
+    {
+        $this->status = 'refusé';
+        return $this;
+    }
+
     public function getPublishedAt(): \DateTimeImmutable
     {
         return $this->publishedAt;

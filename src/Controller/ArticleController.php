@@ -55,7 +55,7 @@ class ArticleController extends AbstractController
     #[Route('/admin/articles', name: 'admin.articles')]
     public function list(EntityManagerInterface $entityManager): Response
     {
-        $articles = $entityManager->getRepository(Article::class)->findBy([], ['created_at' => 'DESC']);
+        $articles = $entityManager->getRepository(Article::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('admin/article/list.html.twig', [
             'articles' => $articles,
