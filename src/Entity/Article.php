@@ -26,10 +26,10 @@ class Article
     private ?string $slug = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $published_at = null;
+    private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::TEXT, length: 160, nullable: true)]
     private ?string $meta_description = null;
@@ -58,14 +58,14 @@ class Article
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->created_at = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        if (!$this->created_at) {
-            $this->created_at = new \DateTimeImmutable();
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTimeImmutable();
         }
     }
 
@@ -118,19 +118,19 @@ class Article
 
     public function getPublishedAt(): ?\DateTimeImmutable
     {
-        return $this->published_at;
+        return $this->publishedAt;
     }
 
-    public function setPublishedAt(?\DateTimeImmutable $published_at): static
+    public function setPublishedAt(?\DateTimeImmutable $publishedAt): static
     {
-        $this->published_at = $published_at;
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     public function getMetaDescription(): ?string

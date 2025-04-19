@@ -48,12 +48,6 @@ class ArticleType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Choisir une catégorie'
             ])
-            ->add('created_at', DateType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de création',
-                'html5' => true,
-                'input' => 'datetime_immutable'
-            ])
             ->add('published_at', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de publication',

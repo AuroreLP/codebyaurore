@@ -36,7 +36,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
-    public function show(Request $request, string $slug, ArticleRepository $repository, EntityManagerInterface $em): Response
+    public function show(Request $request, string $slug, ArticleRepository $repository): Response
     {
         $article = $repository->findOneBy(['slug' => $slug]);
 
@@ -44,25 +44,9 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException('Article non trouvé');
         }
 
-            // Création d'un nouveau commentaire
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setArticle($article);
-            $comment->setPublishedAt(new \DateTimeImmutable());
-
-            $em->persist($comment);
-            $em->flush();
-
-            $this->addFlash('success', 'Votre commentaire a été ajouté !');
-            return $this->redirectToRoute('article.show', ['slug' => $slug]);
-        }
-
+        // Afficher l'article sans gérer le formulaire de commentaire ici
         return $this->render('article/show.html.twig', [
             'article' => $article,
-            'form' => $form->createView() // Passer le formulaire à Twig
         ]);
     }
 
@@ -71,7 +55,7 @@ class ArticleController extends AbstractController
     #[Route('/admin/articles', name: 'admin.articles')]
     public function list(EntityManagerInterface $entityManager): Response
     {
-        $articles = $entityManager->getRepository(Article::class)->findBy([], ['created_at' => 'DESC']);
+        $articles = $entityManager->getRepository(Article::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('admin/article/list.html.twig', [
             'articles' => $articles,
