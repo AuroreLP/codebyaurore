@@ -73,6 +73,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             // Gestion automatique du slug s'il est vide
             if (!$article->getSlug()) {
                 $article->setSlug(strtolower($slugger->slug($article->getTitle())));
@@ -82,18 +83,19 @@ class ArticleController extends AbstractController
                 $article->setPublishedAt(new \DateTimeImmutable());
             }
 
-            $article->setStatus('DRAFT');
+            $article->setStatus(Article::STATUS_DRAFT);
 
             $em->persist($article);
             $em->flush();
 
             $this->addFlash('success', 'Article créé avec succès !');
 
-            return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);
+            /*return $this->redirectToRoute('article.show', ['slug' => $article->getSlug()]);*/
+            return $this->redirectToRoute('admin.articles');
         }
 
         return $this->render('admin/article/new.html.twig', [
-            'form' => $form
+            'form' => $form->createView(),
         ]);
     }
 
