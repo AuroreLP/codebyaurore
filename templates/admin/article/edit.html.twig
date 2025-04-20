@@ -6,23 +6,69 @@
 
       {{ include('partials/_flash_messages.html.twig') }}
 
-      <form method="post" action="{{ path('article.edit', {id: article.id}) }}">
+      <form class="form form--article" method="post" action="{{ path('article.edit', {id: article.id}) }}">
 
          {{ form_start(form) }}
 
-         {{ form_row(form.title) }}
-         {{ form_row(form.slug) }}
-         {{ form_row(form.category) }}
-         {{ form_row(form.metaDescription) }}
-         {{ form_row(form.content) }}
-         {{ form_widget(form.published_at, {'attr': {'class': 'input datepicker'}}) }}
-         {{ form_row(form.save, { 'label': 'Modifier l\'article' }) }}
-
-         {{ form_row(form._token) }}
+             <div class="tag-form__group">
+               {{ form_label(form.title, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.title, {'attr': {'class': 'input'}}) }}
+               {{ form_errors(form.title) }}
+             </div>
+             <div>
+               {{ form_label(form.slug, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.slug, {'attr': {'class': 'input'}}) }}
+               {{ form_errors(form.slug) }}
+             </div>
+             <div>
+               {{ form_label(form.category, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.category, {'attr': {'class': 'select'}}) }}
+               {{ form_errors(form.category) }}
+             </div>
+             <div class="tag-form__group">
+               {{ form_label(form.publishedAt, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.publishedAt, {'attr': {'class': 'input datepicker'}}) }}
+               {{ form_errors(form.publishedAt) }}
+             </div>
+             <div class="tag-form__group">
+               {{ form_label(form.metaDescription, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.metaDescription, {'attr': {'class': 'input'}}) }}
+               {{ form_errors(form.metaDescription) }}
+             </div>
+             <div class="tag-form__group">
+               {{ form_label(form.content, null, {'label_attr': {'class': 'label'}}) }}
+               {{ form_widget(form.content, {'attr': {'class': 'textarea editor'}}) }}
+               {{ form_errors(form.content) }}
+             </div>
+             {{ form_row(form.save, {
+               'label': 'Modifier l\'article',
+               'attr': {'class': 'button--dark-green'}
+             }) }}
+             {{ form_row(form._token) }}
 
          {{ form_end(form) }}
-
-      </form>
+     </form>
 
    </div>
+
+   <!-- CDN pour CKEditor -->
+   <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+   <script>
+    ClassicEditor
+        .create(document.querySelector('.editor'))
+        .then(editor => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', (event) => {
+                // Avant la soumission du formulaire, synchroniser CKEditor avec le champ textarea
+                const contentField = document.querySelector('textarea[name="article[content]"]');
+                contentField.value = editor.getData();
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+   </script>
+
+
 {% endblock %}

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -522,6 +523,7 @@ a {
 }
 .nav__menu--item {
   padding: 0.625rem 1.25rem;
+  color: #2b4743;
 }
 .nav__menu--item:hover {
   color: #38d6c2;
@@ -578,6 +580,89 @@ a {
 @media screen and (min-width: 1900px) {
   .nav__container {
     max-width: 1880px;
+  }
+}
+.article-page {
+  width: 90%;
+  max-width: 70%;
+  margin: 2.5rem auto;
+  padding: 1rem;
+}
+.article-page article {
+  margin-bottom: 3rem;
+}
+.article-page article h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.article-page article h3 {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.article-page .article-content {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.article-page .article-content p {
+  margin-bottom: 1rem;
+}
+.article-page .article-content h3 {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+}
+.article-page .article-content p {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.article-page .comments-section {
+  border-top: 1px solid #ccc;
+  padding-top: 2rem;
+}
+.article-page .comments-section h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+.article-page .comments-section .comment {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.article-page .comments-section .comment p {
+  margin-bottom: 0.5rem;
+}
+.article-page .comments-section .comment small {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+}
+.article-page .comments-section .comment form {
+  margin-top: 0.5rem;
+}
+.article-page .comments-section .comment form button {
+  display: flex;
+  flex-direction: column;
+}
+.article-page .comments-section .comment form button a.button--dark-green, .article-page .comments-section .comment form button form {
+  margin-bottom: 10px;
+}
+.article-page .comments-section .comment-separator {
+  margin: 2rem 0;
+  border: none;
+  border-top: 2px dashed #ccc;
+}
+.article-page .comments-section .add-comment-form {
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .comment-buttons {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 body {
@@ -691,6 +776,105 @@ body {
   font-style: italic;
 }
 
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-dashboard-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+}
+
+.stat-widget {
+  background-color: rgba(56, 214, 194, 0.5);
+  padding: 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2b4743;
+}
+
+.stat-label {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.dashboard-table th, .dashboard-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+.dashboard-table th {
+  background-color: #f8f8f8;
+}
+.dashboard-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.badge--pending {
+  background-color: #ffc107;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.badge--validated {
+  background-color: #38d6c2;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.badge--refused {
+  background-color: #ea638c;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.btn--validate {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn--refuse {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Desktop : côte à côte */
+@media (min-width: 768px) {
+  .dashboard-grid {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
 .button, .table tbody tr:nth-child(even) td .button, .button--delete, .button--dark-green, .button--light-green {
   background-color: transparent;
   border: solid 2px #efe4d5;
@@ -822,6 +1006,9 @@ body {
   border-color: #38d6c2;
   outline: none;
 }
+.form .form--article {
+  max-width: 90%;
+}
 @media (min-width: 768px) {
   .form {
     padding: 3rem;
@@ -829,7 +1016,7 @@ body {
 }
 @media (min-width: 1024px) {
   .form {
-    max-width: 500px;
+    max-width: 90%;
   }
 }
 
@@ -888,4 +1075,13 @@ a {
 }
 a:hover {
   font-weight: bold;
+}
+
+.a-nav {
+  color: #2b4743;
+  cursor: pointer;
+}
+.a-nav:hover {
+  font-weight: bold;
+  color: #2b4743;
 }/*# sourceMappingURL=main.css.map */

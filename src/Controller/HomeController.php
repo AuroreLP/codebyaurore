@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     public function index(ArticleRepository $repository, EntityManagerInterface $em): Response
     {
         // $articles = $repository->findAll(); test:
-        $articles = $repository->findBy([], ['published_at' => 'DESC']);
+        $articles = $repository->findBy([], ['publishedAt' => 'DESC']);
 
         // Récupérer toutes les catégories et tous les tags
         $categories = $em->getRepository(Category::class)->findAll();

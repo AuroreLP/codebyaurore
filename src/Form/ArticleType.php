@@ -40,6 +40,7 @@ class ArticleType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
+                'required' => false, // <--- empêche le blocage avec CKEditor
                 'attr' => ['placeholder' => 'Écrivez votre article ici...']
             ])
             ->add('category', EntityType::class, [
@@ -48,7 +49,7 @@ class ArticleType extends AbstractType
                 'label' => 'Catégorie',
                 'placeholder' => 'Choisir une catégorie'
             ])
-            ->add('published_at', DateType::class, [
+            ->add('publishedAt', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de publication',
                 'required' => false,

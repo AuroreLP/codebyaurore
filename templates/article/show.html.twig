@@ -4,53 +4,70 @@
 
 {% block body %}
 
-<article>
+<div class="article-page">
+    <article>
 
-    <h2>{{ article.title }}</h2>
-    <h3>{{ article.category.name }}</h3>
+        <h2>{{ article.title }}</h2>
+        <h3>{{ article.category.name }}</h3>
+    
+        <div class="article-content">{{ article.content | raw }}</div>
+    
+        {% if article.publishedAt %}
+            <p>Article publié le {{ article.publishedAt | date("d.m.y") }}</p>
+        {% else  %}
+            <p>{{ article.status }}</p>
+        {% endif  %}
+    
+    </article>
+    
+    <div class="comments-section">
+        <h3>Commentaires</h3>
+    
+        {% for existingComment in comments %}
+            <div class="comment">
+                <p>{{ existingComment.comment }}</p>
+                <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username }}</small>
+                <div>
+                    <a class="button--dark-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
 
-    <p>{{ article.content | nl2br }}</p>
-
-    {% if article.publishedAt %}
-        <p>Article publié le {{ article.publishedAt | date("d.m.y") }}</p>
-    {% else  %}
-        <p>{{ article.status }}</p>
-    {% endif  %}
-
-</article>
-
-<div>
-    <!-- affichage des commentaires -->
-    <h3>Commentaires</h3>
-
-    {% for existingComment in article.comments %}
-        <div>
-            <p>{{ existingComment.comment }}</p>
-            <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username}}</small>
-            
-            <!-- Afficher le formulaire de modification -->
-            <a class="button--dark-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
-
-            <!-- Afficher le formulaire de suppression -->
-            <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
-                {{ form_row(delete_forms[existingComment.id]._token) }}
-                <button class="button--delete" type="submit">Supprimer</button>
+                    <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
+                        {{ form_row(delete_forms[existingComment.id]._token) }}
+                        <button class="button--delete" type="submit">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun commentaire pour cet article.</p>
+        {% endfor %}
+    
+        <hr class="comment-separator">
+    
+        <h3>Ajouter un commentaire</h3>
+        <div class="add-comment-form">
+            <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
+                {{ form_start(form) }}
+                    <div>
+                        {{ form_label(form.username, null, {'label_attr': {'class': 'label'}}) }}
+                        {{ form_widget(form.username, {'attr': {'class': 'input'}}) }}
+                        {{ form_errors(form.username) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'input'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.comment, null, {'label_attr': {'class': 'label'}}) }}
+                        {{ form_widget(form.comment, {'attr': {'class': 'input'}}) }}
+                        {{ form_errors(form.comment) }}
+                    </div>
+    
+                    <button class="button--dark-green" type="submit">Envoyer</button>
+                {{ form_end(form) }}
             </form>
         </div>
-        {% else %}
-        <p>Aucun commentaire pour cet article.</p>
-    {% endfor %}
+    </div>
     
-    <h3>Ajouter un commentaire</h3>
-    <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
-        {{ form_start(form) }}
-            {{ form_row(form.username) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.comment) }}
-            <button type="submit">Envoyer</button>
-        {{ form_end(form) }}
-    </form>
-
 </div>
 
 {% endblock %}

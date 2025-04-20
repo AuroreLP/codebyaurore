@@ -17,18 +17,35 @@ final class AdminController extends AbstractController
     public function index(EntityManagerInterface $em, DocumentManager $dm): Response
     {
         // Récupérer les derniers articles publiés
-        $articles = $em->getRepository(Article::class)->findBy([], ['publishedAt' => 'DESC'], 5);
+        $articles = $em->getRepository(Article::class)->findBy([], ['publishedAt' => 'ASC'], 5);
+
+        // Compter le nombre total d'articles
+        $articlesCount = $em->getRepository(Article::class)->count([]);
 
         // Récupérer les derniers messages reçus
         $messages = $dm->getRepository(Message::class)->findBy([], ['createdAt' => 'DESC'], 5);
 
+        // Compter le nombre total de messages avec MongoDB
+        $messagesCount = $dm->getRepository(Message::class)->createQueryBuilder()
+            ->hydrate(false)  // éviter d'hydrater en objets
+            ->count()         // compter les documents
+            ->getQuery()
+            ->execute();  // Utilise execute() pour obtenir le résultat compté
+
+
         // Récupérer les commentaires en attente
         $comments = $em->getRepository(Comment::class)->findBy(['status' => 'en attente'], ['publishedAt' => 'DESC'], 5);
+
+        // Compter le nombre total de commentaires
+        $commentsCount = $em->getRepository(Comment::class)->count(['status' => 'validé']);
         
         return $this->render('admin/dashboard/index.html.twig', [
             'articles' => $articles,
             'messages' => $messages,
             'comments' => $comments,
+            'articlesCount' => $articlesCount,
+            'messagesCount' => $messagesCount,
+            'commentsCount' => $commentsCount,
         ]);
     }
 }

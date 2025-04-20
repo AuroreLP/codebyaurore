@@ -26,6 +26,10 @@ class CommentController extends AbstractController
             throw $this->createNotFoundException('Article non trouvé');
         }
 
+        // Récupérer les commentaires de l'article et les trier par date de publication
+        $comments = $article->getComments()->toArray(); // Récupère les commentaires de l'article
+        usort($comments, fn($a, $b) => $b->getPublishedAt() <=> $a->getPublishedAt()); // Trie les commentaires par ordre décroissant
+
         // Créer un nouveau commentaire
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -50,10 +54,12 @@ class CommentController extends AbstractController
             $deleteForms[$existingComment->getId()] = $this->createDeleteForm($existingComment)->createView();
         }
 
+        // Passer les commentaires triés à la vue
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
             'delete_forms' => $deleteForms,  // Passer les formulaires de suppression à la vue
+            'comments' => $comments,  // Passer les commentaires triés à la vue
     ]);
     }
 

@@ -1,0 +1,9 @@
+# Ajoute la bonne configuration MIME pour les fichiers JavaScript
+<FilesMatch "\.js$">
+  Header set Content-Type "application/javascript"
+</FilesMatch>
+
+# Si tu utilises des fichiers CSS
+<FilesMatch "\.css$">
+  Header set Content-Type "text/css"
+</FilesMatch>

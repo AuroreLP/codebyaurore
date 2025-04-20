@@ -10,6 +10,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -37,13 +39,13 @@
     
                 <ul class="nav__menu">
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
                     </li>
                     <li class="nav__menu--item">
-                        <a class="{{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
+                        <a class="a-nav {{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
                     </li>
             </div>
         </nav>
@@ -67,10 +69,24 @@
         <!-- Inclusion du CDN d'Octokit -->
         <script src="https://cdn.jsdelivr.net/npm/@octokit/core@3.0.0/dist/index.min.js"></script>
 
+        <!-- Inclusion du CDN de Flatpickr-->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+
         <!-- Script JavaScript principal (compilé avec Webpack) -->
         <script src="{{ asset('build/app.js') }}"></script>
 
         <!-- Script JavaScript personnalisé -->
         <script type="module" src="{{ asset('js/modules/About.js') }}"></script>
+
+        <!-- Script pour initialiser flatpickr -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            flatpickr('.datepicker', {
+                dateFormat: 'd/m/Y',
+                allowInput: true
+            });
+            });
+        </script>
+
     </body>
 </html>

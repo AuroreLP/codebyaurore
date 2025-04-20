@@ -8,17 +8,17 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-    .addEntry('app', './assets/app.js')
+    .addEntry('app', './assets/app.js')  // Vérifie que ce fichier existe bien dans assets/
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
-        config.corejs = '3.38';
+        config.useBuiltIns = 'usage';  // Assure-toi que cela permet d'inclure les polyfills nécessaires
+        config.corejs = '3.38';        // Vérifie que core-js est installé
     })
-    .enableSassLoader()
+    .enableSassLoader()   // Assure-toi que les dépendances pour Sass sont bien installées
 ;
 
 module.exports = Encore.getWebpackConfig();
