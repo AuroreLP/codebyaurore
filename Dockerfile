@@ -19,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
         libzip-dev \
         libonig-dev \
         libxslt-dev \
+        ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -65,11 +66,10 @@ RUN npm install
 # Copie tout le reste
 COPY . .
 
-
 # Copie et activation du VirtualHost Apache
 COPY docker/php/vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default.conf && \
     a2enmod rewrite
 
-
-
+# FIX PERMISSIONS for var/cache & Hydrator dirs
+RUN chown -R www-data:www-data var && chmod -R 775 var

@@ -94,6 +94,7 @@
             <tr>
                 <th>Date</th>
                 <th>Nom & Email</th>
+                <th>Sujet</th>
                 <th>Message</th>
             </tr>
         </thead>
@@ -102,6 +103,7 @@
                 <tr>
                     <td>{{ message.createdAt | date("d-m-Y") }}</td>
                     <td><strong>{{ message.firstname }} {{ message.lastname }}</strong><br><small>{{ message.email }}</small></td>
+                    <td>{{ message.subject }}...</td>
                     <td>{{ message.content | slice(0, 50) }}...</td>
                 </tr>
             {% else %}

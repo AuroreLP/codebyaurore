@@ -46,18 +46,22 @@ class EmailService
         $this->mailer->send($email);
     }
 
-    public function sendContactEmail(string $fromEmail, string $name, string $message): void
+    public function sendContactEmail(string $fromEmail, string $lastname, string $firstname, ?string $phone,
+    string $subject, string $message): void
     {
         $emailBody = $this->twig->render('emails/contact.html.twig', [
-            'name' => $name,
+            'lastname' => $lastname,
+            'firstname' => $firstname,
             'email' => $fromEmail,
-            'message' => $message,
+            'phone' => $phone,
+            'subject' => $subject,
+            'messageContent' => $message, 
         ]);
 
         $email = (new Email())
             ->from($fromEmail)
             ->to('contact@tonsite.fr') // remplace par ton adresse pro
-            ->subject("Nouveau message de $name")
+            ->subject("Nouveau message de $lastname . $firstname")
             ->html($emailBody);
 
         $this->mailer->send($email);
