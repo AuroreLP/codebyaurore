@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,6 +43,31 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findFiltered(?Category $category = null, ?Tag $tag = null): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->addSelect('c')
+            ->leftJoin('a.tags', 't')
+            ->addSelect('t')
+            ->andWhere('a.status = :status')
+            ->setParameter('status', Article::STATUS_PUBLISHED)
+            ->orderBy('a.publishedAt', 'DESC');
+
+        if ($category) {
+            $qb->andWhere('a.category = :category')
+            ->setParameter('category', $category);
+        }
+
+        if ($tag) {
+            $qb->andWhere(':tag MEMBER OF a.tags')
+            ->setParameter('tag', $tag);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     //    /**
     //     * @return Article[] Returns an array of Article objects

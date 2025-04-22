@@ -19,6 +19,7 @@ Encore
         config.corejs = '3.38';        // Vérifie que core-js est installé
     })
     .enableSassLoader()   // Assure-toi que les dépendances pour Sass sont bien installées
+    .enablePostCssLoader() // Active PostCSS, utile pour ajouter des plugins CSS si nécessaire
 ;
 
 module.exports = Encore.getWebpackConfig();

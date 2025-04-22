@@ -1,5 +1,6 @@
 import './bootstrap.js';
 import './navbar.js';
+import './filter.js';
 
 
 /*

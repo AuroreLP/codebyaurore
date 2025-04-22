@@ -40,14 +40,14 @@
 
         <!-- Filtres -->
         <div class="blog__filters">
-            <select name="categories">
+            <select name="categories" id="category-filter">
                 <option value="">Toutes les catégories</option>
                 {% for category in categories %}
                     <option value="{{ category.slug }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
         
-            <select name="tags">
+            <select name="tags" id="tag-filter">
                 <option value="">Tous les tags</option>
                 {% for tag in tags %}
                     <option value="{{ tag.slug }}">{{ tag.name }}</option>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Liste des autres articles (sauf le plus récent) -->
-        <div class="blog__articles">
+        <div class="blog__articles" id="articles-container">
             {% for article in articles|slice(1) %}
                 <article class="blog__article">
                     <div class="blog__article-header">

@@ -530,7 +530,7 @@
   padding: 0;
 }
 .nav__menu.show {
-  display: initial;
+  display: block;
 }
 .nav__menu--item {
   padding: 0.625rem 1.25rem;

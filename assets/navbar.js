@@ -1,9 +1,11 @@
 import 'core-js/stable'; // Importer les polyfills stables
 import 'regenerator-runtime/runtime'; // Importer le polyfill pour les générateurs et async/await
 
-window.onload = () => {
+console.log('navbar.js chargé');
+
+document.addEventListener('DOMContentLoaded', () => {
   const navBurger = document.querySelector(".nav__burger");
-  const navMenu = navBurger.nextElementSibling;
+  const navMenu = document.querySelector(".nav__menu");
 
   if (!navBurger || !navMenu) return; // Sécurité si l'élément n'existe 
   
@@ -29,4 +31,4 @@ window.onload = () => {
       navMenu.classList.remove("show");
     });
   });
-};
+});
