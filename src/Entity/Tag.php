@@ -24,12 +24,12 @@ class Tag
     /**
      * @var Collection<int, Article>
      */
-    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'tags')]
-    private Collection $article;
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'tags')]
+    private Collection $articles;
 
     public function __construct()
     {
-        $this->article = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -64,15 +64,16 @@ class Tag
     /**
      * @return Collection<int, Article>
      */
-    public function getArticle(): Collection
+    public function getArticles(): Collection
     {
-        return $this->article;
+        return $this->articles;
     }
 
     public function addArticle(Article $article): static
     {
-        if (!$this->article->contains($article)) {
-            $this->article->add($article);
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->addTag($this); 
         }
 
         return $this;
@@ -80,8 +81,15 @@ class Tag
 
     public function removeArticle(Article $article): static
     {
-        $this->article->removeElement($article);
+        if ($this->articles->removeElement($article)) {
+            $article->removeTag($this); // <-- synchronisation
+        }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? 'Tag';
     }
 }

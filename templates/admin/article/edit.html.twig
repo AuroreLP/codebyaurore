@@ -25,6 +25,11 @@
                {{ form_widget(form.category, {'attr': {'class': 'select'}}) }}
                {{ form_errors(form.category) }}
              </div>
+             <div>
+              {{ form_label(form.status, null, {'label_attr': {'class': 'label'}}) }}
+              {{ form_widget(form.status, {'attr': {'class': 'select'}}) }}
+              {{ form_errors(form.status) }}
+            </div>
              <div class="tag-form__group">
                {{ form_label(form.publishedAt, null, {'label_attr': {'class': 'label'}}) }}
                {{ form_widget(form.publishedAt, {'attr': {'class': 'input datepicker'}}) }}

@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Date de publication</th>
                     <th>Titre</th>
                     <th>Slug</th>
                     <th>Statut</th>
@@ -21,11 +22,24 @@
             </thead>
             <tbody>
                 {% for article in articles %}
-                <tr>
+                <tr class="{{ article.status == 'draft' ? 'article--draft' : '' }}">
                     <td>{{ article.id }}</td>
+                    <td>
+                        {% if article.publishedAt %}
+                            {{ article.publishedAt|date("d.m.y") }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                     <td>{{ article.title }}</td>
                     <td>{{ article.slug }}</td>
-                    <td>{{ article.status }}</td>
+                    <td>
+                        {% if article.status == 'draft' %}
+                            <span class="status status--draft">Brouillon</span>
+                        {% else %}
+                            <span class="status status--published">Publié</span>
+                        {% endif %}
+                    </td>
                     <td class="d-flex gap-1">
                         <a class="button--light-green" href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>
     

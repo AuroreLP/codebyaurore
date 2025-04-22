@@ -1,0 +1,25 @@
+{# templates/admin/tag/show.html.twig #}
+
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+    
+    <div>
+        <p><strong>Nom du tag :</strong> {{ tag.name }}</p>
+        <p><strong>Slug :</strong> {{ tag.slug }}</p>
+        
+        <h3>Articles associés :</h3>
+        <ul>
+            {% for tag in article.tags %}
+                <li>{{ tag.name }}</li> <!-- Afficher la propriété 'name' de chaque tag -->
+            {% else %}
+                <li>Aucun tag</li> <!-- Si aucun tag n'est associé à l'article -->
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{{ path('admin.tags.index') }}">Retour à la liste des tags</a>
+{% endblock %}

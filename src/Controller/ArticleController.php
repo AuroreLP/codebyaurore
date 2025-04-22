@@ -9,6 +9,8 @@ use App\Entity\Comment;
 use App\Entity\Tag;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +21,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ArticleController extends AbstractController
 {
     #[Route('/blog', name: 'article.index')]
-    public function index(ArticleRepository $repository, EntityManagerInterface $em): Response
+    public function index(ArticleRepository $articleRepository, CategoryRepository $categoryRepository, TagRepository $tagRepository): Response
     {
-        // $articles = $repository->findAll(); test:
-        $articles = $repository->findBy([], ['published_at' => 'DESC']);
-
-        // Récupérer toutes les catégories et tous les tags
-        $categories = $em->getRepository(Category::class)->findAll();
-        $tags = $em->getRepository(Tag::class)->findAll();
+        $articles = $articleRepository->findPublished(); // ✅ seulement les "published"
+        $categories = $categoryRepository->findAll();
+        $tags = $tagRepository->findAll();
+        
 
         return $this->render('home/index.html.twig', [
             'articles' => $articles,
@@ -36,7 +36,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
-    public function show(Request $request, string $slug, ArticleRepository $repository): Response
+    public function show(string $slug, ArticleRepository $repository): Response
     {
         $article = $repository->findOneBy(['slug' => $slug]);
 
@@ -53,12 +53,25 @@ class ArticleController extends AbstractController
     // ADMIN PART
     // liste des articles par ordre chronologique DESC
     #[Route('/admin/articles', name: 'admin.articles')]
-    public function list(EntityManagerInterface $entityManager): Response
+    public function list(EntityManagerInterface $em): Response
     {
-        $articles = $entityManager->getRepository(Article::class)->findBy([], ['createdAt' => 'DESC']);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $articles = $em->getRepository(Article::class)->findAll();
+
+        // Séparer les articles par statut
+        $drafts = array_filter($articles, fn($a) => $a->getStatus() === 'draft');
+        $ready = array_filter($articles, fn($a) => $a->getStatus() === 'ready');
+        $published = array_filter($articles, fn($a) => $a->getStatus() === 'published');
+
+        // Trier les articles publiés par date de publication (du plus récent au plus ancien)
+        usort($published, fn($a, $b) => $b->getPublishedAt() <=> $a->getPublishedAt());
+
+        // Fusionner les deux tableaux : drafts en haut, puis les published triés
+        $sortedArticles = array_merge($drafts, $ready, $published);
 
         return $this->render('admin/article/list.html.twig', [
-            'articles' => $articles,
+            'articles' => $sortedArticles,
         ]);
     }
 
@@ -67,6 +80,8 @@ class ArticleController extends AbstractController
 
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $article = new Article(); // Création d'un nouvel article
 
         $form = $this->createForm(ArticleType::class, $article);
@@ -102,6 +117,8 @@ class ArticleController extends AbstractController
     #[Route('/admin/edit/{id}', name: 'article.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -118,8 +135,10 @@ class ArticleController extends AbstractController
     }    
 
     #[Route('/delete/{id}', name: 'article.delete', methods: ['DELETE'])]
-    public function remove(Article $article, EntityManagerInterface $em)
+    public function remove(Article $article, EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', 'L\'article a bien été supprimé');

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,21 +15,19 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(ArticleRepository $repository, EntityManagerInterface $em): Response
+    public function index(ArticleRepository $articleRepository, CategoryRepository $categoryRepository, TagRepository $tagRepository): Response
     {
-        // $articles = $repository->findAll(); test:
-        $articles = $repository->findBy([], ['publishedAt' => 'DESC']);
+        $articles = $articleRepository->findPublishedWithTagsAndCategory();
+        $categories = $categoryRepository->findAll();
+        $tags = $tagRepository->findAll();
 
-        // Récupérer toutes les catégories et tous les tags
-        $categories = $em->getRepository(Category::class)->findAll();
-        $tags = $em->getRepository(Tag::class)->findAll();
-
-        return $this->render('/main/home/index.html.twig', [
+        return $this->render('main/home/index.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
-    }
+        }
+
 
 }
 

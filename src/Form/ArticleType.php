@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -37,6 +38,15 @@ class ArticleType extends AbstractType
                 'label' => 'Résumé',
                 'required' => false,
                 'attr' => ['placeholder' => 'Résumé de 160 caractères max']
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Brouillon' => 'draft',
+                    'Prêt à publier' => 'ready',
+                    'Publié' => 'published',
+                ],
+                'label' => 'Statut',
+                'attr' => ['class' => 'select'],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',

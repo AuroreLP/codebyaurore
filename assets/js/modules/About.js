@@ -9,10 +9,12 @@ class About {
         this.projectsTitle = document.querySelectorAll('.js-home-project-title')
         this.projectsDescription = document.querySelectorAll('.js-home-project-description')
         this.projectsTagsContainer = document.querySelectorAll('.js-home-project-tags-container')
+        this.projectsLinks = document.querySelectorAll('.js-home-project-link'); 
 
         console.log("projectsTitle:", this.projectsTitle); // Debugging
         console.log("projectsDescription:", this.projectsDescription);
         console.log("projectsTagsContainer:", this.projectsTagsContainer);
+        console.log("projectsLinks:", this.projectsLinks);
 
         this.init()
     }
@@ -63,11 +65,28 @@ class About {
 
     async updateHTMLProjects(repos) {
         for (let i = 0; i < repos.length; i++) {
+            const repo = repos[i]
+            console.log(`Project URL: ${repo.html_url}`); 
+
             if (this.projectsTitle[i]) this.projectsTitle[i].textContent = repos[i].name;
             if (this.projectsDescription[i]) this.projectsDescription[i].textContent = repos[i].description || "Pas de description";
+             // Link
+             if (this.projectsLinks[i]) {
+                console.log(`Setting link: ${repo.html_url}`); // Debugging
+                this.projectsLinks[i].setAttribute('href', repo.html_url)
+                this.projectsLinks[i].setAttribute('target', '_blank')
+            }
 
             const languages = await this.getRepoLanguages(repos[i].name);
-            if (this.projectsTagsContainer[i]) this.projectsTagsContainer[i].textContent = "Langages : " + languages.join(", ");
+            if (this.projectsTagsContainer[i]) {
+                this.projectsTagsContainer[i].innerHTML = ""; // On vide le conteneur
+              
+                languages.forEach((lang) => {
+                    const tag = document.createElement("span");
+                    tag.textContent = lang;
+                    this.projectsTagsContainer[i].appendChild(tag);
+                });
+            }
         }
     }
 
@@ -77,25 +96,6 @@ class About {
         if (this.avatarHTML) this.avatarHTML.setAttribute("src", APIdata.avatar_url);
     }
 
-    /*
-    updateHTML(APIdata) {
-        //afficher la description de mon profil github
-        if (this.descriptionHTML) this.descriptionHTML.textContent = APIdata.bio
-        //afficher l'url de mon profil github
-        if (this.profilHTML) this.profilHTML.setAttribute("href", APIdata.html_url)
-        //afficher mon avatar
-        if (this.avatarHTML) this.avatarHTML.setAttribute("src", APIdata.avatar_url)
-    }
-
-    
-    createHTML(repos) {
-        repos.forEach((repo, index) => {
-            if (this.projectsTitle[index]) this.projectsTitle[index].textContent = repo.name;
-            if (this.projectsDescription[index]) this.projectsDescription[index].textContent = repo.description || "Pas de description";
-            if (this.projectsTagsContainer[index]) this.projectsTagsContainer[index].textContent = "Langages : " + Object.keys(repo.language || {}).join(", ");
-        });
-    }
-    */
 }
 
 // ✅ Instanciation de la classe après la définition

@@ -51,7 +51,8 @@ class Article
     /**
      * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'article')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'articles')]
+    #[ORM\JoinTable(name: 'article_tag')]  // Spécifie explicitement le nom de la table pivot
     private Collection $tags;
 
     public function __construct()

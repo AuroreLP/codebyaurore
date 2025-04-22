@@ -5,6 +5,39 @@
 <main>
     <section class="blog">
 
+        {# Article mis en avant : le plus récent #}
+        {% if articles|length > 0 %}
+            {% set latest = articles|first %}
+            <article class="blog__highlighted-article">
+                <div class="blog__highlighted-article-header">
+                    <h2 class="highlighted-title">
+                        <a href="{{ path('article.show', {'slug': latest.slug}) }}">{{ latest.title }}</a>
+                    </h2>
+                    <span class="highlighted-category">{{ latest.category.name }}</span>
+                </div>
+                <div class="blog__highlighted-metaContainer">
+                    <p class="highlighted-meta">
+                        {{ latest.metaDescription }}
+                    </p>
+                    <a href="{{ path('article.show', {'slug': latest.slug}) }}" class="highlighted__read-more-link">
+                        Lire la suite
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M5 12h14M13 6l6 6-6 6"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="blog__article-separator"><div>
+                <div class="blog__article-footer">
+                    <span class="date">Publié le {{ latest.publishedAt | date("d.m.y") }}</span>
+                    <div class="tags">
+                        {% for tag in latest.tags %}
+                            <span>#{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+        {% endif %}
+
         <!-- Filtres -->
         <div class="blog__filters">
             <select name="categories">
@@ -13,18 +46,18 @@
                     <option value="{{ category.slug }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
-    
+        
             <select name="tags">
                 <option value="">Tous les tags</option>
                 {% for tag in tags %}
-                    <option value="{{ tag.slug }}">#{{ tag.name }}</option>
+                    <option value="{{ tag.slug }}">{{ tag.name }}</option>
                 {% endfor %}
             </select>
         </div>
-    
-        <!-- Liste des articles -->
+
+        <!-- Liste des autres articles (sauf le plus récent) -->
         <div class="blog__articles">
-            {% for article in articles %}
+            {% for article in articles|slice(1) %}
                 <article class="blog__article">
                     <div class="blog__article-header">
                         <h2 class="title">
@@ -32,11 +65,20 @@
                         </h2>
                         <span class="category">{{ article.category.name }}</span>
                     </div>
-                    <p class="blog__article-meta">{{ article.metaDescription }}</p>
-                    <div class="blog__article-separator"></div>
+                    <div class="blog__article-meta-container">
+                        <p class="blog__article-meta">
+                            {{ article.metaDescription }} 
+                        </p>
+                        <a href="{{ path('article.show', {'slug': article.slug}) }}" class="read-more-link">
+                            Lire la suite
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="blog__article-separator"><div>
                     <div class="blog__article-footer">
-                        <span class="date">Publié le {{ article.publishedAt | date("d.m.y") }}
-                        </span>
+                        <span class="date">Publié le {{ article.publishedAt | date("d.m.y") }}</span>
                         <div class="tags">
                             {% for tag in article.tags %}
                                 <span>#{{ tag.name }}</span>
@@ -45,11 +87,11 @@
                     </div>
                 </article>
             {% else %}
-                <p>Aucun article trouvé.</p>
+                <p>Aucun article publié trouvé.</p>
             {% endfor %}
         </div>
     
     </section>
-    
-  </main>
+</main>
+
 {% endblock %}

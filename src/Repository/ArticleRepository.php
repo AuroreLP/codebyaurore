@@ -16,6 +16,32 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function findPublishedWithTagsAndCategory(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->addSelect('c')
+            ->leftJoin('a.tags', 't')
+            ->addSelect('t')
+            ->andWhere('a.status = :status')
+            ->setParameter('status', 'published')
+            ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPublished(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.tags', 't')              // jointure tags
+            ->addSelect('t')                       // et sélection
+            ->andWhere('a.status = :status')
+            ->setParameter('status', 'published')
+            ->orderBy('a.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Article[] Returns an array of Article objects
     //     */
