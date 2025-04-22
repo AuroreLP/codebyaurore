@@ -53,7 +53,7 @@ class Article
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'articles')]
     #[ORM\JoinTable(name: 'article_tag')]  // Spécifie explicitement le nom de la table pivot
-    private Collection $tags;
+    private $tags;
 
     public function __construct()
     {
@@ -206,30 +206,24 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection<int, Tag>
-     */
+  
     public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function addTag(Tag $tag): static
+    public function addTag(Tag $tag): self
     {
         if (!$this->tags->contains($tag)) {
-            $this->tags->add($tag);
-            $tag->addArticle($this);
+            $this->tags[] = $tag;
         }
 
         return $this;
     }
 
-    public function removeTag(Tag $tag): static
+    public function removeTag(Tag $tag): self
     {
-        if ($this->tags->removeElement($tag)) {
-            $tag->removeArticle($this);
-        }
-
+        $this->tags->removeElement($tag);
         return $this;
     }
 }

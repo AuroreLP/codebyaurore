@@ -26,6 +26,11 @@
                {{ form_errors(form.category) }}
              </div>
              <div>
+              {{ form_label(form.tags, null, {'label_attr': {'class': 'label'}}) }}
+              {{ form_widget(form.tags, {'attr': {'class': 'select', 'multiple': 'multiple'}}) }}
+              {{ form_errors(form.tags) }}
+             </div>
+             <div>
               {{ form_label(form.status, null, {'label_attr': {'class': 'label'}}) }}
               {{ form_widget(form.status, {'attr': {'class': 'select'}}) }}
               {{ form_errors(form.status) }}

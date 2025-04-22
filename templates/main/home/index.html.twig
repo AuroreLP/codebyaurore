@@ -81,7 +81,7 @@
                         <span class="date">Publié le {{ article.publishedAt | date("d.m.y") }}</span>
                         <div class="tags">
                             {% for tag in article.tags %}
-                                <span>#{{ tag.name }}</span>
+                                <span>{{ tag.name }}</span>
                             {% endfor %}
                         </div>
                     </div>

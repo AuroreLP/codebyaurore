@@ -35,10 +35,12 @@
                     <td>{{ article.slug }}</td>
                     <td>
                         {% if article.status == 'draft' %}
-                            <span class="status status--draft">Brouillon</span>
-                        {% else %}
-                            <span class="status status--published">Publié</span>
-                        {% endif %}
+                        <span class="status status--draft">Brouillon</span>
+                    {% elseif article.status == 'ready' %}
+                        <span class="status status--ready">Prêt</span>
+                    {% else %}
+                        <span class="status status--published">Publié</span>
+                    {% endif %}
                     </td>
                     <td class="d-flex gap-1">
                         <a class="button--light-green" href="{{ path('article.show', {slug: article.slug}) }}">Consulter</a>

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -58,6 +59,16 @@ class ArticleType extends AbstractType
                 'choice_label' => 'name', // Assure-toi que `name` est une propriété de Category
                 'label' => 'Catégorie',
                 'placeholder' => 'Choisir une catégorie'
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true,       // permet la sélection multiple
+                'expanded' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'select-multiple', // optionnel, pour ton CSS
+                ]
             ])
             ->add('publishedAt', DateType::class, [
                 'widget' => 'single_text',

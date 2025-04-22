@@ -20,20 +20,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/blog', name: 'article.index')]
-    public function index(ArticleRepository $articleRepository, CategoryRepository $categoryRepository, TagRepository $tagRepository): Response
-    {
-        $articles = $articleRepository->findPublished(); // ✅ seulement les "published"
-        $categories = $categoryRepository->findAll();
-        $tags = $tagRepository->findAll();
-        
-
-        return $this->render('home/index.html.twig', [
-            'articles' => $articles,
-            'categories' => $categories,
-            'tags' => $tags
-        ]);
-    }
 
     #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
     public function show(string $slug, ArticleRepository $repository): Response

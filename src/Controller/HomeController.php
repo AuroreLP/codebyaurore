@@ -14,6 +14,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    private $articleRepository;
+
+    public function __construct(ArticleRepository $articleRepository)
+    {
+        $this->articleRepository = $articleRepository;
+    }
+    
     #[Route('/', name: 'home')]
     public function index(ArticleRepository $articleRepository, CategoryRepository $categoryRepository, TagRepository $tagRepository): Response
     {
