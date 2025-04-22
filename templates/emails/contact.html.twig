@@ -1,10 +1,10 @@
 <h2>Vous avez reçu un nouveau message</h2>
-<p><strong>Nom :</strong> {{ message.lastname }}</p>
-<p><strong>Nom :</strong> {{ message.firstname }}</p>
-<p><strong>Email :</strong> {{ message.email }}</p>
-{% if message.phone %}
-<p><strong>Téléphone :</strong> {{ message.phone }}</p>
+<p><strong>Nom :</strong> {{ lastname }}</p>
+<p><strong>Prénom :</strong> {{ firstname }}</p>
+<p><strong>Email :</strong> {{ email }}</p>
+{% if phone %}
+<p><strong>Téléphone :</strong> {{ phone }}</p>
 {% endif %}
-<p><strong>Sujet :</strong> {{ message.subject }}</p>
-<p><strong>Message :</strong><br>{{ message.content|nl2br }}</p>
+<p><strong>Sujet :</strong> {{ subject }}</p>
+<p><strong>Message :</strong><br>{{ messageContent|nl2br }}</p>
 

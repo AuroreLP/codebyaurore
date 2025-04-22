@@ -6,23 +6,23 @@ namespace App\Controller;
 
 use App\Document\Message;
 use App\Form\MessageType;
+use App\Service\EmailService;
 use App\Service\MongoDBMessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ContactController extends AbstractController
 {
     private MongoDBMessageService $mongoDBMessageService;
-    private MailerInterface $mailer;
+    private EmailService $emailService;
 
-    public function __construct(MongoDBMessageService $mongoDBMessageService, MailerInterface $mailer)
+    public function __construct(MongoDBMessageService $mongoDBMessageService, EmailService $emailService)
     {
         $this->mongoDBMessageService = $mongoDBMessageService;
-        $this->mailer = $mailer;
+        $this->emailService = $emailService;
     }
 
     #[Route('/contact', name: 'contact', methods: ['GET', 'POST'])]
@@ -44,22 +44,15 @@ class ContactController extends AbstractController
                 $message->getContent()
             );
 
-            // 2. Envoi de l'e-mail via Mailer
-
-            $email = (new Email())
-                ->from($message->getEmail())
-                ->to('aleperff@gmail.com') // adresse de réceptio
-                ->subject('Nouveau message de contact')
-                ->text(
-                    "Nom : {$message->getLastname()} {$message->getFirstname()}\n" .
-                    "Email : {$message->getEmail()}\n" .
-                    "Téléphone : {$message->getPhone()}\n" .
-                    "Sujet : {$message->getSubject()}\n\n" .
-                    "Message : {$message->getContent()}"
-                );
-
-
-            $this->mailer->send($email);
+            // Envoi via EmailService
+            $this->emailService->sendContactEmail(
+                $message->getEmail(),
+                $message->getLastname(),
+                $message->getFirstname(),
+                $message->getPhone(),
+                $message->getSubject(),
+                $message->getContent()
+            );
 
             // Afficher un message de confirmation (alt: utiliser des flash messages)
             $this->addFlash('success', 'Votre message a été envoyé avec succès.');
@@ -73,21 +66,17 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('/test-email', name: 'test_email')]
-    public function testEmail(MailerInterface $mailer): Response
+    public function testEmail(): Response
     {
         $email = (new Email())
-            ->from('no-reply@mailtrap.club')
-            ->to('aleperff@yopmail.com') // remplace par ton adresse
+            ->from('test@tonsite.fr')
+            ->to('test@mailtrap.io')  // remplace par l'email Mailtrap
             ->subject('Test Mailtrap')
-            ->text('Ceci est un test simple');
+            ->text('Ceci est un test via Mailtrap !');
 
-        try {
-            $mailer->send($email);
-            return new Response('Email envoyé avec succès');
-        } catch (\Throwable $e) {
-            return new Response('Erreur lors de l\'envoi de l\'email: ' . $e->getMessage());
-        }
+        $this->mailer->send($email);
+
+        return new Response('Email envoyé avec succès !');
     }
 
 
