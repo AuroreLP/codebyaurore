@@ -4,31 +4,40 @@
 
 {% block body %}
 
-<div class="article-page">
+<div class="article__page">
     <article>
-
-        <h2>{{ article.title }}</h2>
-        <h3>{{ article.category.name }}</h3>
-    
-        <div class="article-content">{{ article.content | raw }}</div>
-    
-        {% if article.publishedAt %}
-            <p>Article publié le {{ article.publishedAt | date("d.m.y") }}</p>
-        {% else  %}
-            <p>{{ article.status }}</p>
-        {% endif  %}
-    
+        <div class="article__publication-date">
+            {% if article.publishedAt %}
+                <p>{{ article.publishedAt | date("d.m.y") }}</p>
+            {% else  %}
+                <p>{{ article.status }}</p>
+            {% endif  %}
+        </div>
+        <h2 class="article__title">{{ article.title }}</h2>
+        <div class="article__category-tags">
+            <h3 class="article__category">{{ article.category.name }}</h3>
+            <div class="article__tags">
+                {% if article.tags|length > 0 %}
+                    {% for tag in article.tags %}
+                        <span>#{{ tag.name }}</span>
+                    {% endfor %}
+                {% else %}
+                    <span style="color:red;">Aucun tag</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="article__content">{{ article.content | raw }}</div>
     </article>
     
-    <div class="comments-section">
-        <h3>Commentaires</h3>
+    <div class="comment__section">
+        <h4>Commentaires</h4>
     
         {% for existingComment in comments %}
-            <div class="comment">
-                <p>{{ existingComment.comment }}</p>
+            <div class="comment__card">
                 <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username }}</small>
-                <div>
-                    <a class="button--dark-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
+                <p class="comment__content">{{ existingComment.comment }}</p>
+                <div class="comment__buttons">
+                    <a class="button--light-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
 
                     <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
                         {{ form_row(delete_forms[existingComment.id]._token) }}
@@ -40,11 +49,11 @@
             <p>Aucun commentaire pour cet article.</p>
         {% endfor %}
     
-        <hr class="comment-separator">
+        <hr class="comment__separator">
     
-        <h3>Ajouter un commentaire</h3>
-        <div class="add-comment-form">
-            <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
+        <h4>Ajouter un commentaire</h4>
+        <div class="comment__form">
+            <form class="form" method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
                 {{ form_start(form) }}
                     <div>
                         {{ form_label(form.username, null, {'label_attr': {'class': 'label'}}) }}
@@ -63,7 +72,7 @@
                     </div>
     
                     <button class="button--dark-green" type="submit">Envoyer</button>
-                {{ form_end(form) }}
+                    {{ form_end(form, {'render_rest': false}) }}
             </form>
         </div>
     </div>

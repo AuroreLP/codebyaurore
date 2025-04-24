@@ -26,7 +26,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_DATABASE: codebyaurore
     ports:
-      - "127.0.0.1:3307:3306"
+      - "3307:3306"
     volumes:
       - ./var/db_data:/var/lib/mysql
     networks:
@@ -48,7 +48,7 @@ services:
     image: mongo:6
     container_name: codebyaurore_mongodb
     ports:
-      - "127.0.0.1:27017:27017"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:

@@ -66,18 +66,4 @@ class ContactController extends AbstractController
         ]);
     }
 
-    public function testEmail(): Response
-    {
-        $email = (new Email())
-            ->from('test@tonsite.fr')
-            ->to('test@mailtrap.io')  // remplace par l'email Mailtrap
-            ->subject('Test Mailtrap')
-            ->text('Ceci est un test via Mailtrap !');
-
-        $this->mailer->send($email);
-
-        return new Response('Email envoyé avec succès !');
-    }
-
-
 }
