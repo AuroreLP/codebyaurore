@@ -1,0 +1,77 @@
+@use "../abstracts/variables" as var
+
+
+.article__content
+    // Styles de base pour les petits écrans (mobile-first)
+    line-height: 1.6
+    color: var.$text-color
+
+    // Espacement entre les paragraphes
+    p
+        margin-bottom: 0.5rem
+        font-size: var.$font-size-p
+
+    // Titre de l'article
+    h1, h2, h3, h4, h5, h6
+        font-weight: bold
+        line-height: 1.3
+        color: var.$primary-color
+
+    h1
+        font-size: var.$font-size-h1
+
+    h2
+        font-size: var.$font-size-h2
+
+    h3
+        font-size: var.$font-size-h3
+
+    h4
+        font-size: var.$font-size-h4
+
+
+    // Citer une source ou une citation
+    blockquote
+        border-left: 4px solid var.$secondary-color
+        padding-left: 1rem
+        margin-left: 0
+        font-style: italic
+        color: lighten(var.$dark-green,10%)
+
+    // Images responsives
+    img
+        max-width: 100%
+        height: auto
+        margin: 1rem 0
+
+// Styles pour les écrans de taille moyenne (tablettes)
+@media (min-width: 768px)
+    .article__content
+
+    blockquote
+        font-size: 1.1rem
+
+// Styles pour les grands écrans (bureau)
+@media (min-width: 1024px)
+    .article__content
+        margin: 0 auto
+
+    // Augmenter encore la taille des titres pour les grands écrans
+    h1
+        font-size: 3rem
+
+    h2
+        font-size: 2.5rem
+
+    h3
+        font-size: 2rem
+
+    // Espacement plus large entre les paragraphes sur grand écran
+    p
+        margin-bottom: 1.5rem
+
+    blockquote
+        font-size: 1.2rem
+
+    img
+        margin: 2rem 0

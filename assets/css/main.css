@@ -540,7 +540,6 @@ a {
   background: #2b4743;
   color: #efe4d5;
   padding: 1rem 2rem;
-  text-align: center;
 }
 .footer__container {
   display: flex;
@@ -548,6 +547,8 @@ a {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  height: 100%;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .footer__container {
@@ -566,6 +567,7 @@ a {
   gap: 1rem;
   padding: 0;
   margin: 0;
+  align-items: center;
 }
 @media (min-width: 768px) {
   .footer .footer__list-links {
@@ -672,87 +674,174 @@ a {
     max-width: 1880px;
   }
 }
-.article-page {
+.article__content {
+  line-height: 1.6;
+  color: #2b4743;
+}
+.article__content p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.article__content h1, .article__content h2, .article__content h3, .article__content h4, .article__content h5, .article__content h6 {
+  font-weight: bold;
+  line-height: 1.3;
+  color: #38d6c2;
+}
+.article__content h1 {
+  font-size: 2.5rem;
+}
+.article__content h2 {
+  font-size: 2.2rem;
+}
+.article__content h3 {
+  font-size: 1.6rem;
+}
+.article__content h4 {
+  font-size: 1.4rem;
+}
+.article__content blockquote {
+  border-left: 4px solid #ea638c;
+  padding-left: 1rem;
+  margin-left: 0;
+  font-style: italic;
+  color: #3e6761;
+}
+.article__content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  blockquote {
+    font-size: 1.1rem;
+  }
+}
+@media (min-width: 1024px) {
+  .article__content {
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 2rem;
+  }
+  p {
+    margin-bottom: 1.5rem;
+  }
+  blockquote {
+    font-size: 1.2rem;
+  }
+  img {
+    margin: 2rem 0;
+  }
+}
+.article__page {
   width: 90%;
   max-width: 70%;
   margin: 2.5rem auto;
   padding: 1rem;
 }
-.article-page article {
+.article__page article {
   margin-bottom: 3rem;
 }
-.article-page article h2 {
-  font-size: 1.8rem;
+.article__page article .article__publication-date {
+  margin-bottom: 1rem;
+}
+.article__page article .article__title {
+  font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }
-.article-page article h3 {
-  font-size: 1.2rem;
-  color: #666;
+.article__page article .article__category-tags {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.article__page article .article__category-tags .article__category {
+  font-size: 1.6rem;
+  color: #ea638c;
   margin-bottom: 1rem;
 }
-.article-page .article-content {
-  line-height: 1.6;
-  margin-bottom: 1rem;
+.article__page article .article__category-tags .article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.article-page .article-content p {
-  margin-bottom: 1rem;
-}
-.article-page .article-content h3 {
-  margin-top: 2rem;
-  font-size: 1.4rem;
-}
-.article-page .article-content p {
-  font-style: italic;
+.article__page article .article__category-tags .article__tags span {
+  background-color: #ea638c;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
   font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
 }
-.article-page .comments-section {
+.article__page .comment__section {
   border-top: 1px solid #ccc;
   padding-top: 2rem;
 }
-.article-page .comments-section h3 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-.article-page .comments-section .comment {
+.article__page .comment__section .comment__card {
   background-color: #f5f5f5;
-  border: 1px solid #ddd;
+  border: 1px solid #2b4743;
   border-radius: 5px;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
-.article-page .comments-section .comment p {
+.article__page .comment__section .comment__card p {
   margin-bottom: 0.5rem;
 }
-.article-page .comments-section .comment small {
+.article__page .comment__section .comment__card small {
   display: block;
   font-size: 0.8rem;
   color: #666;
 }
-.article-page .comments-section .comment form {
-  margin-top: 0.5rem;
-}
-.article-page .comments-section .comment form button {
+.article__page .comment__section .comment__card .comment__buttons {
   display: flex;
   flex-direction: column;
 }
-.article-page .comments-section .comment form button a.button--dark-green, .article-page .comments-section .comment form button form {
+.article__page .comment__section .comment__card .comment__buttons a,
+.article__page .comment__section .comment__card .comment__buttons form {
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 100px;
   margin-bottom: 10px;
 }
-.article-page .comments-section .comment-separator {
+.article__page .comment__section .comment__separator {
   margin: 2rem 0;
   border: none;
   border-top: 2px dashed #ccc;
 }
-.article-page .comments-section .add-comment-form {
-  margin-top: 2rem;
-  padding-top: 1rem;
+.article__page .comment__section h4 {
+  font-size: 1.4rem;
+}
+.article__page .comment__section .comment__form {
+  margin-top: 1rem;
 }
 
 @media (min-width: 768px) {
-  .comment-buttons {
+  .article__page article .article__category-tags {
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+  }
+  .article__page .comment__section .comment__card .comment__buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+  .article__page .comment__section .comment__card .comment__buttons a,
+  .article__page .comment__section .comment__card .comment__buttons form {
+    width: auto;
+    margin-bottom: 0;
   }
 }
 body {
@@ -874,12 +963,16 @@ body {
 }
 
 .admin-dashboard-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .dashboard-section {
   margin-bottom: 2rem;
+}
+.dashboard-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
 }
 
 .stat-widget {
@@ -913,12 +1006,17 @@ body {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
 }
 .dashboard-table th {
-  background-color: #f8f8f8;
+  background-color: #2b4743;
+  color: #efe4d5;
 }
 .dashboard-table tr:hover {
-  background-color: #f9f9f9;
+  background-color: #38d6c2;
+}
+.dashboard-table tr:hover a {
+  color: #2b4743;
 }
 
 .badge--pending {
@@ -1157,6 +1255,7 @@ body {
 a {
   text-decoration: none;
   color: #38d6c2;
+  font-weight: bold;
   cursor: pointer;
 }
 a:hover {

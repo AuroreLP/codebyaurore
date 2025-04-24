@@ -1,7 +1,8 @@
 @use "../abstracts/variables" as var
 @use "../abstracts/functions" as fct
+@use "article__content"
 
-.article-page
+.article__page
     width: 90%
     max-width: 70%
     margin: fct.rem(40) auto
@@ -10,44 +11,53 @@
     article
         margin-bottom: 3rem
 
-        h2
-            font-size: 1.8rem
+        .article__publication-date
+            margin-bottom: 1rem
+
+        .article__title
+            font-size: var.$font-size-h2
             margin-bottom: 0.5rem
 
-        h3
-            font-size: 1.2rem
-            color: #666
+        .article__category-tags
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            align-items: center
+            flex-wrap: wrap // utile pour éviter les débordements sur petits écrans
             margin-bottom: 1rem
+            gap: 1rem
 
-    .article-content
-        line-height: 1.6
-        margin-bottom: 1rem
+            .article__category
+                font-size: var.$font-size-h3
+                color: var.$pink
+                margin-bottom: 1rem
 
-        p
-            margin-bottom: 1rem
+            .article__tags
+                display: flex
+                flex-wrap: wrap
+                gap: 0.5rem
+                span
+                    background-color: var.$secondary-color
+                    color: white
+                    padding: 5px 10px
+                    border-radius: 20px
+                    font-size: 0.9rem
+                    cursor: pointer
+                    display: inline-flex
+                    align-items: center
+                    height: 100% // optionnel, à ajuster selon le rendu visuel
 
-        h3
-            margin-top: 2rem
-            font-size: 1.4rem
 
-        p
-            font-style: italic
-            font-size: 0.9rem
-
-    .comments-section
+    .comment__section
         border-top: 1px solid #ccc
         padding-top: 2rem
 
-        h3
-            font-size: 1.4rem
-            margin-bottom: 1rem
-
-        .comment
+        .comment__card
             background-color: #f5f5f5
-            border: 1px solid #ddd
+            border: 1px solid var.$dark-green
             border-radius: 5px
             padding: 1rem
-            margin-bottom: 1rem
+            margin: 1rem 0
 
             p
                 margin-bottom: 0.5rem
@@ -57,27 +67,45 @@
                 font-size: 0.8rem
                 color: #666
 
-            form
-                margin-top: 0.5rem
 
-                button
-                    display: flex
-                    flex-direction: column
+            .comment__buttons
+                display: flex
+                flex-direction: column
 
-                    a.button--dark-green, form
-                        margin-bottom: 10px  // Un petit espace entre les éléments
+                a, 
+                form
+                    width: fit-content
+                    min-width: 100px
+                    margin-bottom: 10px  // Un petit espace entre les éléments
 
-        .comment-separator
+        .comment__separator
             margin: 2rem 0
             border: none
             border-top: 2px dashed #ccc
 
-        .add-comment-form
-            margin-top: 2rem
-            padding-top: 1rem
+        h4
+            font-size: var.$font-size-h4
+
+        .comment__form
+            margin-top: 1rem
+
 
 @media (min-width: 768px)  // Quand l'écran atteint une taille 'md' et plus
-    .comment-buttons
-        flex-direction: row
-        justify-content: space-between
-        align-items: center
+    .article__page
+        article
+            .article__category-tags
+                flex-direction: row
+                justify-content: space-between
+
+
+        .comment__section
+            .comment__card
+                .comment__buttons
+                    flex-direction: row
+                    justify-content: flex-start
+                    gap: 0.5rem
+                
+                    a,
+                    form
+                        width: auto
+                        margin-bottom: 0 // supprime le `margin-bottom` vertical pour l'affichage en ligne

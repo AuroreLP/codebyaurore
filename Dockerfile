@@ -32,21 +32,19 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
-# Installation des extensions PHP
+# Installation des extensions PHP & Apache
 RUN docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_mysql mysqli gd opcache intl zip calendar dom mbstring xsl && \
     a2enmod rewrite
 
 # Installation de APCu et autres extensions via pecl
-RUN pecl install apcu && docker-php-ext-enable apcu
+RUN pecl install apcu mongodb && docker-php-ext-enable apcu mongodb
 
 # Installation de php-extension-installer pour des extensions supplémentaires
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions amqp
+RUN chmod +x /usr/local/bin/install-php-extensions \
+ && install-php-extensions amqp
 
-# Installation de MongoDB via PECL
-RUN pecl install mongodb && docker-php-ext-enable mongodb
 
 # Installer Node.js et npm (ajoute cette étape avant "RUN npm install")
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
@@ -57,19 +55,20 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
 # Définition du répertoire de travail
 WORKDIR /var/www/html
 
-# Copier les fichiers nécessaires pour npm install
+# Installation des dépendances front (NPM)
 COPY package*.json ./
-
-# Installation des dépendances Node.js
 RUN npm install
 
-# Copie tout le reste
+# Copie du code applicatif
 COPY . .
 
 # Copie et activation du VirtualHost Apache
 COPY docker/php/vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN a2ensite 000-default.conf && \
-    a2enmod rewrite
+RUN a2ensite 000-default.conf
 
-# FIX PERMISSIONS for var/cache & Hydrator dirs
-RUN chown -R www-data:www-data var && chmod -R 775 var
+# Donner les bons droits à www-data
+RUN chown -R www-data:www-data /var/www/html && chmod -R 775 /var/www/html/var
+
+# Exécuter en tant que www-data
+USER www-data
+
