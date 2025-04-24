@@ -7,11 +7,15 @@
   margin-top: 1rem
   
 .admin-dashboard-title
-  font-size: 2rem
-  margin-bottom: 1rem
+  font-size: var.$font-size-h1
+  margin-bottom: 2rem
 
 .dashboard-section
   margin-bottom: 2rem
+
+  h2
+    margin-bottom: 1rem
+    font-size: var.$font-size-h3
 
 .stat-widget
   background-color: rgba(var.$light-green, 0.5)
@@ -37,16 +41,21 @@
   width: 100%
   border-collapse: collapse
 
+
   th, td
     padding: 10px
     text-align: left
     border-bottom: 1px solid #ccc
+    margin-bottom: 1rem
 
   th
-    background-color: #f8f8f8
+    background-color: var.$dark-green
+    color: var.$white
 
   tr:hover
-    background-color: #f9f9f9
+    background-color: var.$light-green
+    a
+      color: var.$dark-green
 
 .badge--pending
   background-color: #ffc107  // Jaune

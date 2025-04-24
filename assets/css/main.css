@@ -540,7 +540,6 @@ a {
   background: #2b4743;
   color: #efe4d5;
   padding: 1rem 2rem;
-  text-align: center;
 }
 .footer__container {
   display: flex;
@@ -548,6 +547,8 @@ a {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  height: 100%;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .footer__container {
@@ -566,6 +567,7 @@ a {
   gap: 1rem;
   padding: 0;
   margin: 0;
+  align-items: center;
 }
 @media (min-width: 768px) {
   .footer .footer__list-links {
@@ -765,7 +767,7 @@ a {
 }
 .article__page article .article__category-tags .article__category {
   font-size: 1.6rem;
-  color: #38d6c2;
+  color: #ea638c;
   margin-bottom: 1rem;
 }
 .article__page article .article__category-tags .article__tags {
@@ -961,12 +963,16 @@ body {
 }
 
 .admin-dashboard-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .dashboard-section {
   margin-bottom: 2rem;
+}
+.dashboard-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
 }
 
 .stat-widget {
@@ -1000,12 +1006,17 @@ body {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
 }
 .dashboard-table th {
-  background-color: #f8f8f8;
+  background-color: #2b4743;
+  color: #efe4d5;
 }
 .dashboard-table tr:hover {
-  background-color: #f9f9f9;
+  background-color: #38d6c2;
+}
+.dashboard-table tr:hover a {
+  color: #2b4743;
 }
 
 .badge--pending {
@@ -1244,6 +1255,7 @@ body {
 a {
   text-decoration: none;
   color: #38d6c2;
+  font-weight: bold;
   cursor: pointer;
 }
 a:hover {
