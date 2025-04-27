@@ -44,7 +44,7 @@
     
         <h3>Ajouter un commentaire</h3>
         <div class="add-comment-form">
-            <form method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
+            <form class="form" method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
                 {{ form_start(form) }}
                     <div>
                         {{ form_label(form.username, null, {'label_attr': {'class': 'label'}}) }}

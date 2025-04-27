@@ -27,16 +27,6 @@ class CommentType extends AbstractType
             ->add('comment', TextareaType::class, [
                 'label' => 'Votre commentaire',
                 'required' => true,
-            ])
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'En attente' => 'en attente',
-                    'Validé' => 'validé',
-                    'Refusé' => 'refusé',
-                ],
-                'data' => $options['data']->getStatus(), // Valeur par défaut
-                'label' => 'Statut',
-                'required' => true,
             ]);
     }
 
