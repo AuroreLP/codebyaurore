@@ -31,9 +31,9 @@ class Comment
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $token = null;
 
-    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments', cascade:['remove'])]
     #[ORM\JoinColumn(nullable: false)] // Un commentaire DOIT être rattaché à un article
-    private ?Article $article = null;
+    private $article;
 
     public function __construct()
     {

@@ -4,9 +4,9 @@
    <div class="container">
       <h2>Nouvel article</h2>
 
-      {{ include('partials/_flash_messages.html.twig') }}
-
       <form class="form form--article" method="post" action="{{ path('article.new') }}">
+
+        {{ include('partials/_flash_messages.html.twig') }}
 
          {{ form_start(form) }}
 

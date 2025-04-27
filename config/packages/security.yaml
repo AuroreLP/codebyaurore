@@ -18,7 +18,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: admin
+                default_target_path: admin.dashboard
             logout:
                 path: app_logout
                 target: app_login
@@ -29,7 +29,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: admin
+                default_target_path: admin.dashboard
             logout:
                 path: app_logout
                 target: app_login
