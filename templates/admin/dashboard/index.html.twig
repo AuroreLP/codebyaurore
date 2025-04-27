@@ -104,7 +104,7 @@
                     <td>{{ message.createdAt | date("d-m-Y") }}</td>
                     <td><strong>{{ message.firstname }} {{ message.lastname }}</strong><br><small>{{ message.email }}</small></td>
                     <td>{{ message.subject }}...</td>
-                    <td>{{ message.content | slice(0, 50) }}...</td>
+                    <td><a class="button--light-green" href="{{ path('admin.message.show', { id: message.id }) }}">Voir le message</a></td>
                 </tr>
             {% else %}
                 <tr>

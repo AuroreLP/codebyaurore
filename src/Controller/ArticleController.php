@@ -126,6 +126,12 @@ class ArticleController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Supprimer les commentaires associés à l'article
+        $comments = $em->getRepository(Comment::class)->findBy(['article' => $article]);
+        foreach ($comments as $comment) {
+            $em->remove($comment);
+        }
+
         $em->remove($article);
         $em->flush();
         $this->addFlash('success', 'L\'article a bien été supprimé');

@@ -12,8 +12,7 @@
             <th>Article</th>
             <th>Status</th>
             <th>Nom & Email</th>
-            <th>Message</th>
-            <th>Actions</th>
+            <th>Commentaires</th>
         </tr>
     </thead>
     <tbody>
@@ -39,17 +38,6 @@
                     <small>{{ comment.email }}</small>
                 </td>
                 <td>{{ comment.comment | slice(0, 80) }}{% if comment.comment|length > 80 %}...{% endif %}</td>
-                <td>
-                    {% if comment.status == 'en attente' %}
-                        <a href="{{ path('admin.comment.validate', { 'id': comment.id }) }}"
-                           class="button--light-green">Valider</a>
-                        <a href="{{ path('admin.comment.refuse', { 'id': comment.id }) }}"
-                           class="button--delete"
-                           onclick="return confirm('Refuser ce commentaire ?');">Refuser</a>
-                    {% else %}
-                        <span class="no-action">-</span>
-                    {% endif %}
-                </td>
             </tr>
                     {% else %}
             <tr>
