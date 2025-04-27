@@ -58,7 +58,8 @@ class CommentController extends AbstractController
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
-            'delete_forms' => $deleteForms,  // Passer les formulaires de suppression à la vue
+            'deleteForms' => $deleteForms,  // Passer les formulaires de suppression à la vue
+            'comment' => $comment,
             'comments' => $comments,  // Passer les commentaires triés à la vue
     ]);
     }
@@ -82,6 +83,7 @@ class CommentController extends AbstractController
         if (!$article) {
             throw $this->createNotFoundException('Article non trouvé');
         }
+
 
         // création d'un nouveau commentaire
         $comment = new Comment();
@@ -111,8 +113,8 @@ class CommentController extends AbstractController
         // Rendu du formulaire
         return $this->render('article/show.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
-            'comment' => $comment, 
+            'form' => $form->createView(), 
+            'comments' => $article->getComments(),
         ]);
     }
 

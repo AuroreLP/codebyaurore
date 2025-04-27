@@ -39,10 +39,14 @@
                 <div class="comment__buttons">
                     <a class="button--light-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
 
-                    <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
-                        {{ form_row(delete_forms[existingComment.id]._token) }}
-                        <button class="button--delete" type="submit">Supprimer</button>
-                    </form>
+                    {% if deleteForms[existingComment.id] is defined %}
+                        <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
+                            {{ form_row(deleteForms[existingComment.id]._token) }}
+                            <button class="button--delete" type="submit">Supprimer</button>
+                        </form>
+                    {% else %}
+                        <p>Formulaire de suppression non disponible.</p>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
@@ -52,6 +56,17 @@
         <hr class="comment__separator">
     
         <h4>Ajouter un commentaire</h4>
+
+        {% if form.vars.errors|length > 0 %}
+            <div class="error-message">
+                <ul>
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <div class="comment__form">
             <form class="form" method="post" action="{{ path('comment.new', { 'slug': article.slug }) }}">
                 {{ form_start(form) }}
@@ -72,7 +87,7 @@
                     </div>
     
                     <button class="button--dark-green" type="submit">Envoyer</button>
-                    {{ form_end(form, {'render_rest': false}) }}
+                    {{ form_end(form) }}
             </form>
         </div>
     </div>

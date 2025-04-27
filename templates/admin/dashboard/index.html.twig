@@ -30,30 +30,23 @@
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Article</th>
-                <th>Status</th>
-                <th>Nom & Email</th>
-                <th>Message</th>
                 <th>Actions</th>
+                <th>Message</th>
+                <th>Article</th>
+                <th>Nom & Email</th>
             </tr>
         </thead>
         <tbody>
             {% for comment in comments %}
                 <tr>
                     <td>{{ comment.publishedAt | date("Y-m-d H:i") }}</td>
-                    <td><a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
                     <td>
-                        <span class="badge 
-                            {% if comment.status == 'en attente' %}badge--pending{% endif %}">
-                            {{ comment.status }}
-                        </span>
+                        <a href="{{ path('admin.comment.validate', { 'id': comment.id }) }}" class="button--dark-green">Valider</a>
+                        <a href="{{ path('admin.comment.refuse', { 'id': comment.id }) }}" class="button--delete">Refuser</a>
                     </td>
-                    <td><strong>{{ comment.username }}</strong><br><small>{{ comment.email }}</small></td>
                     <td>{{ comment.comment | slice(0, 50) }}...</td>
-                    <td>
-                        <a href="{{ path('admin.comment.validate', { 'id': comment.id }) }}" class="btn btn--validate">Valider</a>
-                        <a href="{{ path('admin.comment.refuse', { 'id': comment.id }) }}" class="btn btn--refuse">Refuser</a>
-                    </td>
+                    <td><a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
+                    <td><strong>{{ comment.username }}</strong><br><small>{{ comment.email }}</small></td> 
                 </tr>
             {% else %}
                 <tr>
