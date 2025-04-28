@@ -66,6 +66,13 @@ COPY . .
 COPY docker/php/vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default.conf
 
+# Heroku oblige Apache à écouter sur $PORT
+ENV PORT=8080
+RUN sed -i "s/80/\${PORT}/g" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+
+# Installer dépendances PHP pour production
+RUN composer install --no-dev --optimize-autoloader
+
 # Donner les bons droits à www-data
 RUN chown -R www-data:www-data /var/www/html && chmod -R 775 /var/www/html/var
 
