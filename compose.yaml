@@ -22,15 +22,17 @@ services:
     container_name: codebyaurore_mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_DATABASE: codebyaurore
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3307:3306"
     volumes:
       - ./var/db_data:/var/lib/mysql
     networks:
       - codebyaurore
+    env_file:
+      - .env.local
 
   phpmyadmin:
     image: phpmyadmin
