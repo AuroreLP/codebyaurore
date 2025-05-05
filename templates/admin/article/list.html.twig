@@ -9,56 +9,59 @@
         <p>
             <a class="button--dark-green" href="{{ path('article.new')}}">+ Nouvel article</a>
         </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Date de publication</th>
-                    <th>Titre</th>
-                    <th>Slug</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for article in articles %}
-                <tr class="{{ article.status == 'draft' ? 'article--draft' : '' }}">
-                    <td>{{ article.id }}</td>
-                    <td>
-                        {% if article.publishedAt %}
-                            {{ article.publishedAt|date("d.m.y") }}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date de publication</th>
+                        <th>Titre</th>
+                        <th>Slug</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                    <tr class="{{ article.status == 'draft' ? 'article--draft' : '' }}">
+                        <td data-cell="id">{{ article.id }}</td>
+                        <td data-cell="Date de publication">
+                            {% if article.publishedAt %}
+                                {{ article.publishedAt|date("d.m.y") }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td data-cell="Titre">{{ article.title }}</td>
+                        <td data-cell="slug">{{ article.slug }}</td>
+                        <td data-cell="Statut">
+                            {% if article.status == 'draft' %}
+                            <span class="status status--draft">Brouillon</span>
+                        {% elseif article.status == 'ready' %}
+                            <span class="status status--ready">Prêt</span>
                         {% else %}
-                            -
+                            <span class="status status--published">Publié</span>
                         {% endif %}
-                    </td>
-                    <td>{{ article.title }}</td>
-                    <td>{{ article.slug }}</td>
-                    <td>
-                        {% if article.status == 'draft' %}
-                        <span class="status status--draft">Brouillon</span>
-                    {% elseif article.status == 'ready' %}
-                        <span class="status status--ready">Prêt</span>
+                        </td>
+                        <td data-cell="Actions" class="d-flex gap-1">
+        
+                            <a class="button--light-green" href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
+        
+                            <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="button--delete" type="submit">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
                     {% else %}
-                        <span class="status status--published">Publié</span>
-                    {% endif %}
-                    </td>
-                    <td class="d-flex gap-1">
-    
-                        <a class="button--light-green" href="{{ path('article.edit', {id: article.id}) }}">Editer</a>
-    
-                        <form action="{{ path('article.delete', {id: article.id}) }}" method="post">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button class="button--delete" type="submit">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td>Aucun article trouvé</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <tr>
+                        <td data-cell="Aucun">Aucun article trouvé</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
     </section>    
   </main>
 {% endblock %}

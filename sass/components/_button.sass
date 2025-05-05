@@ -1,10 +1,17 @@
 @use "../abstracts/variables" as var
 @use "../abstracts/mixins" as mixin
     
+.button-wrapper
+    text-align: center
+
+
 .button
     background-color: transparent
     border: solid 2px var.$white
     color: var.$white
+    font-family: var.$font-family
+    font-weight: 600
+    font-size: var.$font-size-p
     border-radius: 0.5rem
     margin-top: 0.5rem
     padding: 0.5rem 0.75rem
@@ -52,3 +59,22 @@
             color: var.$pink
             background-color: transparent
             border: solid 2px var.$pink
+
+
+// BADGES POUR LES COMMENTAIRES
+.badge
+    font-family: var.$font-family
+    font-weight: 600
+    font-size: var.$font-size-p
+    color: white
+    padding: 5px 10px
+    &--pending
+        @extend .badge
+        white-space: nowrap 
+        background-color: #edc54c
+    &--validated
+        @extend .badge
+        background-color: var.$light-green
+    &--delete
+        @extend .badge
+        background-color: var.$pink

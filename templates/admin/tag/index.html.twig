@@ -20,10 +20,10 @@
     <tbody>
       {% for tag in tags %}
         <tr>
-          <td>{{ tag.id }}</td>
-          <td>{{ tag.name }}</td>
-          <td>{{ tag.slug }}</td>
-          <td>
+          <td data-cell="Id">{{ tag.id }}</td>
+          <td data-cell="Nom">{{ tag.name }}</td>
+          <td data-cell="Slug">{{ tag.slug }}</td>
+          <td data-cell="Action">
             <a class="button--light-green" href="{{ path('admin.tags.edit', {id: tag.id}) }}">Modifier</a>
             <form method="post" action="{{ path('admin.tags.delete', {id: tag.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer ce tag ?');">
               <input type="hidden" name="_token" value="{{ csrf_token('delete_tag_' ~ tag.id) }}">

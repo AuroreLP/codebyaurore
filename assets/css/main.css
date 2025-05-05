@@ -902,59 +902,6 @@ body {
   margin-bottom: 20px;
 }
 
-.comment-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-}
-.comment-table th, .comment-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
-}
-.comment-table th {
-  background: #2b4743;
-  color: #efe4d5;
-}
-.comment-table .badge {
-  border-radius: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  -moz-column-gap: 0.5rem;
-       column-gap: 0.5rem;
-  font-size: 0.9rem;
-  text-transform: capitalize;
-}
-.comment-table .badge--pending {
-  background-color: #ffe08a;
-  color: #7a5901;
-}
-.comment-table .btn {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-  margin: 0 0.2rem 0.2rem 0;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.comment-table .btn--validate {
-  background-color: #c8facc;
-  color: #0d5f16;
-}
-.comment-table .btn--refuse {
-  background-color: #ffcccc;
-  color: #8a1d1d;
-}
-.comment-table .no-action {
-  color: #aaa;
-  font-style: italic;
-}
-
 .dashboard-grid {
   display: flex;
   flex-direction: column;
@@ -1013,47 +960,10 @@ body {
   color: #efe4d5;
 }
 .dashboard-table tr:hover {
-  background-color: #38d6c2;
+  background-color: #ebddca;
 }
 .dashboard-table tr:hover a {
   color: #2b4743;
-}
-
-.badge--pending {
-  background-color: #edc54c;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.badge--validated {
-  background-color: #38d6c2;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.badge--refused {
-  background-color: #ea638c;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.btn--validate {
-  background-color: #2b4743;
-  color: white;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.btn--refuse {
-  background-color: #ea638c;
-  color: white;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 5px;
 }
 
 /* Desktop : côte à côte */
@@ -1063,10 +973,17 @@ body {
     align-items: stretch;
   }
 }
-.button, .table tbody tr:nth-child(even) td .button, .button--delete, .button--dark-green, .button--light-green {
+.button-wrapper {
+  text-align: center;
+}
+
+.button, .button--delete, .button--dark-green, .button--light-green {
   background-color: transparent;
   border: solid 2px #efe4d5;
   color: #efe4d5;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
   padding: 0.5rem 0.75rem;
@@ -1076,7 +993,7 @@ body {
        column-gap: 0.5rem;
   cursor: pointer;
 }
-.button:hover, .table tbody tr:nth-child(even) td .button:hover, .button--delete:hover, .button--dark-green:hover, .button--light-green:hover {
+.button:hover, .button--delete:hover, .button--dark-green:hover, .button--light-green:hover {
   border: solid 2px #38d6c2;
   color: #38d6c2;
 }
@@ -1117,52 +1034,77 @@ body {
   border: solid 2px #ea638c;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 30px;
-  color: #efe4d5;
-  border: solid 2px #2b4743;
-  background-color: #2b4743;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px #d5d5d5;
+.badge, .badge--delete, .badge--validated, .badge--pending {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  padding: 5px 10px;
 }
-.table thead {
-  background-color: #efe4d5;
-  color: #2b4743;
+.badge--pending {
+  white-space: nowrap;
+  background-color: #edc54c;
 }
-.table tbody tr:nth-child(even) {
-  background-color: #efe4d5;
-  color: #2b4743;
-}
-.table tbody tr td {
-  padding: 12px 15px;
-  align-content: center;
-}
-.table tbody tr:nth-child(even) td .button {
-  border: solid 2px #2b4743;
-  color: #2b4743;
-  background-color: transparent;
-}
-.table tbody tr:nth-child(even) td .button:hover {
+.badge--validated {
   background-color: #38d6c2;
-  color: #2b4743;
 }
-.table tbody tr:nth-child(odd) td .button {
-  background-color: #2b4743;
-  color: #efe4d5;
-}
-.table tbody tr:nth-child(odd) td .button:hover {
-  background-color: #38d6c2;
-  color: #2b4743;
-}
-.table .d-flex {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
+.badge--delete {
+  background-color: #ea638c;
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  border: 1px solid #ccc;
+}
+.table th, .table td {
+  padding: 1rem;
+  text-align: center;
+}
+.table th {
+  background: #2b4743;
+  color: #efe4d5;
+}
+.table tr:nth-of-type(2n) {
+  background: #ebddca;
+}
+
+@media (max-width: 650px) {
+  th {
+    display: none;
+  }
+  tr {
+    border-bottom: 1px solid #ccc;
+    display: block;
+  }
+  td {
+    display: block;
+    gap: 1rem;
+    display: flex;
+    align-content: left;
+    align-items: center;
+  }
+  td:first-child {
+    padding-top: 1rem;
+  }
+  td:last-child {
+    padding-bottom: 1rem;
+  }
+  td::before {
+    content: attr(data-cell) " : ";
+    font-weight: 700;
+  }
+}
 .form {
   max-width: 400px;
   margin: 3rem auto;
@@ -1173,6 +1115,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+.form h1 {
+  font-size: 2.5rem;
 }
 .form label {
   font-weight: 600;
@@ -1269,4 +1214,45 @@ a:hover {
 .a-nav:hover {
   font-weight: bold;
   color: #2b4743;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.checkbox input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #38d6c2;
+  cursor: pointer;
+}
+.checkbox label {
+  margin: 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.tag-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.tag-checkbox .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag-checkbox .checkbox-item input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #38d6c2;
+  cursor: pointer;
+}
+.tag-checkbox .checkbox-item label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  cursor: pointer;
+  display: inline;
 }/*# sourceMappingURL=main.css.map */

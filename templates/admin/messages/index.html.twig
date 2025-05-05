@@ -20,13 +20,13 @@
     <tbody>
         {% for message in messages %}
             <tr>
-                <td>{{ message.createdAt | date("Y-m-d") }}</td>
-                <td>{{ message.lastname }}</td>
-                <td>{{ message.firstname }}</td>
-                <td>{{ message.phone }}</td>
-                <td>{{ message.email }}</td>
-                <td>{{ message.subject }}</td>
-                <td><a class="button--light-green" href="{{ path('admin.message.show', { id: message.id }) }}">Voir le message</a></td>
+                <td data-cell="Date">{{ message.createdAt | date("Y-m-d") }}</td>
+                <td data-cell="Nom">{{ message.lastname }}</td>
+                <td data-cell="Prénom">{{ message.firstname }}</td>
+                <td data-cell="Téléphone">{{ message.phone }}</td>
+                <td data-cell="Email">{{ message.email }}</td>
+                <td data-cell="Sujet">{{ message.subject }}</td>
+                <td data-cell="Action"><a class="button--light-green" href="{{ path('admin.message.show', { id: message.id }) }}">Voir le message</a></td>
             </tr>
         {% endfor %}
     </tbody>

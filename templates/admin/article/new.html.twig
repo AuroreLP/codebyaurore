@@ -2,9 +2,10 @@
 
 {% block body %}
    <div class="container">
-      <h2>Nouvel article</h2>
 
       <form class="form form--article" method="post" action="{{ path('article.new') }}">
+
+        <h1>Nouvel article</h1>
 
         {{ include('partials/_flash_messages.html.twig') }}
 
@@ -25,10 +26,25 @@
                {{ form_widget(form.category, {'attr': {'class': 'select'}}) }}
                {{ form_errors(form.category) }}
              </div>
-             <div>
+             <div class="tag-checkbox">
               {{ form_label(form.tags, null, {'label_attr': {'class': 'label'}}) }}
-              {{ form_widget(form.tags, {'attr': {'class': 'select', 'multiple': 'multiple'}}) }}
+              {% for child in form.tags %}
+                <div class="checkbox-item">
+                  {{ form_widget(child) }}
+                  {{ form_label(child) }}
+                </div>
+              {% endfor %}
               {{ form_errors(form.tags) }}
+            </div>
+            <div class="tag-form__group">
+              {{ form_label(form.status, null, {'label_attr': {'class': 'label'}}) }}
+              {{ form_widget(form.status, {'attr': {'class': 'select'}}) }}
+              {{ form_errors(form.status) }}
+            </div>
+            <div class="tag-form__group">
+              {{ form_label(form.publishedAt, null, {'label_attr': {'class': 'label'}}) }}
+              {{ form_widget(form.publishedAt, {'attr': {'class': 'flatpickr'}}) }}
+              {{ form_errors(form.publishedAt) }}
             </div>
              <div class="tag-form__group">
                {{ form_label(form.metaDescription, null, {'label_attr': {'class': 'label'}}) }}
@@ -40,6 +56,7 @@
                {{ form_widget(form.content, {'attr': {'class': 'textarea editor'}}) }}
                {{ form_errors(form.content) }}
              </div>
+             
              {{ form_row(form.save, {
               'label': 'Créer l\'article',
               'attr': {'class': 'button--dark-green'}
