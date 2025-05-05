@@ -902,59 +902,6 @@ body {
   margin-bottom: 20px;
 }
 
-.comment-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-}
-.comment-table th, .comment-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
-}
-.comment-table th {
-  background: #2b4743;
-  color: #efe4d5;
-}
-.comment-table .badge {
-  border-radius: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  -moz-column-gap: 0.5rem;
-       column-gap: 0.5rem;
-  font-size: 0.9rem;
-  text-transform: capitalize;
-}
-.comment-table .badge--pending {
-  background-color: #ffe08a;
-  color: #7a5901;
-}
-.comment-table .btn {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-  margin: 0 0.2rem 0.2rem 0;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.comment-table .btn--validate {
-  background-color: #c8facc;
-  color: #0d5f16;
-}
-.comment-table .btn--refuse {
-  background-color: #ffcccc;
-  color: #8a1d1d;
-}
-.comment-table .no-action {
-  color: #aaa;
-  font-style: italic;
-}
-
 .dashboard-grid {
   display: flex;
   flex-direction: column;
@@ -1013,47 +960,10 @@ body {
   color: #efe4d5;
 }
 .dashboard-table tr:hover {
-  background-color: #38d6c2;
+  background-color: #ebddca;
 }
 .dashboard-table tr:hover a {
   color: #2b4743;
-}
-
-.badge--pending {
-  background-color: #edc54c;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.badge--validated {
-  background-color: #38d6c2;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.badge--refused {
-  background-color: #ea638c;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.btn--validate {
-  background-color: #2b4743;
-  color: white;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.btn--refuse {
-  background-color: #ea638c;
-  color: white;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 5px;
 }
 
 /* Desktop : côte à côte */
@@ -1122,6 +1032,24 @@ body {
   color: #ea638c;
   background-color: transparent;
   border: solid 2px #ea638c;
+}
+
+.badge, .badge--delete, .badge--validated, .badge--pending {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  padding: 5px 10px;
+}
+.badge--pending {
+  white-space: nowrap;
+  background-color: #edc54c;
+}
+.badge--validated {
+  background-color: #38d6c2;
+}
+.badge--delete {
+  background-color: #ea638c;
 }
 
 h1 {
