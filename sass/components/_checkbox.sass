@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as var
+
+.checkbox
+  display: flex
+  align-items: center
+  gap: 0.5rem
+
+  input[type='checkbox']
+    // Optionnel : styles personnalisés
+    width: 1rem
+    height: 1rem
+    accent-color: var.$light-green
+    cursor: pointer
+
+
+  label
+    margin: 0
+    font-size: 1rem
+    cursor: pointer

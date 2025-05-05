@@ -1063,10 +1063,17 @@ body {
     align-items: stretch;
   }
 }
+.button-wrapper {
+  text-align: center;
+}
+
 .button, .table tbody tr:nth-child(even) td .button, .button--delete, .button--dark-green, .button--light-green {
   background-color: transparent;
   border: solid 2px #efe4d5;
   color: #efe4d5;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
   padding: 0.5rem 0.75rem;
@@ -1174,6 +1181,9 @@ body {
   flex-direction: column;
   gap: 1.5rem;
 }
+.form h1 {
+  font-size: 2.5rem;
+}
 .form label {
   font-weight: 600;
   color: #2b4743;
@@ -1269,4 +1279,21 @@ a:hover {
 .a-nav:hover {
   font-weight: bold;
   color: #2b4743;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.checkbox input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #38d6c2;
+  cursor: pointer;
+}
+.checkbox label {
+  margin: 0;
+  font-size: 1rem;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

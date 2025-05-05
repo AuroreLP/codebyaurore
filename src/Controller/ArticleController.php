@@ -4,16 +4,10 @@ namespace App\Controller;
 
 use App\Form\ArticleType;
 use App\Entity\Article;
-use App\Entity\Category;
 use App\Entity\Comment;
-use App\Entity\Tag;
-use App\Form\CommentType;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
