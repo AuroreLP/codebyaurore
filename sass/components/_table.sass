@@ -1,55 +1,54 @@
 @use "../abstracts/variables" as var
 @use "../components/button"
 
-    
+
+
+h1
+  font-size: var.$font-size-h1
+
+.table-wrapper
+  width: 100%
+
+  
 .table
   width: 100%
+  min-width: 600px 
   border-collapse: collapse
-  margin-top: 30px
-  color: var.$white
-  border: solid 2px var.$dark-green
-  background-color: var.$dark-green
-  border-radius: 10px
-  box-shadow: 0 2px 5px var.$light-grey
+  margin-top: 2rem
+  border: 1px solid #ccc
 
-  thead
-    background-color: var.$white
-    color: var.$dark-green
+  th, td
+    padding: 1rem
+    text-align: center
+
+  th
+    background: var.$dark-green
+    color: var.$white
+
+  tr:nth-of-type(2n)
+    background: darken(var.$white, 3)
 
 
-  tbody
-    tr
-      &:nth-child(even)
-        background-color: var.$white
-        color: var.$dark-green
-      td
-        padding: 12px 15px
-        align-content: center
 
-      // Boutons dans les lignes paires (background-color: var.$white)
-    tr:nth-child(even) td .button
-      @extend .button
-      border: solid 2px var.$dark-green
-      color: var.$dark-green
-      background-color: transparent
-      &:hover
-        background-color: var.$light-green
-        color: var.$dark-green
+@media (max-width: 650px)
+  th
+    display: none
+  tr
+    border-bottom: 1px solid #ccc
+    display: block
 
-    // Boutons dans les lignes impaires (background-color: var.dark-green)
-    tr:nth-child(odd) td .button
-      background-color: var.$dark-green
-      color: var.$white
-      &:hover
-        background-color: var.$light-green
-        color: var.$dark-green
-
-  .d-flex
+  td
+    display: block
+    gap: 1rem
     display: flex
-    gap: 10px
-    justify-content: center
+    align-content: left
     align-items: center
-
-
+  td:first-child
+    padding-top: 1rem
+  td:last-child
+    padding-bottom: 1rem
+  td::before
+    content: attr(data-cell) " : "
+    font-weight: 700
 
   

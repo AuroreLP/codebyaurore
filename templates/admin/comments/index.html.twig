@@ -5,7 +5,7 @@
 {% block body %}
 <h1>Commentaires reçus</h1>
 
-<table class="comment-table">
+<table class="table">
     <thead>
         <tr>
             <th>Date</th>
@@ -18,13 +18,11 @@
     <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.publishedAt | date("Y-m-d H:i") }}</td>
-                <td>
-                    <a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">
-                        {{ comment.article.title }}
-                    </a>
+                <td data-cell="Date de publication">{{ comment.publishedAt | date("Y-m-d H:i") }}</td>
+                <td data-cell="Article">
+                    {{ comment.article.title }}
                 </td>
-                <td>
+                <td data-cell="Statut">
                     <span class="badge 
                         {% if comment.status == 'en attente' %}badge--pending
                         {% elseif comment.status == 'validé' %}badge--validated
@@ -33,15 +31,15 @@
                         {{ comment.status }}
                     </span>
                 </td>
-                <td>
+                <td data-cell="Pseudo">
                     <strong>{{ comment.username }}</strong><br>
                     <small>{{ comment.email }}</small>
                 </td>
-                <td>{{ comment.comment | slice(0, 80) }}{% if comment.comment|length > 80 %}...{% endif %}</td>
+                <td data-cell="Commentaire">{{ comment.comment | slice(0, 80) }}{% if comment.comment|length > 80 %}...{% endif %}</td>
             </tr>
                     {% else %}
             <tr>
-                <td colspan="6" class="text-center">Aucun commentaire trouvé.</td>
+                <td data-cell="Aucun commentaire" colspan="6" class="text-center">Aucun commentaire trouvé.</td>
             </tr>
         {% endfor %}
     </tbody>

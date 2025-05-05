@@ -24,10 +24,10 @@
     <tbody>
     {% for category in categories %}
       <tr>
-        <td>{{ category.id }}</td>
-        <td>{{ category.name }}</td>
-        <td>{{ category.slug }}</td>
-        <td class="d-flex gap-1">
+        <td data-cell="Id">{{ category.id }}</td>
+        <td data-cell="Nom">{{ category.name }}</td>
+        <td data-cell="Slug">{{ category.slug }}</td>
+        <td data-cell="Actions" class="d-flex gap-1">
           <a class="button--light-green" href="{{ path('admin.categories.edit', {'id': category.id}) }}">Modifier</a>
 
           <form method="post" action="{{ path('admin.categories.delete', {'id': category.id}) }}" onsubmit="return confirm('Confirmer la suppression ?')">
