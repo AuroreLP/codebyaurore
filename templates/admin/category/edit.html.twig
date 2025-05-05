@@ -3,7 +3,8 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<div class="category-form">
+<div class="form">
+
   <h1 class="category-form__title">{{ title }}</h1>
 
   {{ form_start(form, {'attr': {'class': 'category-form__form'}}) }}
@@ -12,10 +13,15 @@
       {{ form_widget(form.name, {'attr': {'class': 'category-form__input'}}) }}
       {{ form_errors(form.name) }}
     </div>
+    <div class="category-form__group">
+      {{ form_label(form.slug, null, {'label_attr': {'class': 'category-form__label'}}) }}
+      {{ form_widget(form.slug, {'attr': {'class': 'category-form__input'}}) }}
+      {{ form_errors(form.slug) }}
+    </div>
 
     <div class="category-form__actions">
-      <button type="submit" class="category-form__button category-form__button--submit">Enregistrer</button>
-      <a href="{{ path('admin.categories.index') }}" class="category-form__button category-form__button--back">Retour</a>
+      <button type="submit" class="button--dark-green">Enregistrer</button>
+      <a href="{{ path('admin.categories.index') }}" class="button--light-green">Retour</a>
     </div>
   {{ form_end(form) }}
 </div>
