@@ -16,62 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommentController extends AbstractController
-{
-    #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
-    public function showArticle(Request $request, string $slug, ArticleRepository $articleRepository, EntityManagerInterface $em): Response
-    {
-        $article = $articleRepository->findOneBy(['slug' => $slug]);
-
-        if (!$article) {
-            throw $this->createNotFoundException('Article non trouvé');
-        }
-
-        // Récupérer les commentaires de l'article et les trier par date de publication
-        $comments = $article->getComments()->toArray(); // Récupère les commentaires de l'article
-        usort($comments, fn($a, $b) => $b->getPublishedAt() <=> $a->getPublishedAt()); // Trie les commentaires par ordre décroissant
-
-        // Créer un nouveau commentaire
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setArticle($article);
-            $comment->setPublishedAt(new \DateTimeImmutable());
-
-            $em->persist($comment);
-            $em->flush();
-
-            $this->addFlash('success', 'Votre commentaire a été ajouté !');
-
-            // Rediriger vers la page de l'article pour afficher le nouveau commentaire
-            return $this->redirectToRoute('article.show', ['slug' => $slug]);
-        }
-
-        // Créer un tableau de formulaires de suppression pour chaque commentaire
-        $deleteForms = [];
-        foreach ($article->getComments() as $existingComment) {
-            $deleteForms[$existingComment->getId()] = $this->createDeleteForm($existingComment)->createView();
-        }
-
-        // Passer les commentaires triés à la vue
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
-            'deleteForms' => $deleteForms,  // Passer les formulaires de suppression à la vue
-            'comment' => $comment,
-            'comments' => $comments,  // Passer les commentaires triés à la vue
-    ]);
-    }
-
-    private function createDeleteForm(Comment $comment)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('comment.delete', ['id' => $comment->getId()]))
-            ->setMethod('DELETE') // Utilisation de DELETE au lieu de POST
-            ->getForm();
-    }
-    
+{    
     #[Route('/blog/{slug}/comment/new', name: 'comment.new', methods: ['POST'])]
     public function new(Request $request, string $slug, 
     ArticleRepository $articleRepository, EntityManagerInterface $em, EmailService $emailService): Response
@@ -104,10 +49,23 @@ class CommentController extends AbstractController
             $em->flush();
 
             // Envoyer un email avec le token pour valider le commentaire
-            $emailService->sendValidationEmail($comment);
+            $emailService->sendValidationEmail($comment, $article);
 
-            $this->addFlash('success', 'Commentaire ajouté avec succès! Un email de validation vous a été envoyé.');
+            $this->addFlash('success', 'Commentaire envoyé pour validation. Un email de validation vous sera envoyé.');
             return $this->redirectToRoute('article.show', ['slug' => $slug]);
+        }
+
+        // En cas d’erreur, on redirige vers la page article avec le formulaire rempli
+        $comments = $article->getComments()->toArray();
+        usort($comments, fn($a, $b) => $b->getPublishedAt() <=> $a->getPublishedAt());
+
+        $deleteForms = [];
+        foreach ($article->getComments() as $existingComment) {
+            $deleteForms[$existingComment->getId()] = $this->createFormBuilder()
+                ->setAction($this->generateUrl('comment.delete', ['id' => $existingComment->getId()]))
+                ->setMethod('DELETE')
+                ->getForm()
+                ->createView();
         }
 
         // Rendu du formulaire
@@ -115,6 +73,7 @@ class CommentController extends AbstractController
             'article' => $article,
             'form' => $form->createView(), 
             'comments' => $article->getComments(),
+            'deleteForms' => $deleteForms
         ]);
     }
 

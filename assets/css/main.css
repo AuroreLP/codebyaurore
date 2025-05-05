@@ -824,6 +824,9 @@ a {
 .article__page .comment__section h4 {
   font-size: 1.4rem;
 }
+.article__page .comment__section .disclaimer {
+  margin-top: 1rem;
+}
 .article__page .comment__section .comment__form {
   margin-top: 1rem;
 }

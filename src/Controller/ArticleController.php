@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Form\ArticleType;
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
+use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +20,7 @@ class ArticleController extends AbstractController
 {
 
     #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
-    public function show(string $slug, ArticleRepository $repository): Response
+    public function show(string $slug, ArticleRepository $repository, Request $request, EntityManagerInterface $em, EmailService $emailService, CommentRepository $commentRepository): Response
     {
         $article = $repository->findOneBy(['slug' => $slug]);
 
@@ -25,9 +28,25 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException('Article non trouvé');
         }
 
-        // Afficher l'article sans gérer le formulaire de commentaire ici
+        $comments = $commentRepository->findValidByArticle($article);
+        usort($comments, fn($a, $b) => $b->getPublishedAt() <=> $a->getPublishedAt());
+
+        $form = $this->createForm(CommentType::class);
+
+        $deleteForms = [];
+        foreach ($article->getComments() as $existingComment) {
+            $deleteForms[$existingComment->getId()] = $this->createFormBuilder()
+                ->setAction($this->generateUrl('comment.delete', ['id' => $existingComment->getId()]))
+                ->setMethod('DELETE')
+                ->getForm()
+                ->createView();
+        }
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'form' => $form->createView(),
+            'comments' => $comments,
+            'deleteForms' => $deleteForms
         ]);
     }
 

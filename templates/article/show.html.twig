@@ -34,20 +34,8 @@
     
         {% for existingComment in comments %}
             <div class="comment__card">
-                <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username }}</small>
                 <p class="comment__content">{{ existingComment.comment }}</p>
-                <div class="comment__buttons">
-                    <a class="button--light-green" href="{{ path('comment.edit', {id: existingComment.id}) }}">Modifier</a>
-
-                    {% if deleteForms[existingComment.id] is defined %}
-                        <form action="{{ path('comment.delete', {id: existingComment.id}) }}" method="POST">
-                            {{ form_row(deleteForms[existingComment.id]._token) }}
-                            <button class="button--delete" type="submit">Supprimer</button>
-                        </form>
-                    {% else %}
-                        <p>Formulaire de suppression non disponible.</p>
-                    {% endif %}
-                </div>
+                <small>Posté le {{ existingComment.publishedAt|date('d/m/Y H:i') }} par {{ existingComment.username }}</small>
             </div>
         {% else %}
             <p>Aucun commentaire pour cet article.</p>
@@ -56,6 +44,8 @@
         <hr class="comment__separator">
     
         <h4>Ajouter un commentaire</h4>
+
+        <p class="disclaimer">Votre email ne sera pas affiché, seulement le pseudo que vous aurez choisi.</p>
 
         {% if form.vars.errors|length > 0 %}
             <div class="error-message">
