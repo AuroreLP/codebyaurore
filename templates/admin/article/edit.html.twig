@@ -2,11 +2,12 @@
 
 {% block body %}
    <div class="container">
-      <h2>Modifier l'article</h2>
 
       {{ include('partials/_flash_messages.html.twig') }}
 
       <form class="form form--article" method="post" action="{{ path('article.edit', {id: article.id}) }}">
+
+        <h1>Modifier l'article</h1>
 
          {{ form_start(form) }}
 
@@ -25,11 +26,16 @@
                {{ form_widget(form.category, {'attr': {'class': 'select'}}) }}
                {{ form_errors(form.category) }}
              </div>
-             <div>
+             <div class="tag-checkbox">
               {{ form_label(form.tags, null, {'label_attr': {'class': 'label'}}) }}
-              {{ form_widget(form.tags, {'attr': {'class': 'select', 'multiple': 'multiple'}}) }}
+              {% for child in form.tags %}
+                <div class="checkbox-item">
+                  {{ form_widget(child) }}
+                  {{ form_label(child) }}
+                </div>
+              {% endfor %}
               {{ form_errors(form.tags) }}
-             </div>
+            </div>
              <div>
               {{ form_label(form.status, null, {'label_attr': {'class': 'label'}}) }}
               {{ form_widget(form.status, {'attr': {'class': 'select'}}) }}
