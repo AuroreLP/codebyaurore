@@ -1296,4 +1296,28 @@ a:hover {
   margin: 0;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.tag-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.tag-checkbox .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag-checkbox .checkbox-item input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #38d6c2;
+  cursor: pointer;
+}
+.tag-checkbox .checkbox-item label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  cursor: pointer;
+  display: inline;
 }/*# sourceMappingURL=main.css.map */

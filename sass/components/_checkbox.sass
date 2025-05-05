@@ -12,8 +12,32 @@
     accent-color: var.$light-green
     cursor: pointer
 
-
   label
     margin: 0
     font-size: 1rem
     cursor: pointer
+
+
+.tag-checkbox
+  display: flex
+  flex-direction: column
+  gap: 1rem // plus d'espace entre label général et les options
+
+  .checkbox-item // ajout d'une classe ciblée
+    display: flex
+    align-items: center
+    gap: 0.5rem
+
+    input[type='checkbox']
+      width: 1rem
+      height: 1rem
+      accent-color: var.$light-green
+      cursor: pointer
+
+    label
+      margin: 0
+      font-size: 1rem
+      font-weight: normal
+      cursor: pointer
+      display: inline
+
