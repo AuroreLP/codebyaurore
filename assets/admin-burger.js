@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const burger = document.getElementById('adminBurger');
-    const sidebar = document.getElementById('adminSidebar');
+    const toggleButton = document.getElementById('toggle-btn');
+    const sidebar = document.getElementById('sidebar');
 
-    burger.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        const expanded = sidebar.classList.contains('active');
-        burger.setAttribute('aria-expanded', expanded);
-    });
+    if (toggleButton && sidebar) {
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('close');
+            toggleButton.classList.toggle('rotate');
+        });
+    }
 });

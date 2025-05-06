@@ -504,6 +504,11 @@
   color: #38d6c2;
 }
 
+body.public {
+  display: block;
+  grid-template-columns: unset;
+}
+
 .nav {
   background-color: #efe4d5;
   box-shadow: 0 2px 2px #d5d5d5;
@@ -560,17 +565,15 @@
     display: inline-block;
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
-    line-height: 44px;
+    line-height: 15px;
   }
-  .nav__menu--item:hover {
+  .nav__menu--item:hover, .nav__menu--item.active {
     border-top: 3px solid #38d6c2;
     border-bottom: 3px solid #38d6c2;
     font-weight: 700;
     color: #2b4743;
   }
-  .nav__menu--item .nav__menu--item a.active {
-    border-top: 3px solid #38d6c2;
-    border-bottom: 3px solid #38d6c2;
+  .nav__menu--item.active a {
     font-weight: 700;
     color: #2b4743;
   }

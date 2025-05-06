@@ -19,54 +19,80 @@
             {% block importmap %}{{ importmap('app')}}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        <nav class="nav" id="main-navbar">
-            <div class="nav__container">
-                <a class="nav__logo" href="{{ path('home')}}">
-                    <img style="width: 50px;" src="{{ asset('assets/images/logo AL dark.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
-                </a>
-    
-                <span class="nav__burger" aria-label="Menu">
-                    <svg viewbox="0 0 100 80" width="30" height="30">
-                        <rect width="100" height="15" rx="8"></rect>
-                        <rect y="35" width="100" height="15" rx="8"></rect>
-                        <rect y="70" width="100" height="15" rx="8"></rect>
-                    </svg>
-                </span>
-    
-                <ul class="nav__menu">
-                    <li class="nav__menu--item">
-                        {% if not app.user %}
-                            <a class="a-nav" href="{{ path('app_login') }}">Connexion</a>
-                        {% else %}
-                            <a class="a-nav"  href="{{ path('app_logout') }}">Déconnexion</a>
-                        {% endif %}
-                    </li>
-                </ul>
+    <body class="{% block body_class %}admin{% endblock %}">
+        <nav id="sidebar">
+            <ul>
+                <li>
+                    <a class="nav__logo" href="{{ path('home')}}">
+                        <img class="logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
+                    </a>
+                </li>
+                <li>
+                    <button onclick=toggleSidebar() id="toggle-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+                    </button>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') == 'admin.dashboard' %}active{% endif %}">
+                    <a href="{{ path('admin.dashboard') }}">
+                        <img src="/assets/images/dashboard.png">
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') starts with 'admin.articles' %}active{% endif %}">
+                    <a href="{{ path('admin.articles') }}">
+                        <img src="/assets/images/article.png">
+                        <span>Articles</span>
+                    </a>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') starts with 'admin.comments' %}active{% endif %}">
+                    <a href="{{ path('admin.comments.index') }}">
+                        <img src="/assets/images/chat.png">
+                        <span>Commentaires</span>
+                    </a>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') starts with 'admin.messages' %}active{% endif %}">
+                    <a href="{{ path('admin.messages.index') }}">
+                        <img src="/assets/images/email.png">
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') starts with 'admin.categories' %}active{% endif %}">
+                    <a href="{{ path('admin.categories.index') }}">
+                        <img src="/assets/images/category.png">
+                        <span>Catégories</span>
+                    </a>
+                </li>
+                <li class="{% if app.request.attributes.get('_route') starts with 'admin.tags' %}active{% endif %}">
+                    <a href="{{ path('admin.tags.index') }}">
+                        <img src="/assets/images/price-tag.png">
+                        <span>Tags</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="login-li">
+                {% if not app.user %}
+                    <a href="{{ path('app_login') }}">
+                        <img src="/assets/images/input.png">
+                        <span>Connexion</span>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_logout') }}">
+                        <img src="/assets/images/logout.png">
+                        <span>Déconnexion</span>
+                    </a>
+                {% endif %}
             </div>
         </nav>
         <main class="dashboard">
-            {% include 'partials/_flash_messages.html.twig' %}
-            {% include 'partials/_sidebar.html.twig' %}
+            <div class="container">
+                {% include 'partials/_flash_messages.html.twig' %}
             <section class="content">
                 <div class="content__body">
                     <!-- Contenu principal ici -->
                     {% block body %}{% endblock %}
                 </div>
             </section>
-        </main>
-        <footer class="footer">
-            <div class="footer__container">
-                <img class="footer__container-logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
-                <ul class="footer__list-links">
-                    <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Mentions légales</a>
-                    </li>
-                    <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'article.' ? 'active' : '' }}" href="{{ path('home')}}">Politique de confidentialité</a>
-                    </li>
-                </ul>
             </div>
-        </footer>
+        </main>
     </body>
 </html>

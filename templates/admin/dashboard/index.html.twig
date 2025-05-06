@@ -39,14 +39,14 @@
         <tbody>
             {% for comment in comments %}
                 <tr>
-                    <td>{{ comment.publishedAt | date("Y-m-d H:i") }}</td>
-                    <td>
+                    <td data-cell="Date">{{ comment.publishedAt | date("Y-m-d H:i") }}</td>
+                    <td data-cell="Actions">
                         <a href="{{ path('admin.comment.validate', { 'id': comment.id }) }}" class="button--dark-green">Valider</a>
                         <a href="{{ path('admin.comment.refuse', { 'id': comment.id }) }}" class="button--delete">Refuser</a>
                     </td>
-                    <td>{{ comment.comment | slice(0, 50) }}...</td>
-                    <td><a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
-                    <td><strong>{{ comment.username }}</strong><br><small>{{ comment.email }}</small></td> 
+                    <td data-cell="Message">{{ comment.comment | slice(0, 50) }}...</td>
+                    <td data-cell="Article"><a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
+                    <td data-cell="Nom & Email"><strong>{{ comment.username }}</strong><br><small>{{ comment.email }}</small></td> 
                 </tr>
             {% else %}
                 <tr>
@@ -68,8 +68,8 @@
         <tbody>
             {% for article in articles %}
                 <tr>
-                    <td>{{ article.publishedAt | date("d-m-Y") }}</td>
-                    <td><a href="{{ path('article.show', { 'slug': article.slug }) }}">{{ article.title }}</a></td>
+                    <td data-cell="Date de publication">{{ article.publishedAt | date("d-m-Y") }}</td>
+                    <td data-cell="Titre"><a href="{{ path('article.show', { 'slug': article.slug }) }}">{{ article.title }}</a></td>
                 </tr>
             {% else %}
                 <tr>
@@ -94,10 +94,10 @@
         <tbody>
             {% for message in messages %}
                 <tr>
-                    <td>{{ message.createdAt | date("d-m-Y") }}</td>
-                    <td><strong>{{ message.firstname }} {{ message.lastname }}</strong><br><small>{{ message.email }}</small></td>
-                    <td>{{ message.subject }}...</td>
-                    <td><a class="button--light-green" href="{{ path('admin.message.show', { id: message.id }) }}">Voir le message</a></td>
+                    <td data-cell="Date">{{ message.createdAt | date("d-m-Y") }}</td>
+                    <td data-cell="Nom & Email"><strong>{{ message.firstname }} {{ message.lastname }}</strong><br><small>{{ message.email }}</small></td>
+                    <td data-cell="Sujet">{{ message.subject }}...</td>
+                    <td data-cell="Message"><a class="button--light-green" href="{{ path('admin.message.show', { id: message.id }) }}">Voir le message</a></td>
                 </tr>
             {% else %}
                 <tr>

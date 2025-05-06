@@ -1,6 +1,10 @@
 @use "../abstracts/variables" as var
 @use "../abstracts/functions" as fct
 
+body.public
+  display: block
+  grid-template-columns: unset
+
 .nav
     background-color: var.$background-color
     box-shadow: 0 2px 2px var.$light-grey
@@ -57,17 +61,16 @@
         display: inline-block
         border-top: 2px solid transparent
         border-bottom: 2px solid transparent
-        line-height: 44px
+        line-height: 15px
 
-        &:hover
+        &:hover,
+        &.active
             border-top: 3px solid var.$light-green
             border-bottom: 3px solid var.$light-green
             font-weight: 700
             color: var.$dark-green
 
-        .nav__menu--item a.active
-            border-top: 3px solid var.$light-green
-            border-bottom: 3px solid var.$light-green
+        &.active a
             font-weight: 700
             color: var.$dark-green
 

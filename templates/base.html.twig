@@ -22,7 +22,7 @@
         {% endblock %}
 
     </head>
-    <body>
+    <body class="{% block body_class %}public{% endblock %}">
         <nav class="nav" id="main-navbar">
             <div class="nav__container">
                 <a class="nav__logo" href="{{ path('home')}}">
@@ -38,15 +38,16 @@
                 </span>
     
                 <ul class="nav__menu">
-                    <li class="nav__menu--item">
-                        <a class="a-nav {{ app.request.attributes.get('_route') == 'home' ? 'active' : ''}}" href="{{ path('home')}}">Blog</a>
+                    <li class="nav__menu--item {% if app.request.attributes.get('_route') == 'home' %}active{% endif %}">
+                        <a class="a-nav" href="{{ path('home')}}">Blog</a>
                     </li>
-                    <li class="nav__menu--item">
-                        <a class="a-nav {{ app.request.attributes.get('_route') == 'about' ? 'active' : ''}}" href="{{ path('about')}}">A propos</a>
+                    <li class="nav__menu--item {% if app.request.attributes.get('_route') == 'about' %}active{% endif %}">
+                        <a class="a-nav" href="{{ path('about')}}">A propos</a>
                     </li>
-                    <li class="nav__menu--item">
-                        <a class="a-nav {{ app.request.attributes.get('_route') == 'contact' ? 'active' : ''}}" href="{{ path('contact')}}">Contact</a>
+                    <li class="nav__menu--item {% if app.request.attributes.get('_route') == 'contact' %}active{% endif %}">
+                        <a class="a-nav" href="{{ path('contact')}}">Contact</a>
                     </li>
+                </ul>
             </div>
         </nav>
         <main>
@@ -58,10 +59,10 @@
                 <img class="footer__container-logo" style="width: 50px;" src="{{ asset('assets/images/logo AL white.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
                 <ul class="footer__list-links">
                     <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'home' ? 'active' : ''}}" href="{{ path('mentions_legales') }}">Mentions légales</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'mentions_legales' ? 'active' : '' }}">Mentions légales</a>
                     </li>
                     <li class="footer__list--item">
-                        <a class="{{ app.current_route == 'home' ? 'active' : '' }}" href="{{ path('politique_confidentialite') }}">Politique de confidentialité</a>
+                        <a class="{{ app.request.attributes.get('_route') == 'politique_confidentialite' ? 'active' : '' }}">Politique de confidentialité</a>
                     </li>
                 </ul>
             </div>
