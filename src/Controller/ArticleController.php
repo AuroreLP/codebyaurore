@@ -19,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ArticleController extends AbstractController
 {
 
-    #[Route('/blog/{slug}', name: 'article.show', requirements: ['slug' => '[a-z0-9-]+'])]
+    #[Route('/blog/{slug}', name: 'blog.show', requirements: ['slug' => '[a-z0-9-]+'])]
     public function show(string $slug, ArticleRepository $repository, Request $request, EntityManagerInterface $em, EmailService $emailService, CommentRepository $commentRepository): Response
     {
         $article = $repository->findOneBy(['slug' => $slug]);

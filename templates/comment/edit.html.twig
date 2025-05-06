@@ -10,5 +10,5 @@
         <button type="submit">Enregistrer</button>
     {{ form_end(form) }}
 
-    <a href="{{ path('article.show', { slug: comment.article.slug }) }}">Retour à l'article</a>
+    <a href="{{ path('blog.show', { slug: comment.article.slug }) }}">Retour à l'article</a>
 {% endblock %}

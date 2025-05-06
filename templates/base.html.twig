@@ -25,7 +25,7 @@
     <body class="{% block body_class %}public{% endblock %}">
         <nav class="nav" id="main-navbar">
             <div class="nav__container">
-                <a class="nav__logo" href="{{ path('home')}}">
+                <a class="nav__logo" href="{{ path('blog')}}">
                     <img style="width: 50px;" src="{{ asset('assets/images/logo AL dark.png') }}" alt="Logo aurore le perff, développeuse web" loading="lazy">
                 </a>
     
@@ -38,8 +38,8 @@
                 </span>
     
                 <ul class="nav__menu">
-                    <li class="nav__menu--item {% if app.request.attributes.get('_route') == 'home' %}active{% endif %}">
-                        <a class="a-nav" href="{{ path('home')}}">Blog</a>
+                    <li class="nav__menu--item {% if app.request.attributes.get('_route') starts with 'blog' %}active{% endif %}">
+                        <a class="a-nav" href="{{ path('blog')}}">Blog</a>
                     </li>
                     <li class="nav__menu--item {% if app.request.attributes.get('_route') == 'about' %}active{% endif %}">
                         <a class="a-nav" href="{{ path('about')}}">A propos</a>
