@@ -475,7 +475,7 @@
   .footer__container {
     flex-direction: row;
     justify-content: space-between;
-    max-width: 1200px;
+    max-height: 60px;
     margin: 0 auto;
   }
 }
@@ -544,7 +544,6 @@ body.public {
   color: #2b4743;
 }
 .nav__menu--item:hover {
-  color: #38d6c2;
   font-weight: 600;
 }
 
