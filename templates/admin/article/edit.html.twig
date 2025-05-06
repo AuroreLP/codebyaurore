@@ -43,7 +43,7 @@
             </div>
              <div class="tag-form__group">
                {{ form_label(form.publishedAt, null, {'label_attr': {'class': 'label'}}) }}
-               {{ form_widget(form.publishedAt, {'attr': {'class': 'input datepicker'}}) }}
+               {{ form_widget(form.publishedAt, {'attr': {'class': 'flatpickr'}}) }}
                {{ form_errors(form.publishedAt) }}
              </div>
              <div class="tag-form__group">
@@ -85,6 +85,22 @@
             console.error(error);
         });
    </script>
+
+<!-- Style Flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+
+<!-- Script Flatpickr + langue FR -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/fr.js"></script>
+
+<script>
+  flatpickr(".flatpickr", {
+    enableTime: false,
+    dateFormat: "Y-m-d",
+    locale: "fr"
+  });
+</script>
+
 
 
 {% endblock %}

@@ -69,7 +69,7 @@
             {% for article in articles %}
                 <tr>
                     <td data-cell="Date de publication">{{ article.publishedAt | date("d-m-Y") }}</td>
-                    <td data-cell="Titre"><a href="{{ path('article.show', { 'slug': article.slug }) }}">{{ article.title }}</a></td>
+                    <td data-cell="Titre"><a href="{{ path('blog.show', { 'slug': article.slug }) }}">{{ article.title }}</a></td>
                 </tr>
             {% else %}
                 <tr>
