@@ -16,6 +16,7 @@ services:
       - mongodb
     networks:
       - codebyaurore
+    user: "33:33"
 ###> doctrine/doctrine-bundle ###
   mysql:
     image: mysql
