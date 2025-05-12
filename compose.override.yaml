@@ -1,0 +1,3 @@
+services:
+  www:
+    user: "1000:1000"
