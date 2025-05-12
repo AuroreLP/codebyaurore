@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     container_name: codebyaurore_php
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
       - ./:/var/www/html
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
@@ -14,10 +14,11 @@ services:
       - .env.local
     depends_on:
       - mongodb
+      - mysql
     networks:
       - codebyaurore
-    user: "33:33"
-###> doctrine/doctrine-bundle ###
+    # user: "33:33" à décommenter en production
+
   mysql:
     image: mysql
     container_name: codebyaurore_mysql
@@ -48,7 +49,7 @@ services:
       - codebyaurore
 
   mongodb:
-    image: mongo:6
+    image: mongo:6.0
     container_name: codebyaurore_mongodb
     ports:
       - "27017:27017"

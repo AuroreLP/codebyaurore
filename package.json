@@ -17,7 +17,6 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
-    "@symfony/stimulus-bundle": "^2.24.0",
     "core-js": "^3.41.0",
     "flatpickr": "^4.6.13"
   }

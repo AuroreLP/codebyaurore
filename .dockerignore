@@ -1,7 +1,8 @@
-node_modules
-vendor
-.env
-.git
+node_modules/
+vendor/
+.git/
 .gitignore
 Dockerfile
 compose.yaml
+/var/
+/public/bundles/
