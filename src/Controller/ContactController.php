@@ -11,6 +11,7 @@ use App\Service\MongoDBMessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,17 +46,19 @@ class ContactController extends AbstractController
             );
 
             // Envoi via EmailService
-            $this->emailService->sendContactEmail(
-                $message->getEmail(),
-                $message->getLastname(),
-                $message->getFirstname(),
-                $message->getPhone(),
-                $message->getSubject(),
-                $message->getContent()
-            );
-
-            // Afficher un message de confirmation (alt: utiliser des flash messages)
-            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+            try {
+                $this->emailService->sendContactEmail(
+                    $message->getEmail(),
+                    $message->getLastname(),
+                    $message->getFirstname(),
+                    $message->getPhone(),
+                    $message->getSubject(),
+                    $message->getContent()
+                );
+                $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+            } catch (\Throwable $e) {
+                $this->addFlash('danger', 'Erreur lors de l’envoi du mail : ' . $e->getMessage());
+            }
 
             // Rediriger ou afficher la page de contact
             return $this->redirectToRoute('contact');

@@ -2,48 +2,23 @@
 
 namespace App\Service;
 
-use App\Entity\Comment;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail as MimeTemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Twig\Environment;
 
 class EmailService
 {
     private MailerInterface $mailer;
     private Environment $twig;
-    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
         MailerInterface $mailer,
         Environment $twig,
-        UrlGeneratorInterface $urlGenerator
+        
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
-        $this->urlGenerator = $urlGenerator;
-    }
-
-    public function sendValidationEmail(Comment $comment): void
-    {
-        $validationUrl = $this->urlGenerator->generate(
-            'comment.validate',
-            ['token' => $comment->getToken()],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
-        $emailBody = $this->twig->render('emails/comment_validation.html.twig', [
-            'comment' => $comment,
-            'validationUrl' => $validationUrl,
-        ]);
-
-        $email = (new Email())
-            ->from('noreply@tonsite.fr')
-            ->to($comment->getEmail())
-            ->subject('Validez votre commentaire')
-            ->html($emailBody);
-
-        $this->mailer->send($email);
     }
 
     public function sendContactEmail(string $fromEmail, string $lastname, string $firstname, ?string $phone,
@@ -52,18 +27,27 @@ class EmailService
         $emailBody = $this->twig->render('emails/contact.html.twig', [
             'lastname' => $lastname,
             'firstname' => $firstname,
-            'email' => $fromEmail,
+            'mail' => $fromEmail,
             'phone' => $phone,
             'subject' => $subject,
             'messageContent' => $message, 
         ]);
 
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from($fromEmail)
-            ->to('contact@tonsite.fr') // remplace par ton adresse pro
+            ->to('aleperff@gmail.com') // remplace par ton adresse pro
             ->subject("Nouveau message de $lastname . $firstname")
-            ->html($emailBody);
-
+            ->htmlTemplate('emails/contact.html.twig')
+            ->context([
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'mail' => $fromEmail,
+                'phone' => $phone,
+                'subject' => $subject,
+                'messageContent' => $message,
+            ]);
+        
+        // Envoi du message
         $this->mailer->send($email);
     }
 }
