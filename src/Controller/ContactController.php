@@ -1,7 +1,4 @@
 <?php
-
-// src/Controller/ContactController.php
-
 namespace App\Controller;
 
 use App\Document\Message;
