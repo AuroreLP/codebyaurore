@@ -1,6 +1,9 @@
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }}">{{ message }}</div>
+{% if app.request.hasPreviousSession %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
-
+{% endif %}
