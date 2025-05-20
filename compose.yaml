@@ -57,14 +57,6 @@ services:
       - mongo_data:/data/db
     networks:
       - codebyaurore
-  mailpit:
-    image: axllent/mailpit
-    container_name: codebyaurore_mailpit
-    ports:
-      - "8025:8025" # Interface Web Mailpit
-      - "1025:1025" # Port SMTP
-    networks:
-      - codebyaurore
 
 networks:
   codebyaurore:
