@@ -21,7 +21,7 @@ class MessageController extends AbstractController
     public function index()
     {
         // Récupérer tous les messages
-        $messages = $this->documentManager->getRepository(Message::class)->findAll();
+        $messages = $this->documentManager->getRepository(Message::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('admin/messages/index.html.twig', [
             'messages' => $messages,
@@ -41,4 +41,24 @@ class MessageController extends AbstractController
             'message' => $message,
         ]);
     }
+
+    #[Route('/admin/message/delete/{id}', name: 'admin.message.delete', methods: ['DELETE'])]
+    public function remove(string $id): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $message = $this->documentManager->getRepository(Message::class)->find($id);
+
+        if (!$message) {
+            throw $this->createNotFoundException('Message introuvable.');
+        }
+
+        $this->documentManager->remove($message);
+        $this->documentManager->flush();
+
+        $this->addFlash('success', 'Le message a bien été supprimé.');
+
+        return $this->redirectToRoute('admin.messages.index');
+    }
+
 }

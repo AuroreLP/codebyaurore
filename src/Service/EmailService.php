@@ -35,7 +35,7 @@ class EmailService
         $email = (new TemplatedEmail())
             ->from($fromEmail)
             ->to('aleperff@gmail.com') // remplace par ton adresse pro
-            ->subject("Nouveau message de $lastname . $firstname")
+            ->subject("Nouveau message de $firstname $lastname")
             ->htmlTemplate('emails/contact.html.twig')
             ->context([
                 'lastname' => $lastname,
