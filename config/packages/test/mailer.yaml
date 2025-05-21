@@ -2,5 +2,3 @@ framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
         enabled: true
-        envelope:
-            sender: 'test@example.com'

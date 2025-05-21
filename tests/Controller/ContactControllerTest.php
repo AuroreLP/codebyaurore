@@ -3,18 +3,18 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Mime\Email;
-use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
+use Zenstruck\Mailer\Test\InteractsWithMailer;
+use Zenstruck\Mailer\Test\TestEmail;
 
 class ContactControllerTest extends WebTestCase
 {
-    use MailerAssertionsTrait;
+    use InteractsWithMailer;
 
     public function testContactFormSendsEmail(): void
     {
         $client = static::createClient();
 
-        $crawler = $client->request('POST', '/contact');
+        $crawler = $client->request('GET', '/contact');
 
         $form = $crawler->selectButton('Envoyer')->form([
             'message[lastname]' => 'Dupont',
@@ -37,12 +37,15 @@ class ContactControllerTest extends WebTestCase
         $this->assertSelectorTextContains('div.alert.alert-success', 'Votre message a été envoyé avec succès.');
 
         // Vérifie qu’un email a bien été envoyé
-        $this->assertEmailCount(1);
+        $this->mailer()->assertSentEmailCount(1);
 
-        // Vérifie le contenu de l'email
-        $email = $this->getMailerMessage(0);
-        $this->assertInstanceOf(Email::class, $email);
-        $this->assertEmailHeaderSame($email, 'Subject', 'Nouveau message de Jean Dupont');
-        $this->assertEmailTextBodyContains($email, 'Bonjour, je souhaite en savoir plus sur vos services.');
+        // Récupère l'email envoyé
+        $this->mailer()->assertEmailSentTo('aleperff@gmail.com', function(TestEmail $email) {
+            $email->assertSubject('Nouveau message de Jean Dupont');
+            $email->assertTextContains('Bonjour, je souhaite en savoir plus sur vos services.');
+            $email->assertFrom('jean@example.com');
+
+            return true;
+        });
     }
 }
