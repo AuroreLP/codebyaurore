@@ -26,10 +26,15 @@ class MongoDBMessageService
         $messageDoc->setContent($content);
         $messageDoc->setCreatedAt(new \DateTime());
 
-        // Persister le message dans MongoDB
-        $this->documentManager->persist($messageDoc);
-        $this->documentManager->flush(); // Sauvegarde dans MongoDB
+        // encapsulation de l'appel à flush dans un bloc try-catch pour gérer les erreurs
+        try {
+            // Persister le message dans MongoDB
+            $this->documentManager->persist($messageDoc);
+            $this->documentManager->flush();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Erreur lors de la sauvegarde du message: " . $e->getMessage());
+        }
 
-        return $messageDoc->getId(); // Retourne l'ID du message
+        return $messageDoc->getId();
     }
 }
