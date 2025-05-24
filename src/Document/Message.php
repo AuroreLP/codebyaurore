@@ -13,13 +13,29 @@ class Message
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'Le prénom est requis.')]
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: 'Le prénom doit comporter au moins {{ limit }} caractères.',
+        maxMessage: 'Le prénom ne peut pas comporter plus de {{ limit }} caractères.'
+    )]
     private string $firstname;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'Le nom est requis.')]
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: 'Le nom doit comporter au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom ne peut pas comporter plus de {{ limit }} caractères.'
+    )]
     private string $lastname;
 
     #[MongoDB\Field(type: 'string', nullable: true)]
+    #[Assert\Regex(
+        pattern: "/^[0-9\s\-\(\)\+]+$/",
+        message: "Le numéro de téléphone n'est pas valide."
+    )]
     private ?string $phone = null;
 
     #[MongoDB\Field(type: 'string')]
@@ -29,10 +45,22 @@ class Message
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'L\'objet est requis.')]
+    #[Assert\Length(
+        min: 5,
+        max: 100,
+        minMessage: "L'objet doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "L'objet ne peut pas comporter plus de {{ limit }} caractères."
+    )]
     private string $subject = '';
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank(message: 'Le message est requis.')]
+    #[Assert\Length(
+        min: 10,
+        max: 1000,
+        minMessage: 'Le message doit comporter au moins {{ limit }} caractères.',
+        maxMessage: 'Le message ne peut pas comporter plus de {{ limit }} caractères.'
+    )]
     private string $content;
 
     #[MongoDB\Field(type: 'date')]
