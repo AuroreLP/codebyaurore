@@ -96,10 +96,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return $this->roles;
-        /*
-        return in_array($this->username, ['alp']) ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER']; 
-        */
+        $admins = explode(',', $_ENV['ADMIN_USERS']);
+        return in_array($this->username, $admins) ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER']; 
     }
 
     public function setRoles(array $roles): self
