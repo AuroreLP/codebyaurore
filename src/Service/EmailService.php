@@ -23,6 +23,10 @@ class EmailService
     public function sendContactEmail(string $fromEmail, string $lastname, string $firstname, ?string $phone,
     string $subject, string $message): void
     {
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException("L'email n'est pas valide.");
+        }
+
         $emailBody = $this->twig->render('emails/contact.html.twig', [
             'lastname' => $lastname,
             'firstname' => $firstname,
@@ -34,7 +38,7 @@ class EmailService
 
         $email = (new TemplatedEmail())
             ->from($fromEmail)
-            ->to('aleperff@gmail.com') // remplace par ton adresse pro
+            ->to('aleperff@gmail.com')
             ->subject("Nouveau message de $firstname $lastname")
             ->htmlTemplate('emails/contact.html.twig')
             ->context([
