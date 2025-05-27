@@ -9,14 +9,17 @@ use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Psr\Log\LoggerInterface;
 
 class SecurityController extends AbstractController
 {
     private $loginRateLimiter;
+    private $logger;
 
-    public function __construct(RateLimiterFactory $loginRateLimiter)
+    public function __construct(RateLimiterFactory $loginRateLimiter, LoggerInterface $logger)
     {
         $this->loginRateLimiter = $loginRateLimiter;
+        $this->logger = $logger;
     }
 
     #[Route(path: '/login', name: 'app_login')]
@@ -26,6 +29,7 @@ class SecurityController extends AbstractController
         $limiter = $this->loginRateLimiter->create($request->getClientIp());
         $limiter->consume()->ensureAccepted();
     } catch (RateLimitExceededException $e) {
+        $this->logger->warning('Too many login attempts from IP: ' . $request->getClientIp());
         $this->addFlash('error', 'Trop de tentatives de connexion. Merci de patienter quelques minutes avant de réessayer.');
 
         return $this->render('security/login.html.twig', [
