@@ -1,3 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+nelmio_csp_report:
+    path: /nelmio/csp/report
+    controller: Nelmio\SecurityBundle\Controller\ContentSecurityPolicyController::reportAction
