@@ -17,6 +17,7 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
     "core-js": "^3.41.0",
     "flatpickr": "^4.6.13"
   }
