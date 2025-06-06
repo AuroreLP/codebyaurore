@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,14 +18,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 30)]
     private string $firstname;
+
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 30)]
     private string $lastname;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 30)]
     private string $username;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 8)]
     private string $password;
 
     #[ORM\Column(type: 'json')]
@@ -33,7 +43,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->username;
+        // Échappement des données pour éviter XSS
+        return htmlspecialchars($this->username, ENT_QUOTES, 'UTF-8');
     }
 
     public function getId(): int
@@ -53,7 +64,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setFirstname(string $firstname): self
     {
-        $this->firstname = $firstname;
+        // Nettoyage des données avant de les stocker
+        $this->firstname = htmlspecialchars($firstname, ENT_QUOTES, 'UTF-8');
 
         return $this;
     }
@@ -65,7 +77,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setLastname(string $lastname): self
     {
-        $this->lastname = $lastname;
+        // Nettoyage des données avant de les stocker
+        $this->lastname = htmlspecialchars($lastname, ENT_QUOTES, 'UTF-8');
 
         return $this;
     }
@@ -77,7 +90,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsername(string $username): self
     {
-        $this->username = $username;
+        // Nettoyage des données avant de les stocker
+        $this->username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 
         return $this;
     }
@@ -96,8 +110,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        // Si l'utilisateur est l'administrateur, ajouter ROLE_ADMIN
-        return in_array($this->username, ['alp']) ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER'];
+        $admins = explode(',', $_ENV['ADMIN_USERS']);
+        return in_array($this->username, $admins) ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER']; 
     }
 
     public function setRoles(array $roles): self

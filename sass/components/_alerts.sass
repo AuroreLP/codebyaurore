@@ -1,0 +1,44 @@
+@use "../abstracts/variables" as var
+
+.alert
+  padding: 1rem 1.5rem
+  border-radius: 4px
+  margin-bottom: 1rem
+  font-weight: 600
+  font-size: 1rem
+  position: relative
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+
+  &.alert-error,
+  &.alert-danger
+    background-color: #f8d7da
+    border: 1px solid #f5c2c7
+    color: var.$dark-green
+
+    // petite icône (optionnel)
+    &::before
+      content: "⚠️"
+      margin-right: 0.5rem
+      position: absolute
+      left: 10px
+      top: 50%
+      transform: translateY(-50%)
+      font-size: 1.2rem
+
+    padding-left: 2.5rem // pour laisser de la place à l'icône
+
+  &.alert-success
+    background-color: #d1e7dd
+    border: 1px solid #badbcc
+    color: var.$light-green
+
+    &::before
+      content: "✅"
+      margin-right: 0.5rem
+      position: absolute
+      left: 10px
+      top: 50%
+      transform: translateY(-50%)
+      font-size: 1.2rem
+
+    padding-left: 2.5rem
