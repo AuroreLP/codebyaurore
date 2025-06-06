@@ -1,0 +1,12 @@
+nelmio_security:
+    csp:
+        enforce:
+            default-src: ["'self'"]
+            script-src: ["'self'", "https://cdn.jsdelivr.net", "https://esm.sh", "https://cdn.ckeditor.com", "'unsafe-inline'", "'unsafe-eval'"]
+            style-src: ["'self'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net", "'unsafe-inline'"]
+            img-src: ["'self'", "data:", "https://picsum.photos", "https://avatars.githubusercontent.com"]
+            frame-src: ["'self'"]
+            font-src: ["'self'", "https://fonts.gstatic.com"]
+            connect-src: ["'self'", "https://api.github.com"]
+        report:
+            report-uri: "/nelmio/csp/report"

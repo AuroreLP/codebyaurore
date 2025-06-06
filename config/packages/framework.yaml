@@ -1,9 +1,15 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-
     # protection CSRF activée globalement
     csrf_protection: true
+    rate_limiter:
+        login:
+            policy: sliding_window
+            limit: 3
+            interval: '10 minutes'
+            storage_service: 'limiter.storage.cache_app'
+    lock: '%env(LOCK_DSN)%'
 
     # Note that the session will be started ONLY if you read or write from it.
         # Gestion des sessions
@@ -12,6 +18,7 @@ framework:
         cookie_lifetime: 3600   # 1 heure
         cookie_secure: auto     # Sécurisation du cookie selon l'environnement
         cookie_httponly: true   # Empêche l'accès aux cookies depuis JavaScript
+        cookie_samesite: 'lax'
 
 
     #esi: true

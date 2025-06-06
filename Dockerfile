@@ -21,6 +21,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
         libonig-dev \
         libxslt-dev \
         ca-certificates \
+        iputils-ping \ 
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
