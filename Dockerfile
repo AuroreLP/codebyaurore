@@ -61,8 +61,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
 WORKDIR /var/www/html
 
 # Copie des fichiers package.json & .env avant install
-COPY .env ./
-COPY .env.local ./  
+# COPY .env ./
+# COPY .env.local ./  
 COPY composer.* ./
 
 # Pour éviter les erreurs de mémoire avec Composer
