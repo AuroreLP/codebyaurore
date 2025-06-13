@@ -1,10 +1,10 @@
-
 services:
   www:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: codebyaurore_php
+    restart: always
     ports:
       - 8080:8080
     volumes:
@@ -27,32 +27,16 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-    ports:
-      - "3307:3306"
     volumes:
-      - ./var/db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - codebyaurore
     env_file:
       - .env.local
 
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: codebyaurore_phpmyadmin
-    depends_on:
-      - mysql
-    ports:
-      - 8081:80
-    environment:
-      PMA_HOST: mysql
-    networks:
-      - codebyaurore
-
   mongodb:
     image: mongo:6.0
     container_name: codebyaurore_mongodb
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:
@@ -62,3 +46,4 @@ networks:
   codebyaurore:
 volumes:
   mongo_data:
+  mysql_data:

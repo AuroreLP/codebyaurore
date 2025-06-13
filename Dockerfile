@@ -1,4 +1,3 @@
-# Utilisation de l'image officielle PHP avec Apache
 FROM php:8.2-apache
 
 # Configuration Apache

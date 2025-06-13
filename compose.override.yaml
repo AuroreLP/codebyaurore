@@ -1,3 +1,27 @@
 services:
   www:
-    user: "1000:1000"
+    user: "${UID}:${GID}"
+
+  mysql:
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./var/db_data:/var/lib/mysql
+
+  mongodb:
+    ports:
+      - "27017:27017"
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: codebyaurore_phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - codebyaurore
+    profiles:
+      - dev
