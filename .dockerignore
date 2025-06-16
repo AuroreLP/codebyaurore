@@ -4,5 +4,5 @@ vendor/
 .gitignore
 Dockerfile
 compose.yaml
-/var/
-/public/bundles/
+var/
+public/bundles/

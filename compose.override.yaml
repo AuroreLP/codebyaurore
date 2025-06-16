@@ -1,6 +1,12 @@
 services:
   www:
     user: "${UID}:${GID}"
+    environment:
+      - APP_ENV=dev
+    volumes:
+      - ./src:/var/www/html/src
+      - ./public:/var/www/html/public
+      - ./docker/php/vhosts:/etc/apache2/sites-enabled
 
   mysql:
     ports:
@@ -25,3 +31,6 @@ services:
       - codebyaurore
     profiles:
       - dev
+
+volumes:
+  tmp-db-data:
