@@ -3,7 +3,8 @@
 {% block title %}A propos | Code by Aurore{% endblock %}
 
 {% block body %}
-<section class="hero">
+<body>
+  <section class="hero">
     <div class="hero__container">
       <p class="hero__subtitle">Portfolio</p>
       <h1 class="hero__title">Hello, je suis Aurore</h1>
@@ -64,6 +65,10 @@
         </li>
       </ul>
     </div>
-</section>
+  </section>
+  
+  <!-- Script JavaScript personnalisé -->
+  <script type="module" src="{{ asset('js/modules/About.js') }}"></script>
+</body>
 
 {% endblock %}
