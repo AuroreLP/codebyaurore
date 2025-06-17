@@ -14,13 +14,8 @@ safe_chown() {
   fi
 }
 
-if [ "$APP_ENV" = "prod" ]; then
   echo "Mode production : attribution de www-data"
   safe_chown "/var/www/html/var" "www-data:www-data"
-else
-  echo "Mode dev : attribution UID 1000"
-  safe_chown "/var/www/html/var" "1000:1000"
-fi
 
 # Démarre Apache en foreground
 exec apache2-foreground

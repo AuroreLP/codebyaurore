@@ -11,12 +11,16 @@ services:
   mysql:
     ports:
       - "3307:3306"
+    networks:
+      - codebyaurore
     volumes:
       - ./var/db_data:/var/lib/mysql
 
   mongodb:
     ports:
       - "27017:27017"
+    networks:
+      - codebyaurore
 
   phpmyadmin:
     image: phpmyadmin
@@ -27,10 +31,16 @@ services:
       - 8081:80
     environment:
       PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - codebyaurore
     profiles:
       - dev
 
+networks:
+  codebyaurore:
+
 volumes:
-  tmp-db-data:
+  mongo_data:
