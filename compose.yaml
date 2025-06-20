@@ -41,10 +41,6 @@ services:
     image: mongo:6.0
     restart: always
     container_name: codebyaurore_mongodb
-    command: ["mongod", "--auth"]
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo_data:/data/db
     networks:
