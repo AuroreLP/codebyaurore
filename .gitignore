@@ -10,7 +10,7 @@
 /public/bundles/
 /var/
 /vendor/
-/compose.override.yaml
+compose.override.yaml
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
