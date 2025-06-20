@@ -36,7 +36,6 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // lier le commentaire à l'article
             $comment->setArticle($article);
             $comment->setPublishedAt(new \DateTimeImmutable());
             $comment->setStatus('en attente');
@@ -48,11 +47,9 @@ class CommentController extends AbstractController
             $em->persist($comment);
             $em->flush();
 
-            // Envoyer un email avec le token pour valider le commentaire
-            $emailService->sendValidationEmail($comment, $article);
 
             $this->addFlash('success', 'Commentaire envoyé pour validation. Un email de validation vous sera envoyé.');
-            return $this->redirectToRoute('article.show', ['slug' => $slug]);
+            return $this->redirectToRoute('blog.show', ['slug' => $slug]);
         }
 
         // En cas d’erreur, on redirige vers la page article avec le formulaire rempli

@@ -60,7 +60,8 @@
             "symfony/runtime": true
         },
         "bump-after-update": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "cache-dir": "/tmp/composer-cache"
     },
     "autoload": {
         "psr-4": {

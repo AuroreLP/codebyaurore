@@ -1,4 +1,3 @@
-# Utilisation de l'image officielle PHP avec Apache
 FROM php:8.2-apache
 
 # Configuration Apache
@@ -21,7 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
         libonig-dev \
         libxslt-dev \
         ca-certificates \
-        iputils-ping \ 
+        iputils-ping \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -68,8 +67,9 @@ COPY composer.* ./
 # Pour éviter les erreurs de mémoire avec Composer
 ENV COMPOSER_MEMORY_LIMIT=-1
 
-# Installation dépendances PHP sans exécution des scripts
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Installation dépendances PHP
+RUN composer install --optimize-autoloader --no-scripts
+
 
 # Installation des dépendances front (NPM)
 COPY package*.json ./
@@ -82,15 +82,21 @@ COPY . .
 COPY docker/php/vhosts/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default.conf
 
-# Heroku oblige Apache à écouter sur $PORT
+# oblige Apache à écouter sur $PORT
 ENV PORT=8080
 RUN sed -i "s/80/\${PORT}/g" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
 
 
 # Donner les bons droits à www-data
 RUN mkdir -p /var/www/html/var && \
-    chown -R www-data:www-data /var/www/html && \
+    chown -R www-data:www-data /var/www/html/var && \
     chmod -R 775 /var/www/html/var
 
+# Copier le script d'entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
+# Donner les droits d'exécution au script
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["apache2-foreground"]

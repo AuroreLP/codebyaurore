@@ -1,14 +1,17 @@
-
 services:
   www:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: codebyaurore_php
+    restart: always
+    environment:
+      - APP_ENV=prod
     ports:
       - 8080:8080
     volumes:
-      - ./:/var/www/html
+      - ./src:/var/www/html/src
+      - ./public:/var/www/html/public
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
     env_file:
       - .env.local
@@ -17,42 +20,26 @@ services:
       - mysql
     networks:
       - codebyaurore
-    # user: "33:33" à décommenter en production
 
   mysql:
     image: mysql
     container_name: codebyaurore_mysql
     restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-    ports:
-      - "3307:3306"
     volumes:
       - ./var/db_data:/var/lib/mysql
     networks:
       - codebyaurore
     env_file:
-      - .env.local
-
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: codebyaurore_phpmyadmin
-    depends_on:
-      - mysql
-    ports:
-      - 8081:80
-    environment:
-      PMA_HOST: mysql
-    networks:
-      - codebyaurore
+      - .env
 
   mongodb:
     image: mongo:6.0
     container_name: codebyaurore_mongodb
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:

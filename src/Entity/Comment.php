@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -14,12 +15,18 @@ class Comment
     private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 300)]
     private string $comment;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -34,6 +41,11 @@ class Comment
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(name: "article_id", referencedColumnName: "id", onDelete: "CASCADE")] // Un commentaire DOIT être rattaché à un article
     private $article;
+
+    public const STATUS_PENDING = 'en attente';
+    public const STATUS_VALIDATED = 'validé';
+    public const STATUS_REFUSED = 'refusé';
+
 
     public function __construct()
     {
@@ -93,13 +105,13 @@ class Comment
 
     public function validate(): self
     {
-        $this->status = 'validé';
+        $this->status = Comment::STATUS_VALIDATED;
         return $this;
     }
 
     public function refuse(): self
     {
-        $this->status = 'refusé';
+        $this->status = Comment::STATUS_REFUSED;
         return $this;
     }
 
