@@ -13,6 +13,7 @@
             <th>Status</th>
             <th>Nom & Email</th>
             <th>Commentaires</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,13 @@
                     <small>{{ comment.email }}</small>
                 </td>
                 <td data-cell="Commentaire">{{ comment.comment | slice(0, 80) }}{% if comment.comment|length > 80 %}...{% endif %}</td>
+                <td>
+                    <form action="{{ path('comment.delete', {id: comment.id}) }}" method="post" onsubmit="return confirm('Confirmer la suppression ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                        <button class="button--delete">Supprimer</button>
+                    </form>
+                </td>
             </tr>
                     {% else %}
             <tr>

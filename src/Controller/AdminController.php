@@ -16,8 +16,10 @@ final class AdminController extends AbstractController
     #[Route('/admin', name: 'admin.dashboard')]
     public function index(EntityManagerInterface $em, DocumentManager $dm): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         // Récupérer les derniers articles publiés
-        $articles = $em->getRepository(Article::class)->findBy([], ['publishedAt' => 'ASC'], 5);
+        $articles = $em->getRepository(Article::class)->findBy([], ['publishedAt' => 'DESC'], 5);
 
         // Compter le nombre total d'articles
         $articlesCount = $em->getRepository(Article::class)->count([]);
@@ -34,10 +36,10 @@ final class AdminController extends AbstractController
 
 
         // Récupérer les commentaires en attente
-        $comments = $em->getRepository(Comment::class)->findBy(['status' => 'en attente'], ['publishedAt' => 'DESC'], 5);
+        $comments = $em->getRepository(Comment::class)->findBy(['status' => Comment::STATUS_PENDING], ['publishedAt' => 'DESC'], 5);
 
         // Compter le nombre total de commentaires
-        $commentsCount = $em->getRepository(Comment::class)->count(['status' => 'validé']);
+        $commentsCount = $em->getRepository(Comment::class)->count(['status' => Comment::STATUS_VALIDATED]);
         
         return $this->render('admin/dashboard/index.html.twig', [
             'articles' => $articles,

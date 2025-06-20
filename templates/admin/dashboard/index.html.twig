@@ -45,12 +45,12 @@
                         <a href="{{ path('admin.comment.refuse', { 'id': comment.id }) }}" class="button--delete">Refuser</a>
                     </td>
                     <td data-cell="Message">{{ comment.comment | slice(0, 50) }}...</td>
-                    <td data-cell="Article"><a href="{{ path('article.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
+                    <td data-cell="Article"><a href="{{ path('blog.show', { 'slug': comment.article.slug }) }}">{{ comment.article.title }}</a></td>
                     <td data-cell="Nom & Email"><strong>{{ comment.username }}</strong><br><small>{{ comment.email }}</small></td> 
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6" class="text-center">Aucun commentaire en attente.</td>
+                    <td colspan="5" class="text-center">Aucun commentaire en attente.</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -101,7 +101,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3" class="text-center">Aucun message reçu récemment.</td>
+                    <td colspan="4" class="text-center">Aucun message reçu récemment.</td>
                 </tr>
             {% endfor %}
         </tbody>

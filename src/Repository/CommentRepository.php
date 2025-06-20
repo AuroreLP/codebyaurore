@@ -41,7 +41,7 @@ class CommentRepository extends ServiceEntityRepository
             ->andWhere('c.article = :article')
             ->andWhere('c.status = :status')
             ->setParameter('article', $article)
-            ->setParameter('status', 'validé')
+            ->setParameter('status', comment::STATUS_VALIDATED)
             ->orderBy('c.publishedAt', 'DESC')
             ->getQuery()
             ->getResult();
