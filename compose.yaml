@@ -14,7 +14,7 @@ services:
       - ./public:/var/www/html/public
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
     env_file:
-      - .env.local
+      - .env
     depends_on:
       - mongodb
       - mysql
@@ -39,7 +39,12 @@ services:
 
   mongodb:
     image: mongo:6.0
+    restart: always
     container_name: codebyaurore_mongodb
+    command: ["mongod", "--auth"]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo_data:/data/db
     networks:
