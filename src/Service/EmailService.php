@@ -13,7 +13,7 @@ class EmailService
 
     public function __construct(
         MailerInterface $mailer,
-        Environment $twig,
+        Environment $twig
         
     ) {
         $this->mailer = $mailer;
@@ -37,7 +37,8 @@ class EmailService
         ]);
 
         $email = (new TemplatedEmail())
-            ->from($fromEmail)   
+            ->from('contact@codebyaurore.dev')
+            ->replyTo($fromEmail)   
             ->to('aleperff@gmail.com')
             ->subject("Nouveau message de $firstname $lastname")
             ->htmlTemplate('emails/contact.html.twig')
