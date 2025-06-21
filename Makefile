@@ -7,7 +7,7 @@ COMPOSE_FILES_PROD=-f compose.yaml
 
 # Fichiers .env
 ENV_FILE_DEV=--env-file .env.local
-ENV_FILE_PROD=--env-file .env
+ENV_FILE_PROD=--env-file .env.prod
 
 # Commandes compose DEV (ancienne méthode)
 COMPOSE_DEV=$(COMPOSE) $(ENV_FILE_DEV) $(COMPOSE_FILES_DEV)

@@ -13,8 +13,6 @@ services:
       - ./src:/var/www/html/src
       - ./public:/var/www/html/public
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
-    env_file:
-      - .env
     depends_on:
       - mongodb
       - mysql
@@ -34,8 +32,6 @@ services:
       - ./var/db_data:/var/lib/mysql
     networks:
       - codebyaurore
-    env_file:
-      - .env
 
   mongodb:
     image: mongo:6.0
