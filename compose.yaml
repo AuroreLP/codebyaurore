@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
     container_name: codebyaurore_php
     restart: always
-    environment:
-      - APP_ENV=prod
     env_file:
       - .env.prod
     ports:
@@ -17,7 +15,6 @@ services:
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
       - ./.env.prod:/var/www/html/.env
     depends_on:
-      - mongodb
       - mysql
     networks:
       - codebyaurore
@@ -40,6 +37,7 @@ services:
     image: mongo:6.0
     restart: always
     container_name: codebyaurore_mongodb
+    command: ["mongod", "--tlsMode", "disabled"]
     volumes:
       - mongo_data:/data/db
     networks:
@@ -47,5 +45,6 @@ services:
 
 networks:
   codebyaurore:
+
 volumes:
   mongo_data:
