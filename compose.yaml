@@ -15,7 +15,6 @@ services:
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
       - ./.env.prod:/var/www/html/.env
     depends_on:
-      - mongodb
       - mysql
     networks:
       - codebyaurore
@@ -38,23 +37,14 @@ services:
     image: mongo:6.0
     restart: always
     container_name: codebyaurore_mongodb
-    command:
-      - mongod
-      - --auth
-      - --tlsMode=requireTLS
-      - --tlsCertificateKeyFile=/etc/ssl/mongodb.pem
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    command: ["mongod", "--tlsMode", "disabled"]
     volumes:
-      - ./certs/mongodb.pem:/etc/ssl/mongodb.pem:ro
       - mongo_data:/data/db
-    ports:
-      - "27017:27017"
     networks:
       - codebyaurore
 
 networks:
   codebyaurore:
+
 volumes:
   mongo_data:

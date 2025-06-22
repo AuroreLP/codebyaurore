@@ -9,70 +9,44 @@ COMPOSE_FILES_PROD=-f compose.yaml
 ENV_FILE_DEV=--env-file .env
 ENV_FILE_PROD=--env-file .env.prod
 
-# Commandes compose DEV (ancienne méthode)
-COMPOSE_DEV=$(COMPOSE) $(ENV_FILE_DEV) $(COMPOSE_FILES_DEV)
-
-# Commandes compose PROD (ancienne méthode)
-COMPOSE_PROD=$(COMPOSE) $(ENV_FILE_PROD) $(COMPOSE_FILES_PROD)
-
-# Nouvelle commande DEV avec profil
-COMPOSE_PROFILE_DEV=$(COMPOSE) --profile dev
-
-# -- COMMANDES DEV (ancienne méthode) --
-up-dev:
-	$(COMPOSE_DEV) up -d
-
-down-dev:
-	$(COMPOSE_DEV) down
-
-build-dev:
-	$(COMPOSE_DEV) build
-
-logs-dev:
-	$(COMPOSE_DEV) logs -f
-
-# -- NOUVELLES COMMANDES DEV (avec profils) --
+# -- Commandes avec profil DEV --
 up-dev-profile:
-	$(COMPOSE_PROFILE_DEV) up -d --build
+	$(COMPOSE) $(COMPOSE_FILES_DEV) $(ENV_FILE_DEV) --profile dev up -d --build
 
 down-dev-profile:
-	$(COMPOSE_PROFILE_DEV) down
+	$(COMPOSE) $(COMPOSE_FILES_DEV) $(ENV_FILE_DEV) --profile dev down
 
 logs-dev-profile:
-	$(COMPOSE_PROFILE_DEV) logs -f
+	$(COMPOSE) $(COMPOSE_FILES_DEV) $(ENV_FILE_DEV) --profile dev logs -f
 
-# -- COMMANDES PROD --
-up-prod:
-	$(COMPOSE_PROD) up -d
+# -- Commandes avec profil PROD --
+up-prod-profile:
+	$(COMPOSE) $(COMPOSE_FILES_PROD) $(ENV_FILE_PROD) --profile prod up -d --build
 
-down-prod:
-	$(COMPOSE_PROD) down
+down-prod-profile:
+	$(COMPOSE) $(COMPOSE_FILES_PROD) $(ENV_FILE_PROD) --profile prod down
 
-logs-prod:
-	$(COMPOSE_PROD) logs -f
-
-build-prod:
-	$(COMPOSE_PROD) build
+logs-prod-profile:
+	$(COMPOSE) $(COMPOSE_FILES_PROD) $(ENV_FILE_PROD) --profile prod logs -f
 
 # -- COMMANDES UTILES --
 restart-dev:
 	@echo "🔄 Redémarrage de l'environnement de développement..."
-	$(MAKE) down-dev
-	$(MAKE) up-dev
+	$(MAKE) down-dev-profile
+	$(MAKE) up-dev-profile
 	@echo "✅ Environnement de développement relancé !"
 
 restart-prod:
 	@echo "🔄 Redémarrage de l'environnement de production..."
-	$(MAKE) down-prod
-	$(MAKE) up-prod
+	$(MAKE) down-prod-profile
+	$(MAKE) up-prod-profile
 	@echo "✅ Environnement de production relancé !"
 
 ps:
-	$(COMPOSE_DEV) ps
+	$(COMPOSE) $(COMPOSE_FILES_DEV) $(ENV_FILE_DEV) ps
 
 sh:
-	$(COMPOSE_DEV) exec www bash
+	$(COMPOSE) $(COMPOSE_FILES_DEV) $(ENV_FILE_DEV) exec www bash
 
 sh-prod:
-	$(COMPOSE_PROD) exec www bash
-
+	$(COMPOSE) $(COMPOSE_FILES_PROD) $(ENV_FILE_PROD) exec www bash
