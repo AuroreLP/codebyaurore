@@ -10,10 +10,9 @@ services:
     env_file:
       - .env
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
-      - ./src:/var/www/html/src
-      - ./public:/var/www/html/public
+      - ./:/var/www/html
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
     depends_on:
       - mongodb
