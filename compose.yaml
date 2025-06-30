@@ -6,14 +6,13 @@ services:
     container_name: codebyaurore_php
     restart: always
     env_file:
-      - .env.prod
+      - .env
     ports:
       - 8080:8080
     volumes:
       - ./src:/var/www/html/src
       - ./public:/var/www/html/public
       - ./docker/php/vhosts:/etc/apache2/sites-enabled
-      - ./.env.prod:/var/www/html/.env
     depends_on:
       - mysql
     networks:
