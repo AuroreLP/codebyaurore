@@ -30,18 +30,18 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // 1. Enregistrement en base MongoDB
-            $this->mongoDBMessageService->saveMessage(
-                $message->getLastname(),
-                $message->getFirstname(),
-                $message->getPhone(),
-                $message->getEmail(),
-                $message->getSubject(),
-                $message->getContent()
-            );
-
-            // Envoi via EmailService
             try {
+                // 1. Enregistrement en base MongoDB
+                $this->mongoDBMessageService->saveMessage(
+                    $message->getLastname(),
+                    $message->getFirstname(),
+                    $message->getPhone(),
+                    $message->getEmail(),
+                    $message->getSubject(),
+                    $message->getContent()
+                );
+
+                // Envoi via EmailService
                 $this->emailService->sendContactEmail(
                     $message->getEmail(),
                     $message->getLastname(),
@@ -52,7 +52,7 @@ class ContactController extends AbstractController
                 );
                 $this->addFlash('success', 'Votre message a été envoyé avec succès.');
             } catch (\Throwable $e) {
-                $this->addFlash('danger', 'Erreur lors de l’envoi du mail : ' . $e->getMessage());
+                $this->addFlash('danger', 'Une erreur est survenue. Veuillez réessayer.');
             }
 
             // Rediriger ou afficher la page de contact
