@@ -3,14 +3,14 @@ framework:
     secret: '%env(APP_SECRET)%'
     # protection CSRF activée globalement
     csrf_protection: true
-    rate_limiter:
-        login:
-            policy: sliding_window
-            limit: 3
-            interval: '10 minutes'
-            storage_service: 'limiter.storage.cache_app'
-    lock: '%env(LOCK_DSN)%'
-
+#    rate_limiter:
+#        login:
+#            policy: sliding_window
+#            limit: 3
+#            interval: '10 minutes'
+#            storage_service: 'limiter.storage.cache_app'
+#    lock: '%env(LOCK_DSN)%'
+#
     # Note that the session will be started ONLY if you read or write from it.
         # Gestion des sessions
     session:

@@ -110,9 +110,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        $admins = explode(',', $_ENV['ADMIN_USERS']);
-        return in_array($this->username, $admins) ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER']; 
+        error_log("DEBUG getRoles() - roles from DB: " . json_encode($this->roles));
+        
+        // Commencer par les rôles stockés en base
+        $roles = $this->roles;
+        
+        // Ajouter ROLE_ADMIN si l'utilisateur est dans ADMIN_USERS
+        if (isset($_ENV['ADMIN_USERS'])) {
+            $admins = explode(',', $_ENV['ADMIN_USERS']);
+            if (in_array($this->username, $admins) && !in_array('ROLE_ADMIN', $roles)) {
+                $roles[] = 'ROLE_ADMIN';
+            }
+        }
+        
+        // Garantir qu'il y a toujours ROLE_USER
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        
+        error_log("DEBUG getRoles() - final roles: " . json_encode($roles));
+        return $roles;
     }
+
+    /*
+    public function getRoles(): array
+    {
+        // Commencer par les rôles stockés en base
+        $roles = $this->roles;
+        
+        // Ajouter ROLE_ADMIN si l'utilisateur est dans ADMIN_USERS
+        if (isset($_ENV['ADMIN_USERS'])) {
+            $admins = explode(',', $_ENV['ADMIN_USERS']);
+            if (in_array($this->username, $admins) && !in_array('ROLE_ADMIN', $roles)) {
+                $roles[] = 'ROLE_ADMIN';
+            }
+        }
+        
+        // Garantir qu'il y a toujours ROLE_USER
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        
+        return $roles;
+    } */
 
     public function setRoles(array $roles): self
     {

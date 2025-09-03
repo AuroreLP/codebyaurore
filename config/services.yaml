@@ -20,14 +20,3 @@ services:
         arguments:
             $mailer: '@mailer'
             $twig: '@twig'
-    App\Controller\SecurityController:
-        arguments:
-            $loginRateLimiter: '@login.limiter'
-    login.limiter:
-        alias: 'limiter.login'
-    limiter.storage.cache_app:
-        class: Symfony\Component\RateLimiter\Storage\CacheStorage
-        arguments:
-            - '@cache.app'
-
-    Symfony\Component\RateLimiter\Storage\StorageInterface: '@limiter.storage.cache_app'

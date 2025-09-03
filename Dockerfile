@@ -91,13 +91,12 @@ RUN sed -i "s/80/\${PORT}/g" /etc/apache2/ports.conf /etc/apache2/sites-availabl
 RUN mkdir -p /var/www/html/var && \
     chown -R www-data:www-data /var/www/html/var && \
     chmod -R 775 /var/www/html/var
-USER www-data
 
 # Copier le script d'entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Donner les droits d'exécution au script
-# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
