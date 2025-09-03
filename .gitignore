@@ -35,3 +35,6 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 cookies.txt
 test_*.php
+
+
+dump.sql
