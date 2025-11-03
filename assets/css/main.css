@@ -105,6 +105,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 .hero__subtitle {
   font-weight: 600;
@@ -179,14 +180,14 @@ a {
   font-size: 1.8rem;
   margin-bottom: 2.1875rem;
 }
-.main__projects {
+.main__container__projects {
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   width: 100%;
 }
-.main__projects-item {
+.main__container-item {
   background: #efe4d5;
   border-radius: 0.625rem;
   box-shadow: 0px 4px 10px rgba(104, 168, 145, 0.1);
@@ -199,33 +200,42 @@ a {
   justify-content: space-between;
   height: auto;
 }
-.main__projects-item:hover {
+.main__container-item:hover {
   transform: translateY(-5px);
 }
-.main__projects .js-home-project-title {
+.main__container__avatar {
+  position: absolute;
+  top: -4.0625rem;
+  right: -4.0625rem;
+  width: 8.125rem;
+  height: 8.125rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.main__container .js-home-project-title {
   font-size: 1.5625rem;
   font-weight: 600;
   margin: 0.625rem 0;
   color: #2b4743;
 }
-.main__projects .js-home-project-description {
+.main__container .js-home-project-description {
   font-size: 1rem;
   color: #2b4743;
   margin-bottom: 0.9375rem;
   justify-content: start;
   text-align: start;
 }
-.main__projects .js-home-project-tags-container {
+.main__container .js-home-project-tags-container {
   color: #efe4d5;
 }
-.main__projects .js-home-project-tags-container {
+.main__container .js-home-project-tags-container {
   display: flex;
   gap: 0.3125rem;
   margin: 1.25rem 0;
   align-items: center;
   justify-content: center;
 }
-.main__projects .js-home-project-tags-container span {
+.main__container .js-home-project-tags-container span {
   background: #ea638c;
   color: #efe4d5;
   font-size: 0.75rem;
@@ -547,6 +557,9 @@ a {
   border-color: #38d6c2;
   box-shadow: 0 0 0 3px #38d6c2;
   outline: none;
+}
+.contact__form .group textarea {
+  min-height: 11.875rem;
 }
 .contact__form .form-error {
   color: #ea638c;
