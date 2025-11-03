@@ -4,14 +4,12 @@
     
 .hero
     @include mixin.container-style
-    
     z-index: 1
-
 
     &__container
         position: relative
         background: var.$dark-green
-        padding: fct.rem(60)
+        padding: fct.rem(30)
         max-width: 800px
         width: 80%
         margin: 0 auto
@@ -21,7 +19,7 @@
         flex-direction: column
         justify-content: center
         align-items: center
-        overflow: visible
+        margin-bottom: 1rem
 
     &__subtitle
         @include mixin.font(0.75rem, 600)
@@ -37,9 +35,9 @@
 
     &__avatar
         position: absolute
-        top: fct.rem(-10)
+        top: fct.rem(-20)
         right: fct.rem(-35)
-        @include mixin.circle(fct.rem(130))
+        @include mixin.circle(fct.rem(100))
 
         img
             width: 100%
@@ -66,7 +64,7 @@
     &__container
         position: relative
         background: var.$dark-green
-        padding: fct.rem(60)
+        padding: fct.rem(30)
         max-width: 800px
         width: 80%
         margin: 0 auto
@@ -104,24 +102,17 @@
             &:hover
                 transform: translateY(-5px)
 
-        &__avatar
-            position: absolute
-            top: fct.rem(-65)  // Au lieu de -10, montez-le plus haut
-            right: fct.rem(-65) // Au lieu de -35, décalez-le plus à droite
-            @include mixin.circle(fct.rem(130))
 
         .js-home-project-title
             font-size: fct.rem(25)
             font-weight: 600
             margin: fct.rem(10) 0
-            color: var.$dark-green
+            color: var.$white
         
         .js-home-project-description
             font-size: fct.rem(16)
-            color: var.$dark-green
+            color: var.$white
             margin-bottom: fct.rem(15)
-            justify-content: start
-            text-align: start
 
         .js-home-project-tags-container
             color: var.$white
@@ -130,6 +121,7 @@
             display: flex
             gap: fct.rem(5)
             margin: fct.rem(20) 0
+            flex-wrap: wrap
             align-items: center
             justify-content: center  
 
@@ -143,6 +135,10 @@
 
 // Responsive : affichage en grille sur desktop
 @media screen and (min-width: 768px)
+    .main__container
+        padding: fct.rem(60)
+        justify-content: start
+        align-items: start
     .main__projects
         grid-template-columns: repeat(3, 1fr)
 
